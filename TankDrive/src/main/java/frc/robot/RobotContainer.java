@@ -7,17 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.commands.goSlow;
-// import frc.robot.subsystems.ExampleSubsystem;
-// import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  
 //import the classes we have created
-import frc.robot.commands.TankDrive;
-import frc.robot.commands.goFast;
+import frc.robot.commands.*;
 import frc.robot.subsystems.DriveTrainSubsystem;
-//import edu.wpi.first.wpilibj2.command.CommandBase;
- 
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
