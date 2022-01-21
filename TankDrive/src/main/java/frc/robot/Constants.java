@@ -15,6 +15,10 @@ package frc.robot;
 public final class Constants {
     public static final int kLeftMotorPort = 11;
     public static final int kRightMotorPort = 12;
+    public static final int button3 = 3;
+    public static final int button5 = 5;
+    public static final int button4 = 4;
+    public static final int button2 = 2;
  
     // public static final double LeftSpeed = 0.75;
     // public static final double RightSpeed = 0.75;

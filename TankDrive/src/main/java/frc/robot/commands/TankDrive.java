@@ -28,7 +28,7 @@ public class TankDrive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_drivetrain.drive(m_left.getAsDouble(), m_right.getAsDouble());
+        m_drivetrain.drive(m_left.getAsDouble());
     }
  
   // Make this return true when this Command no longer needs to run execute()
@@ -39,9 +39,6 @@ public class TankDrive extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        m_drivetrain.drive(0, 0);
+        m_drivetrain.drive(0);
     }
 }
- 
- 
-
