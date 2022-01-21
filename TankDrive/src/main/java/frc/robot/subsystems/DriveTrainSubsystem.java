@@ -4,6 +4,8 @@ package frc.robot.subsystems;
 //import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.EncoderType;
  
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,12 +24,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
-
+       super();
        leftEncoder.setPosition(0);
        rightEncoder.setPosition(0);
 
       
-      super();
+      
     }
  
     public void drive(double left, double right) {
