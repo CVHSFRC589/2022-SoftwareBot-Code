@@ -8,13 +8,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.goSlow;
 import frc.robot.Constants;
 // import frc.robot.subsystems.ExampleSubsystem;
 // import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  
 //import the classes we have created
-import frc.robot.commands.*;
+import frc.robot.commands.TankDrive;
+import frc.robot.commands.goFast;
+import frc.robot.commands.driveFiveFeet;
+import frc.robot.commands.goFreeze;
 import frc.robot.subsystems.DriveTrainSubsystem;
 //import edu.wpi.first.wpilibj2.command.CommandBase;
  
@@ -44,13 +48,14 @@ public class RobotContainer {
   // final int stayDeadJ2 = 4;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_drivetrain.setDefaultCommand(
-      new TankDrive(
-        () -> m_joystick1.getY(), () -> m_joystick2.getY(), m_drivetrain
-      )
-    );
+    // m_drivetrain.setDefaultCommand(
+    //   new TankDrive(
+    //     () -> m_joystick1.getY(), () -> m_joystick2.getY(), m_drivetrain
+    //   )
+    // );
     SmartDashboard.putNumber("LeftMotorEncoder", m_drivetrain.getLeft());
     System.out.println("encoderworkingyay: " + m_drivetrain.getLeft());
+   // m_drivetrain.driveFiveFeet();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -68,7 +73,7 @@ public class RobotContainer {
     JoystickButton j1SpeedDecr = new JoystickButton(m_joystick1, Constants.button2);
     j1SpeedDecr.whenPressed(new goSlow(m_drivetrain));
     JoystickButton j1SetConstant = new JoystickButton(m_joystick1, Constants.button5);
-    j1SetConstant.whenPressed(new goConstant(m_drivetrain));
+    j1SetConstant.whenPressed(new driveFiveFeet(m_drivetrain));
     JoystickButton j1SetDead= new JoystickButton(m_joystick1, Constants.button4);
     j1SetDead.whenPressed(new goFreeze(m_drivetrain));
    
@@ -77,7 +82,7 @@ public class RobotContainer {
     JoystickButton j2SpeedDecr = new JoystickButton(m_joystick2, Constants.button2);
     j2SpeedDecr.whenPressed(new goSlow(m_drivetrain));
     JoystickButton j2SetConstant = new JoystickButton(m_joystick2,Constants.button5);
-    j2SetConstant.whenPressed(new goConstant(m_drivetrain));
+    j2SetConstant.whenPressed(new driveFiveFeet(m_drivetrain));
     JoystickButton j2SetDead= new JoystickButton(m_joystick2, Constants.button4);
     j2SetDead.whenPressed(new goFreeze(m_drivetrain));
   }

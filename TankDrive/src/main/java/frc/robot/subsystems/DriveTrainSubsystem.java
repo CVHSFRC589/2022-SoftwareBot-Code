@@ -4,27 +4,27 @@ package frc.robot.subsystems;
 //import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.EncoderType;
- 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
  
 public class DriveTrainSubsystem extends SubsystemBase {
+    //not entirely sure about these two??
     private final CANSparkMax m_leftMotor = new CANSparkMax(Constants.kLeftMotorPort, MotorType.kBrushless);
     private final CANSparkMax m_rightMotor = new CANSparkMax(Constants.kRightMotorPort, MotorType.kBrushless);
-
-    private final CANEncoder leftEncoder = m_leftMotor.getEncoder(EncoderType.kHallSensor, 42);
-    private final CANEncoder rightEncoder = m_rightMotor.getEncoder(EncoderType.kHallSensor, 42);
+ 
+    private final RelativeEncoder leftEncoder = m_leftMotor.getEncoder();
+    private final RelativeEncoder rightEncoder = m_rightMotor.getEncoder();
  
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
-    private final double encoderPerInch = 1;
     private double m_scaleFactor = 1.0;
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
+       
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
     }
@@ -46,11 +46,14 @@ public class DriveTrainSubsystem extends SubsystemBase {
         m_scaleFactor = 0.5;
     }
  
-    public void goConstant()
+    public void driveFiveFeet()
     {
-      //m_scaleFactor = 0.1;
-      m_leftMotor.set(0.1);
-      m_rightMotor.set(0.1);
+      // //m_scaleFactor = 0.1;
+      if(getLeft()<=60){
+        m_leftMotor.set(0.5);
+        m_rightMotor.set(-0.5);
+        System.out.println("Hi");
+      }
     }
  
     public void goFreeze()
@@ -60,24 +63,23 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //m_leftMotor.set(0.0);
       //m_rightMotor.set(0.0);
     }
-
     public double getLeft()
     {
+        double k = leftEncoder.getPosition();
+        System.out.println(k);
         return leftEncoder.getPosition();
     }
  
-
     public double getRight()
     {
         return rightEncoder.getPosition();
     }
  
-
     public void setLeft(int position)
     {
         leftEncoder.setPosition(position);
     }
-
+ 
     public void setRight(int position)
     {
         rightEncoder.setPosition(position);
