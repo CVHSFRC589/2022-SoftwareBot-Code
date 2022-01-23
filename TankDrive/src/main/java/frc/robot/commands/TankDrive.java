@@ -1,5 +1,6 @@
 package frc.robot.commands;
  
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
@@ -30,10 +31,10 @@ public class TankDrive extends CommandBase {
     @Override
     public void execute() {
         m_drivetrain.drive(m_left.getAsDouble());
-        SmartDashboard.putNumber("LeftMotorEncoder", m_drivetrain.getLeft());
-        SmartDashboard.putNumber("LeftMotorEncoderVal", m_drivetrain.getLeft()*2*3.141592*3/10.71);
+        SmartDashboard.putNumber("LeftMotorEncoderDistanceInches", m_drivetrain.getLeft());
+       // SmartDashboard.putNumber("LeftMotorEncoderVal", m_drivetrain.getLeft()*(Constants.driveWheelCircum)/Constants.gearRatio);
         System.out.println("encoderworkingyay: " + m_drivetrain.getLeft());
-        m_drivetrain.driveFiveFeet();
+        //m_drivetrain.driveFiveFeet();
     }
  
   // Make this return true when this Command no longer needs to run execute()

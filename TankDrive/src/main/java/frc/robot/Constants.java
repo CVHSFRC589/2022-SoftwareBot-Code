@@ -19,6 +19,10 @@ public final class Constants {
     public static final int button5 = 5;
     public static final int button4 = 4;
     public static final int button2 = 2;
+    public static final int button6 = 6;
+    public static final int radius = 3;
+    public static final double driveWheelCircum = 2*3.141592*radius;
+    public static final double gearRatio = 10.71;
  
     // public static final double LeftSpeed = 0.75;
     // public static final double RightSpeed = 0.75;
