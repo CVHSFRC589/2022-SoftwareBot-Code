@@ -8,18 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.commands.goSlow;
+import frc.robot.commands.*;
 import frc.robot.Constants;
-// import frc.robot.subsystems.ExampleSubsystem;
-// import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
- 
-//import the classes we have created
-import frc.robot.commands.TankDrive;
-import frc.robot.commands.goFast;
-import frc.robot.commands.driveFiveFeet;
-import frc.robot.commands.goFreeze;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 //import edu.wpi.first.wpilibj2.command.CommandBase;
  
 /**
@@ -31,31 +24,23 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem m_drivetrain = new DriveTrainSubsystem();
- 
+  private final ShooterSubsystem m_shooter= new ShooterSubsystem();
  
   //joysticks we are going to use
   private final Joystick m_joystick1 = new Joystick(0);
   private final Joystick m_joystick2 = new Joystick(1);
-  //j1
-  // final int speedUpJ1 = button3;
-  // final int slowDownJ1 = 2;
-  // final int stayConstantJ1 = 5;
-  // final int stayDeadJ1 = 4;
-  // //j2
-  // final int speedUpJ2 = button3;
-  // final int slowDownJ2 = 2;
-  // final int stayConstantJ2 = 5;
-  // final int stayDeadJ2 = 4;
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // m_drivetrain.setDefaultCommand(
-    //   new TankDrive(
-    //     () -> m_joystick1.getY(), () -> m_joystick2.getY(), m_drivetrain
-    //   )
-    // );
+    m_drivetrain.setDefaultCommand(
+      new TankDrive(
+         () -> m_joystick1.getY(), () -> m_joystick2.getY(), m_drivetrain
+       )
+    );
     SmartDashboard.putNumber("LeftMotorEncoder", m_drivetrain.getLeft());
     System.out.println("encoderworkingyay: " + m_drivetrain.getLeft());
-   // m_drivetrain.driveFiveFeet();
+    SmartDashboard.putNumber("ShooterEncoder", m_shooter.getShooterSpeed());
+    System.out.println("Shooterworkingyay: " + m_shooter.getShooterSpeed());
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -72,17 +57,21 @@ public class RobotContainer {
     j1SpeedIncr.whenPressed(new goFast(m_drivetrain));
     JoystickButton j1SpeedDecr = new JoystickButton(m_joystick1, Constants.button2);
     j1SpeedDecr.whenPressed(new goSlow(m_drivetrain));
-    JoystickButton j1SetConstant = new JoystickButton(m_joystick1, Constants.button5);
-    j1SetConstant.whenPressed(new driveFiveFeet(m_drivetrain));
+    // JoystickButton j1FiveFeet = new JoystickButton(m_joystick1, Constants.button5);
+    // j1FiveFeet.whenPressed(new driveFiveFeet(m_drivetrain));
+    JoystickButton j1GoToDistance = new JoystickButton(m_joystick1, Constants.button6);
+    j1GoToDistance.whenPressed(new goToDistance(78, m_drivetrain));
     JoystickButton j1SetDead= new JoystickButton(m_joystick1, Constants.button4);
     j1SetDead.whenPressed(new goFreeze(m_drivetrain));
-   
+    JoystickButton j1ToggleShooter= new JoystickButton(m_joystick1, Constants.button1);
+    j1ToggleShooter.whenPressed(new toggleShooterMode(m_shooter));
+
     JoystickButton j2SpeedIncr = new JoystickButton(m_joystick2, Constants.button3);
     j2SpeedIncr.whenPressed(new goFast(m_drivetrain));
     JoystickButton j2SpeedDecr = new JoystickButton(m_joystick2, Constants.button2);
     j2SpeedDecr.whenPressed(new goSlow(m_drivetrain));
-    JoystickButton j2SetConstant = new JoystickButton(m_joystick2,Constants.button5);
-    j2SetConstant.whenPressed(new driveFiveFeet(m_drivetrain));
+    // JoystickButton j2SetConstant = new JoystickButton(m_joystick2,Constants.button5);
+    // j2SetConstant.whenPressed(new driveFiveFeet(m_drivetrain));
     JoystickButton j2SetDead= new JoystickButton(m_joystick2, Constants.button4);
     j2SetDead.whenPressed(new goFreeze(m_drivetrain));
   }

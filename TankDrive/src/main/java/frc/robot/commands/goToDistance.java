@@ -7,15 +7,18 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 // import java.util.function.DoubleSupplier;
  
-public class goFreeze extends CommandBase {
+public class goToDistance extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
- 
+    private final double m_speed = 0.25; //change later to be defined in constructor
+    private double m_distanceInches = 0;
+    
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public goFreeze(DriveTrainSubsystem subsystem) {
+  public goToDistance(double distanceInches, DriveTrainSubsystem subsystem) {
+    m_distanceInches = distanceInches;
     m_drivetrain = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -23,14 +26,17 @@ public class goFreeze extends CommandBase {
  
   // Called when the command is initially scheduled.
   @Override
-
-  public void initialize() {}
+  public void initialize() {
+    m_drivetrain.setLeft(0);
+    m_drivetrain.setRight(0);
+    //m_drivetrain.TankDrive();
+  }
  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    m_drivetrain.goFreeze();
+    m_drivetrain.driveToDistance(m_distanceInches);
   }
  
   // Called once the command ends or is interrupted.

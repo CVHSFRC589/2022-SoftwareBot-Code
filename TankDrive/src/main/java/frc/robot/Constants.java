@@ -15,12 +15,16 @@ package frc.robot;
 public final class Constants {
     public static final int kLeftMotorPort = 11;
     public static final int kRightMotorPort = 12;
+    public static final int kShooterMotorPort = 20;
+    
     public static final int button3 = 3;
     public static final int button5 = 5;
     public static final int button4 = 4;
     public static final int button2 = 2;
     public static final int button6 = 6;
+    public static final int button1 = 1;
     public static final int radius = 3;
+    
     public static final double driveWheelCircum = 2*3.141592*radius;
     public static final double gearRatio = 10.71;
  

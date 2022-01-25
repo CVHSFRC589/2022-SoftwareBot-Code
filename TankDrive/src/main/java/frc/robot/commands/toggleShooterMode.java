@@ -3,34 +3,38 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.commands;
  
-import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 // import java.util.function.DoubleSupplier;
  
-public class goFreeze extends CommandBase {
-    private final DriveTrainSubsystem m_drivetrain;
- 
+public class toggleShooterMode extends CommandBase {
+    private final ShooterSubsystem m_shooter;
+    private final double m_speed = 0.25; //change later to be defined in constructor
+    private double m_distanceInches = 0;
+    
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public goFreeze(DriveTrainSubsystem subsystem) {
-    m_drivetrain = subsystem;
+  public toggleShooterMode(ShooterSubsystem subsystem) {
+    
+    m_shooter = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
  
   // Called when the command is initially scheduled.
   @Override
-
-  public void initialize() {}
+  public void initialize() {
+    
+  }
  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    m_drivetrain.goFreeze();
+    m_shooter.toggleConstantShooterSpeed();
   }
  
   // Called once the command ends or is interrupted.
