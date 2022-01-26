@@ -12,13 +12,13 @@ import frc.robot.Constants;
  
 public class ShooterSubsystem extends SubsystemBase {
     //not entirely sure about these two??
-    private final CANSparkMax m_shooterMotor = new CANSparkMax(Constants.kLeftMotorPort, MotorType.kBrushless);
-    private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.kRightMotorPort, MotorType.kBrushless);
+    private final CANSparkMax m_shooterMotor = new CANSparkMax(Constants.kShooterMotorPort, MotorType.kBrushless);
+    //private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.kRightMotorPort, MotorType.kBrushless);
 
     private final RelativeEncoder shooterEncoder = m_shooterMotor.getEncoder();
-    private final RelativeEncoder feederEncoder = m_feederMotor.getEncoder();
+   // private final RelativeEncoder feederEncoder = m_feederMotor.getEncoder();
  
-    private final DifferentialDrive m_drive = new DifferentialDrive(m_shooterMotor, m_feederMotor);
+   // private final DifferentialDrive m_drive = new DifferentialDrive(m_shooterMotor, m_feederMotor);
     private boolean m_joystickControl = true;
     private double m_shooterSpeed = 0;
     private double m_scaleFactor = 0.25;
@@ -28,16 +28,16 @@ public class ShooterSubsystem extends SubsystemBase {
         super();
         
         shooterEncoder.setPosition(0);
-        feederEncoder.setPosition(0);
+        //feederEncoder.setPosition(0);
     }
  
     // public void drive(double left, double right) {
     //   m_drive.tankDrive(-left*m_scaleFactor, right*m_scaleFactor);
     // }
-    public void drive(double both) {
+    public void drive(double joystickPosition) {
       if(m_joystickControl)
       {
-        m_drive.tankDrive(-both*m_scaleFactor, both*m_scaleFactor);
+        m_shooterMotor.set(joystickPosition);
       }
       else
       {
@@ -58,20 +58,20 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooterSpeed;
     }
 
-    public double getFeeder()
-    {
-        return feederEncoder.getVelocity();
-    }
+    // public double getFeeder()
+    // {
+    //     return feederEncoder.getVelocity();
+    // }
 
     public void setShooter(int position)
     {
         shooterEncoder.setPosition(position);
     }
 
-    public void setFeeder(int position)
-    {
-        feederEncoder.setPosition(position);
-    }
+    // public void setFeeder(int position)
+    // {
+    //     feederEncoder.setPosition(position);
+    // }
       /** Call log method every loop. */
   @Override
   public void periodic() {

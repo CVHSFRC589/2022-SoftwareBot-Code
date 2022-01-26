@@ -5,16 +5,11 @@ package frc.robot.commands;
  
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import java.util.function.DoubleSupplier;
  
 public class toggleShooterMode extends CommandBase {
     private final ShooterSubsystem m_shooter;
-    private final double m_speed = 0.25; //change later to be defined in constructor
-    private double m_distanceInches = 0;
     
   /**
-   * Creates a new ExampleCommand.
-   *
    * @param subsystem The subsystem used by this command.
    */
   public toggleShooterMode(ShooterSubsystem subsystem) {

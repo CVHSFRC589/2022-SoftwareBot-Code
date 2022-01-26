@@ -5,11 +5,10 @@ package frc.robot.commands;
  
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import java.util.function.DoubleSupplier;
  
 public class goToDistance extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
-    private final double m_speed = 0.25; //change later to be defined in constructor
+    //private final double m_speed = 0.25; //change later to be defined in constructor
     private double m_distanceInches = 0;
     
   /**
@@ -29,7 +28,6 @@ public class goToDistance extends CommandBase {
   public void initialize() {
     m_drivetrain.setLeft(0);
     m_drivetrain.setRight(0);
-    //m_drivetrain.TankDrive();
   }
  
   // Called every time the scheduler runs while the command is scheduled.

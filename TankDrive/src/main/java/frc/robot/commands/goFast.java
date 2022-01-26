@@ -5,7 +5,6 @@ package frc.robot.commands;
  
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import java.util.function.DoubleSupplier;
  
 public class goFast extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;

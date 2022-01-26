@@ -5,15 +5,12 @@ package frc.robot.commands;
  
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import java.util.function.DoubleSupplier;
  
 public class driveToDistance extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
-    private final double m_speed = 0.5; //change later to be defined in constructor
+    //private final double m_speed = 0.5; //change later to be defined in constructor
     private double m_distanceInches = 0;
   /**
-   * Creates a new ExampleCommand.
-   *
    * @param subsystem The subsystem used by this command.
    */
   public driveToDistance(DriveTrainSubsystem subsystem) {
@@ -27,7 +24,6 @@ public class driveToDistance extends CommandBase {
   public void initialize() {
     m_drivetrain.setLeft(0);
     m_drivetrain.setRight(0);
-    //m_drivetrain.TankDrive();
   }
  
   // Called every time the scheduler runs while the command is scheduled.
