@@ -23,15 +23,18 @@ public class DriveTrainSubsystem extends SubsystemBase {
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
-        
+        m_rightMotor.setInverted(false);
+        m_leftMotor.setInverted(true);
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
     }
  
-    public void drive(double both) {
+    public void drive(double left, double right) {
       if(m_normal)
       {
-        m_drive.tankDrive(-both*m_scaleFactor, both*m_scaleFactor);
+        // m_drive.tankDrive(left*m_scaleFactor, right*m_scaleFactor);
+        m_drive.arcadeDrive(left*m_scaleFactor, -right*m_scaleFactor);
+
       }
       else
       {
@@ -65,12 +68,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
       rightEncoder.setPosition(0);
       m_driveInches = distanceInches;
     }
-    public void driveFiveFeet()
-    {
-      m_normal = false;
-      leftEncoder.setPosition(0);
-      rightEncoder.setPosition(0);
-    }
+    // public void driveFiveFeet()
+    // {
+    //   m_normal = false;
+    //   leftEncoder.setPosition(0);
+    //   rightEncoder.setPosition(0);
+    // }
     public void goFreeze()
     {
       m_scaleFactor = 0;
@@ -96,6 +99,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
     public void setRight(int position)
     {
         rightEncoder.setPosition(position);
+    }
+
+    public void turnLeft()
+    {
+      m_drive.tankDrive(0.5*m_scaleFactor, 0.5*m_scaleFactor);
+    }
+
+    public void turnRight()
+    {
+      m_drive.tankDrive(-0.5*m_scaleFactor, -0.5*m_scaleFactor);
     }
       /** Call log method every loop. */
   @Override

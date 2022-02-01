@@ -26,21 +26,21 @@ public class RobotContainer {
  
   //joysticks we are going to use
   private final Joystick m_joystick1 = new Joystick(0);
-  private final Joystick m_joystick2 = new Joystick(1);
+ // private final Joystick m_joystick2 = new Joystick(1);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // m_drivetrain.setDefaultCommand(
+    //   new TankDrive(
+    //      () -> m_joystick1.getY(), () -> m_joystick1.getY(), m_drivetrain
+    //    )
+    // );
     m_drivetrain.setDefaultCommand(
-      new TankDrive(
-         () -> m_joystick1.getY(), () -> 0, m_drivetrain
-       )
-    );
-    m_shooter.setDefaultCommand(
-       new ShooterJoystick(
-          () -> m_joystick2.getY(), () -> 0, m_shooter
+       new TankDrive(
+          () -> m_joystick1.getY(), () -> m_joystick1.getX(), m_drivetrain
         )
      );
-    //SmartDashboard.putNumber("LeftMotorEncoder", m_drivetrain.getLeft());
+    SmartDashboard.putNumber("LeftMotorEncoder", m_drivetrain.getLeft());
     SmartDashboard.putNumber("ShooterEncoder", m_shooter.getShooterSpeed());
     System.out.println("Shooterworkingyay: " + m_shooter.getShooterSpeed());
     // Configure the button bindings
@@ -63,15 +63,21 @@ public class RobotContainer {
     j1GoToDistance.whenPressed(new goToDistance(78, m_drivetrain));
     JoystickButton j1SetDead= new JoystickButton(m_joystick1, Constants.button4);
     j1SetDead.whenPressed(new goFreeze(m_drivetrain));
-    JoystickButton j1ToggleShooter= new JoystickButton(m_joystick1, Constants.button1);
-    j1ToggleShooter.whenPressed(new toggleShooterMode(m_shooter));
 
-    JoystickButton j2SpeedIncr = new JoystickButton(m_joystick2, Constants.button3);
-    j2SpeedIncr.whenPressed(new goFast(m_drivetrain));
-    JoystickButton j2SpeedDecr = new JoystickButton(m_joystick2, Constants.button2);
-    j2SpeedDecr.whenPressed(new goSlow(m_drivetrain));
-    JoystickButton j2SetDead= new JoystickButton(m_joystick2, Constants.button4);
-    j2SetDead.whenPressed(new goFreeze(m_drivetrain));
+    
+    JoystickButton j1TurnLeft= new JoystickButton(m_joystick1, Constants.button9);
+    j1TurnLeft.whenPressed(new turnLeft(m_drivetrain, 30));
+   
+    JoystickButton j1TurnLeft2= new JoystickButton(m_joystick1, Constants.button11);
+    j1TurnLeft.whenPressed(new turnLeftV2(m_drivetrain, 30));
+ 
+
+    // JoystickButton j2SpeedIncr = new JoystickButton(m_joystick2, Constants.button3);
+    // j2SpeedIncr.whenPressed(new goFast(m_drivetrain));
+    // JoystickButton j2SpeedDecr = new JoystickButton(m_joystick2, Constants.button2);
+    // j2SpeedDecr.whenPressed(new goSlow(m_drivetrain));
+    // JoystickButton j2SetDead= new JoystickButton(m_joystick2, Constants.button4);
+    // j2SetDead.whenPressed(new goFreeze(m_drivetrain));
   }
  
   /**

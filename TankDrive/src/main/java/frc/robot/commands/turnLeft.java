@@ -6,45 +6,45 @@ package frc.robot.commands;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
  
-public class driveToDistance extends CommandBase {
+public class turnLeft extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
-    private double m_distanceInches = 0;
-    private final double m_speed;
+    private double m_degrees = 0;
   /**
+   * Creates a new ExampleCommand.
+   *
    * @param subsystem The subsystem used by this command.
    */
-  public driveToDistance(double distanceinches, double speed, DriveTrainSubsystem drivetrain) {
-    m_drivetrain = drivetrain;
-    m_speed = speed;
-    m_distanceInches = distanceinches;
+  public turnLeft(DriveTrainSubsystem subsystem, double degrees) {
+    m_drivetrain = subsystem;
+    m_degrees = degrees;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_drivetrain);
+    addRequirements(subsystem);
   }
  
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_drivetrain.setLeft(0);
-    m_drivetrain.setRight(0);
-  }
+  public void initialize() {}
  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    //m_drivetrain.driveToDistance(m_distanceInches);
-    m_drivetrain.drive(-m_speed, m_speed);
+    m_drivetrain.turnLeft();
   }
  
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_drivetrain.drive(0, 0);
-  }
+  public void end(boolean interrupted) {}
  
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_drivetrain.getLeft() >= m_distanceInches;
+    double circum = 2*3.141592*9.875;
+    //return m_degrees <= 3*circum;
+    return false;
   }
+  
 }
+ 
+
+
