@@ -6,17 +6,18 @@ package frc.robot.commands;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
  
-public class turnLeft extends CommandBase {
+public class setSpeedScale extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
-    private double m_degrees = 0;
+    private double m_newScale;
+ 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public turnLeft(DriveTrainSubsystem subsystem, double degrees) {
+  public setSpeedScale(double newScale, DriveTrainSubsystem subsystem) {
     m_drivetrain = subsystem;
-    m_degrees = degrees;
+    m_newScale = newScale;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -29,7 +30,7 @@ public class turnLeft extends CommandBase {
   @Override
   public void execute()
   {
-    m_drivetrain.turnLeft();
+    m_drivetrain.setScaleFactor(m_newScale);
   }
  
   // Called once the command ends or is interrupted.
@@ -39,11 +40,8 @@ public class turnLeft extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double circum = 2*3.141592*9.875;
-    //return m_degrees <= 3*circum;
-    return false;
+    return true;
   }
-  
 }
  
 

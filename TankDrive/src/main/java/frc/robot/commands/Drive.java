@@ -1,36 +1,35 @@
 package frc.robot.commands;
  
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  
-public class ShooterJoystick extends CommandBase {
-    private final ShooterSubsystem m_shooter;
+public class Drive extends CommandBase {
+    private final DriveTrainSubsystem m_drivetrain;
     private final DoubleSupplier m_left;
     private final DoubleSupplier m_right;
  
     /**
-     * TankDrive Command
+     * Drive Command
      * takes in left and right control inputs for each motor
      * drivetrain is the subsystem to drive
      */
    
-    public ShooterJoystick(DoubleSupplier left, DoubleSupplier right, ShooterSubsystem drivetrain) {
+    public Drive(DoubleSupplier left, DoubleSupplier right, DriveTrainSubsystem drivetrain) {
         //setting parameters to local vars
-        m_shooter = drivetrain;
+        m_drivetrain = drivetrain;
         m_left = left;
         m_right = right;
  
-        addRequirements(m_shooter);
+        addRequirements(m_drivetrain);
     }
  
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_shooter.drive(m_left.getAsDouble());
-        //SmartDashboard.putNumber("LeftMotorEncoderDistanceInches", m_shooter.getLeft());
+        m_drivetrain.drive(m_left.getAsDouble(), m_right.getAsDouble());
+        SmartDashboard.putNumber("LeftMotorEncoderDistanceInches", m_drivetrain.getLeftEncoderInches());
         //System.out.println("encoderworkingyay: " + m_drivetrain.getLeft());
     }
  
@@ -42,6 +41,6 @@ public class ShooterJoystick extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        m_shooter.drive(0);
+        m_drivetrain.drive(0, 0);
     }
 }

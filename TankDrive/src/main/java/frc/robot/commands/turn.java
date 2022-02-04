@@ -3,38 +3,39 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.commands;
  
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import java.util.function.DoubleSupplier;
  
-public class driveFiveFeet extends CommandBase {
+public class turn extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
-    private final double m_speed = 0.5; //change later to be defined in constructor
-   
+    private double m_direction = 0;
+    private double m_speed = 0;
+    private double m_distanceInches = 0;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public driveFiveFeet(DriveTrainSubsystem subsystem) {
+  public turn(double direction, double speed, double degrees, DriveTrainSubsystem subsystem) {
     m_drivetrain = subsystem;
+    m_direction = direction;
+    m_speed = speed;
+    m_distanceInches = degrees*Constants.robotTurnCircum/360;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
  
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_drivetrain.setLeft(0);
-    m_drivetrain.setRight(0);
-    //m_drivetrain.TankDrive();
-  }
+  public void initialize() {}
  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    m_drivetrain.driveFiveFeet();
+    m_drivetrain.startTurning(m_direction, m_speed);
   }
  
   // Called once the command ends or is interrupted.
@@ -44,6 +45,12 @@ public class driveFiveFeet extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
-  }
+    System.out.println("Left Inches: "+m_drivetrain.getLeftEncoderInches());
+    System.out.println("Requested Distance: "+m_distanceInches);
+    return (Math.abs(m_drivetrain.getLeftEncoderInches()) >= m_distanceInches);
+  }//TODO: Encoder distance resetting/not working properly
+  
 }
+ 
+
+
