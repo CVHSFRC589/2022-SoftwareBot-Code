@@ -65,13 +65,13 @@ public class RobotContainer {
     JoystickButton j1SpeedDecr = new JoystickButton(m_joystick0, Constants.button2);
     j1SpeedDecr.whenPressed(new goSlow(m_drivetrain));
     JoystickButton j1GoToDistance = new JoystickButton(m_joystick0, Constants.button6);
-    j1GoToDistance.whenPressed(new goToDistance(78, m_drivetrain));
+    j1GoToDistance.whenPressed(new driveToDistance(78, .25, m_drivetrain));
     JoystickButton j1FreezeDrive= new JoystickButton(m_joystick0, Constants.button4);
     j1FreezeDrive.whenPressed(new goFreeze(m_drivetrain));
 
     
-    JoystickButton j1TurnLeft= new JoystickButton(m_joystick0, Constants.button9);
-    j1TurnLeft.whenPressed(new turn(-1, 0.4, 90, m_drivetrain));//-1 mean turn left
+    JoystickButton j1TurnRight= new JoystickButton(m_joystick0, Constants.button9);
+    j1TurnRight.whenPressed(new turn(1, 0.1, 30, m_drivetrain));//-1 mean turn left
    
 
     JoystickButton j1MaxSpeed = new JoystickButton(m_joystick1, 1);

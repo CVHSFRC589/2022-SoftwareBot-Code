@@ -29,25 +29,29 @@ public class turn extends CommandBase {
  
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_drivetrain.reset();
+  }
  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    m_drivetrain.startTurning(m_direction, m_speed);
+    m_drivetrain.setMotors(-m_direction*m_speed, m_direction*m_speed);
   }
  
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drivetrain.reset();
+  }
  
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     System.out.println("Left Inches: "+m_drivetrain.getLeftEncoderInches());
     System.out.println("Requested Distance: "+m_distanceInches);
-    return (Math.abs(m_drivetrain.getLeftEncoderInches()) >= m_distanceInches);
+    return(m_drivetrain.getAverageEncoderInches() >= m_distanceInches-2*m_speed);
   }//TODO: Encoder distance resetting/not working properly
   
 }

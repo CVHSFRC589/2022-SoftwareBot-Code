@@ -24,8 +24,7 @@ public class driveToDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drivetrain.setLeftEncoder(0);
-    m_drivetrain.setRightEncoder(0);
+    m_drivetrain.reset();
   }
  
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +32,7 @@ public class driveToDistance extends CommandBase {
   public void execute()
   {
     //m_drivetrain.driveToDistance(m_distanceInches);
-    m_drivetrain.drive(-m_speed, m_speed);
+    m_drivetrain.drive(m_speed, m_speed);
   }
  
   // Called once the command ends or is interrupted.

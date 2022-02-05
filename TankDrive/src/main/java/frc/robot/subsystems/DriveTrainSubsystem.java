@@ -17,7 +17,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
  
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
     private boolean m_normalDrive = true;
-    private double m_scaleFactor = 0.25;
+    private double m_scaleFactor = 0.5;
     private double m_driveInches = 0;
  
     /**create a new drive train subsystem */
@@ -40,6 +40,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
       {
         goToDistance();
       }
+    }
+
+    public void reset(){
+      setLeftEncoder(0);
+      setRightEncoder(0);
+      setMotors(0,0);
+      m_scaleFactor = .5;
     }
 
     public void setMotors(double leftSpeed, double rightSpeed){
@@ -87,8 +94,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     public void startTurning(double direction, double speed)
     {
       m_drive.tankDrive(0.0, 0.0);
-      setLeftEncoder(0);
-      setRightEncoder(0);
       //m_drive.tankDrive(direction*speed, -direction*speed);
       setMotors(direction*speed,-direction*speed);
     }
@@ -104,12 +109,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
         return rightEncoder.getPosition()*Constants.driveWheelCircum/Constants.gearRatio;
     }
 
-    public void setLeftEncoder(int position)
+    public double getAverageEncoderInches(){
+      return (Math.abs(getLeftEncoderInches())+Math.abs(getLeftEncoderInches()))/2;
+    }
+
+    private void setLeftEncoder(int position)
     {
         leftEncoder.setPosition(position);
     }
 
-    public void setRightEncoder(int position)
+    private void setRightEncoder(int position)
     {
         rightEncoder.setPosition(position);
     }
