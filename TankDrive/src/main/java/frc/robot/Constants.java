@@ -17,12 +17,19 @@ public final class Constants {
     public static final int kRightMotorPort = 12; //12
     public static final int kShooterMotorPort = 20; //20
     
-    public static final int button1 = 1;
-    public static final int button2 = 2;
-    public static final int button3 = 3;
-    public static final int button4 = 4;
-    public static final int button6 = 6;
-    public static final int button9 = 9;    
+    public static final int MAX_SHOOTER_SPEED_BUTTON = 1;
+    public static final int SHOOTER_STOP_BUTTON = 2;
+    public static final int START_SHOOTER_MOTOR_BUTTON = 3;
+    public static final int INCREASE_SHOOTER_SPEED_BUTTON = 4;
+    public static final int DECREASE_SHOOTER_SPEED_BUTTON = 5;
+    public static final int TOGGLE_AVERAGE_SHOOTER_AMPS_BUTTON = 6;
+    public static final int RESET_AVERAGE_SHOOTER_AMPS_BUTTON = 7;
+    public static final int DECREASE_DRIVE_SPEED_BUTTON = 2;
+    public static final int INCREASE_DRIVE_SPEED_BUTTON = 3;
+    public static final int FREEZE_DRIVE_TRAIN_BUTTON = 4;
+    public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
+    public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
+    public static final int TURN_RIGHT_BUTTON = 9;    
     public static final int button11 = 11;
     
     public static final int radius = 3;

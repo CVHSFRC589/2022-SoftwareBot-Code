@@ -34,17 +34,24 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // m_drivetrain.setDefaultCommand( //for tank drive
-    //   new TankDrive(
-    //      () -> m_joystick1.getY(), () -> m_joystick1.getY(), m_drivetrain
-    //    )
-    // );
+    
     m_drivetrain.setDefaultCommand( //for arcade drive
        new Drive(
-          () -> m_joystick0.getY(), () -> m_joystick0.getX(), m_drivetrain
+          () -> m_joystick0.getY(), () -> m_joystick1.getY(), () -> m_joystick0.getX(), m_drivetrain
         )
      );
+
+     //  m_drivetrain.setDefaultCommand( //for arcade drive
+    //    new Drive(
+    //       () -> 0,() ->  0,() -> 0, m_drivetrain
+    //     )
+    //  );
+
+       //m_shooter.setDefaultCommand(new Shoot(m_shooter));
+
     SmartDashboard.putNumber("LeftMotorEncoder", m_drivetrain.getLeftEncoderInches());
+    SmartDashboard.putNumber("RightMotorEncoder", m_drivetrain.getRightEncoderInches());
+
     SmartDashboard.putNumber("ShooterEncoder", m_shooter.getShooterSpeed());
     System.out.println("Shooterworkingyay: " + m_shooter.getShooterSpeed());
 
@@ -60,41 +67,38 @@ public class RobotContainer {
    */
   private void configureButtonBindings()
   {
-    JoystickButton j1SpeedIncr = new JoystickButton(m_joystick0, Constants.button3);
-    j1SpeedIncr.whenPressed(new goFast(m_drivetrain));
-    JoystickButton j1SpeedDecr = new JoystickButton(m_joystick0, Constants.button2);
-    j1SpeedDecr.whenPressed(new goSlow(m_drivetrain));
-    JoystickButton j1GoToDistance = new JoystickButton(m_joystick0, Constants.button6);
-    j1GoToDistance.whenPressed(new driveToDistance(78, .25, m_drivetrain));
-    JoystickButton j1FreezeDrive= new JoystickButton(m_joystick0, Constants.button4);
-    j1FreezeDrive.whenPressed(new goFreeze(m_drivetrain));
+    //Driving buttons
+    JoystickButton j0SpeedIncr = new JoystickButton(m_joystick0, Constants.INCREASE_DRIVE_SPEED_BUTTON);
+    JoystickButton j0SpeedDecr = new JoystickButton(m_joystick0, Constants.DECREASE_DRIVE_SPEED_BUTTON);
+    JoystickButton j0FreezeDrive= new JoystickButton(m_joystick0, Constants.FREEZE_DRIVE_TRAIN_BUTTON);
+    JoystickButton j0GoToDistance = new JoystickButton(m_joystick0, Constants.AUTO_DRIVE_DISTANCE_BUTTON);
+    JoystickButton j0TurnRight= new JoystickButton(m_joystick0, Constants.TURN_RIGHT_BUTTON);
+    JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
 
+    j0SpeedIncr.whenPressed(new setSpeedScale(1,m_drivetrain));
+    j0SpeedDecr.whenPressed(new setSpeedScale(0.5,m_drivetrain));  
+    j0FreezeDrive.whenPressed(new setSpeedScale(0,m_drivetrain));
+    j0GoToDistance.whenPressed(new driveToDistance(78,.3, m_drivetrain));
+    j0TurnRight.whenPressed(new turnDegrees(.1, 90, m_drivetrain));
+    j0ChangeDriveState.whenPressed(new toggleDriveState(m_drivetrain));
     
-    JoystickButton j1TurnRight= new JoystickButton(m_joystick0, Constants.button9);
-    j1TurnRight.whenPressed(new turn(1, 0.1, 30, m_drivetrain));//-1 mean turn left
-   
 
-    JoystickButton j1MaxSpeed = new JoystickButton(m_joystick1, 1);
+    //Shooting buttons
+    JoystickButton j1Shoot = new JoystickButton(m_joystick1, Constants.START_SHOOTER_MOTOR_BUTTON);
+    JoystickButton j1MaxSpeed = new JoystickButton(m_joystick1, Constants.MAX_SHOOTER_SPEED_BUTTON);
+    JoystickButton j1Stop = new JoystickButton(m_joystick1, Constants.SHOOTER_STOP_BUTTON);
+    JoystickButton j1IncreaseSpeed = new JoystickButton(m_joystick1, Constants.INCREASE_SHOOTER_SPEED_BUTTON);
+    JoystickButton j1DecreaseSpeed = new JoystickButton(m_joystick1, Constants.DECREASE_SHOOTER_SPEED_BUTTON);
+    JoystickButton j1ToggleAverageAmps = new JoystickButton(m_joystick1, Constants.TOGGLE_AVERAGE_SHOOTER_AMPS_BUTTON);
+    JoystickButton j1ResetAverageAmps = new JoystickButton(m_joystick1, Constants.RESET_AVERAGE_SHOOTER_AMPS_BUTTON);
+
     j1MaxSpeed.whenPressed(new SetShooterSpeed(1, m_shooter));
-    JoystickButton j1Stop = new JoystickButton(m_joystick1, 2);
     j1Stop.whenPressed(new SetShooterSpeed(0, m_shooter));
-    JoystickButton j1Shoot = new JoystickButton(m_joystick1, 3);
     j1Shoot.whenPressed(new SetShooterSpeed(m_shooterSpeed, m_shooter));
-    JoystickButton j1IncreaseSpeed = new JoystickButton(m_joystick1, 4);
     j1IncreaseSpeed.whenPressed(new ChangeShooterSpeed(.1, m_shooter));
-    JoystickButton j1DecreaseSpeed = new JoystickButton(m_joystick1, 5);
     j1DecreaseSpeed.whenPressed(new ChangeShooterSpeed(-.1, m_shooter));
-    JoystickButton j1ToggleAverageAmps = new JoystickButton(m_joystick1, 6);
     j1ToggleAverageAmps.whenPressed(new ToggleAverageAmps(m_shooter));
-    JoystickButton j1ResetAverageAmps = new JoystickButton(m_joystick1, 7);
     j1ResetAverageAmps.whenPressed(new ResetAverageAmps(m_shooter));
-
-    // JoystickButton j2SpeedIncr = new JoystickButton(m_joystick2, Constants.button3);
-    // j2SpeedIncr.whenPressed(new goFast(m_drivetrain));
-    // JoystickButton j2SpeedDecr = new JoystickButton(m_joystick2, Constants.button2);
-    // j2SpeedDecr.whenPressed(new goSlow(m_drivetrain));
-    // JoystickButton j2SetDead= new JoystickButton(m_joystick2, Constants.button4);
-    // j2SetDead.whenPressed(new goFreeze(m_drivetrain));
   }
  
   /**

@@ -32,18 +32,18 @@ public class driveToDistance extends CommandBase {
   public void execute()
   {
     //m_drivetrain.driveToDistance(m_distanceInches);
-    m_drivetrain.drive(m_speed, m_speed);
+    m_drivetrain.tankDrive(-m_speed, -m_speed);
   }
  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drivetrain.drive(0, 0);
+    m_drivetrain.reset();
   }
  
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_drivetrain.getLeftEncoderInches() >= m_distanceInches;
+    return Math.abs(m_drivetrain.getAverageEncoderInches()) >= m_distanceInches;
   }
 }

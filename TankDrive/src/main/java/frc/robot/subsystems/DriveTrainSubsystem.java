@@ -4,7 +4,10 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
  
@@ -16,29 +19,28 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private final RelativeEncoder rightEncoder = m_rightMotor.getEncoder();
  
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
-    private boolean m_normalDrive = true;
-    private double m_scaleFactor = 0.5;
+    private static BooleanSupplier driveType = () -> true;
+
+    private double m_scaleFactor = 0.8;
     private double m_driveInches = 0;
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
-        m_rightMotor.setInverted(false);
-        m_leftMotor.setInverted(true); //swap inverted
-        leftEncoder.setPosition(0);
-        rightEncoder.setPosition(0);
+
+        m_leftMotor.setInverted(true);
+        m_rightMotor.setInverted(false); //swap inverted
+        reset();
     }
  
     public void drive(double left, double right) {
-      if(m_normalDrive)
+      if(driveType.getAsBoolean())
       {
-        // m_drive.tankDrive(left*m_scaleFactor, right*m_scaleFactor);
-        m_drive.arcadeDrive(left*m_scaleFactor, -right*m_scaleFactor);
-
+        m_drive.tankDrive(left*m_scaleFactor, right*m_scaleFactor);
       }
       else
       {
-        goToDistance();
+        m_drive.arcadeDrive(left*m_scaleFactor, -right*m_scaleFactor);
       }
     }
 
@@ -53,34 +55,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
       m_leftMotor.set(leftSpeed);
       m_rightMotor.set(rightSpeed);
     }
- 
-    public void goFast()
-    {
-        m_scaleFactor = 1.0;
-    }
- 
-    public void goSlow()
-    {
-        m_scaleFactor = 0.5;
+
+    public void tankDrive(double leftSpeed, double rightSpeed){
+      m_drive.tankDrive(leftSpeed, rightSpeed);
     }
 
-    public void goFreeze()
-    {
-      m_scaleFactor = 0;
-  
-    }
-
-    public void goToDistance()
-    {
-     // m_driveInches = distanceInches;
-      if(getLeftEncoderInches()<= m_driveInches){ 
-        setMotors(.25,-.25);
-        System.out.println("it is working");
-      }
-    }
     public void driveToDistance(double distanceInches)
     {
-      m_normalDrive = false;
       leftEncoder.setPosition(0);
       rightEncoder.setPosition(0);
       m_driveInches = distanceInches;
@@ -91,11 +72,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
       m_scaleFactor = scaleFactor;
     }
 
-    public void startTurning(double direction, double speed)
-    {
-      m_drive.tankDrive(0.0, 0.0);
-      //m_drive.tankDrive(direction*speed, -direction*speed);
-      setMotors(direction*speed,-direction*speed);
+    public void switchDrive() {
+      if(driveType.getAsBoolean()) 
+          driveType = () -> false;
+      else
+          driveType = () -> true;
+    }
+
+    public BooleanSupplier getDriveType(){
+      return driveType;
     }
 
     public double getLeftEncoderInches()
@@ -110,7 +95,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
 
     public double getAverageEncoderInches(){
-      return (Math.abs(getLeftEncoderInches())+Math.abs(getLeftEncoderInches()))/2;
+      double avgEncoderInches = (Math.abs(getLeftEncoderInches())+Math.abs(getLeftEncoderInches()))/2;
+      SmartDashboard.putNumber("AvgEncoderInches", avgEncoderInches);
+      return avgEncoderInches;
     }
 
     private void setLeftEncoder(int position)
