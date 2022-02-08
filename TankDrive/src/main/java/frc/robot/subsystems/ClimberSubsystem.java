@@ -1,0 +1,65 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.subsystems;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Compressor;
+
+
+public class ClimberSubsystem extends SubsystemBase {
+  /** Creates a new climber. */
+  private final DoubleSolenoid m_leftArm;
+  private final DoubleSolenoid m_rightArm;
+  private final Compressor m_compressor;
+
+  public ClimberSubsystem() {
+    m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1,2);
+    m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 3,4);
+    m_compressor = new Compressor(PneumaticsModuleType.CTREPCM); //Also turns on the compressor
+    // m_compressor.enableDigital();
+    m_compressor.disable();
+    
+    
+  }
+  public DoubleSolenoid.Value getLeftValue(){
+    return m_leftArm.get();
+  }
+
+  public DoubleSolenoid.Value getRightValue(){
+    return m_rightArm.get();
+  }
+  
+  public void reachLeft()
+  {
+    m_leftArm.set(DoubleSolenoid.Value.kForward);
+    SmartDashboard.putString("Left Solenoid", "Extended");
+  }
+
+  public void reachRight()
+  {
+    m_rightArm.set(DoubleSolenoid.Value.kForward);
+    SmartDashboard.putString("Right Solenoid", "Extended");
+  }
+
+  public void pullLeft()
+  {
+    m_leftArm.set(DoubleSolenoid.Value.kReverse);
+    SmartDashboard.putString("Left Solenoid", "Retracted");
+  }
+
+  public void pullRight()
+  {
+    m_rightArm.set(DoubleSolenoid.Value.kReverse);
+    SmartDashboard.putString("Right Solenoid", "Retracted");
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+}

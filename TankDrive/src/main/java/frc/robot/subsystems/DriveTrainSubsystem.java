@@ -22,7 +22,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private static BooleanSupplier driveType = () -> true;
 
     private double m_scaleFactor = 0.8;
-    private double m_driveInches = 0;
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
@@ -59,14 +58,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     public void tankDrive(double leftSpeed, double rightSpeed){
       m_drive.tankDrive(leftSpeed, rightSpeed);
     }
-
-    public void driveToDistance(double distanceInches)
-    {
-      leftEncoder.setPosition(0);
-      rightEncoder.setPosition(0);
-      m_driveInches = distanceInches;
-    }
-
     
     public void setScaleFactor(double scaleFactor){
       m_scaleFactor = scaleFactor;

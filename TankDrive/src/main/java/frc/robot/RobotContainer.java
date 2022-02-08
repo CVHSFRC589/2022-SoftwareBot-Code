@@ -7,12 +7,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.commands.*;
-import frc.robot.commands.Shooter_Commands.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
+
+//import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import frc.robot.commands.Drive_Commands.*;
+import frc.robot.commands.Shooter_Commands.*;
+import frc.robot.commands.Climber_Commands.*;
+
+
  
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,7 +28,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem m_drivetrain = new DriveTrainSubsystem();
   private final ShooterSubsystem m_shooter= new ShooterSubsystem();
- 
+  private final ClimberSubsystem m_climber = new ClimberSubsystem();
+
   //joysticks we are going to use
   private final Joystick m_joystick0 = new Joystick(0);
   private final Joystick m_joystick1 = new Joystick(1);
@@ -99,6 +104,13 @@ public class RobotContainer {
     j1DecreaseSpeed.whenPressed(new ChangeShooterSpeed(-.1, m_shooter));
     j1ToggleAverageAmps.whenPressed(new ToggleAverageAmps(m_shooter));
     j1ResetAverageAmps.whenPressed(new ResetAverageAmps(m_shooter));
+
+     //Climbing buttons
+     JoystickButton j1Extend = new JoystickButton(m_joystick1, Constants.EXTEND_CLIMBER_ARMS_BUTTON);
+     JoystickButton j1Retract = new JoystickButton(m_joystick1, Constants.RETRACT_CLIMBER_ARMS_BUTTON);
+ 
+     j1Extend.whenPressed(new ExtendBothArms( m_climber));
+     j1Retract.whenPressed(new RetractBothArms( m_climber));
   }
  
   /**

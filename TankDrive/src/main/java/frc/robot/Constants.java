@@ -29,8 +29,9 @@ public final class Constants {
     public static final int FREEZE_DRIVE_TRAIN_BUTTON = 4;
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
     public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
-    public static final int TURN_RIGHT_BUTTON = 9;    
-    public static final int button11 = 11;
+    public static final int TURN_RIGHT_BUTTON = 9;
+    public static final int EXTEND_CLIMBER_ARMS_BUTTON = 11;    
+    public static final int RETRACT_CLIMBER_ARMS_BUTTON = 10;
     
     public static final int radius = 3;
     public static final double robotTurnCircum = 2*Math.PI*9.875;
