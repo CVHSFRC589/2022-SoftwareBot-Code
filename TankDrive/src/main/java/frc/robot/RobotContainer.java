@@ -6,7 +6,10 @@ package frc.robot;
  
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -14,8 +17,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.*;
 import frc.robot.commands.Drive_Commands.*;
 import frc.robot.commands.Shooter_Commands.*;
+import frc.robot.commands.AutoPatternOne;
 import frc.robot.commands.Climber_Commands.*;
-
 
  
 /**
@@ -35,11 +38,16 @@ public class RobotContainer {
   private final Joystick m_joystick1 = new Joystick(1);
 
   private double m_shooterSpeed = .2;
+  private CommandBase m_autoCommand;
 
+  SendableChooser<CommandBase> m_chooser = new SendableChooser<>();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    
+    m_chooser.setDefaultOption("Simple Auto", new AutoPatternOne(m_drivetrain, m_climber));
+    m_chooser.addOption("Drive Forward", new driveToDistance(36, 0.3, m_drivetrain));
+    SmartDashboard.putData(m_chooser);
+
     m_drivetrain.setDefaultCommand( //for arcade drive
        new Drive(
           () -> m_joystick0.getY(), () -> m_joystick1.getY(), () -> m_joystick0.getX(), m_drivetrain
@@ -118,9 +126,11 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  //   // An ExampleCommand will run in autonomous
-  //   return m_autoCommand;
- // }
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    m_autoCommand = new AutoPatternOne(m_drivetrain, m_climber);
+    return m_chooser.getSelected();
+    //return m_autoCommand;
+ }
  
 }

@@ -16,6 +16,7 @@ public final class Constants {
     public static final int kLeftMotorPort = 11; //11
     public static final int kRightMotorPort = 12; //12
     public static final int kShooterMotorPort = 20; //20
+    public static final int INTAKE_MOTOR_PORT = 30;
     
     public static final int MAX_SHOOTER_SPEED_BUTTON = 1;
     public static final int SHOOTER_STOP_BUTTON = 2;

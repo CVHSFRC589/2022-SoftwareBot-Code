@@ -86,7 +86,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
 
     public double getAverageEncoderInches(){
-      double avgEncoderInches = (Math.abs(getLeftEncoderInches())+Math.abs(getLeftEncoderInches()))/2;
+      double avgEncoderInches = (Math.abs(getRightEncoderInches())+Math.abs(getLeftEncoderInches()))/2;
       SmartDashboard.putNumber("AvgEncoderInches", avgEncoderInches);
       return avgEncoderInches;
     }
