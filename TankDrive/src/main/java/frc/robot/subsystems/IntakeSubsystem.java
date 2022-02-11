@@ -21,8 +21,41 @@ public class IntakeSubsystem extends SubsystemBase {
   private final CANSparkMax m_intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_PORT, MotorType.kBrushless);;
 
   public IntakeSubsystem() {
-    m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1,2);
-    m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 3,4);
+    m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_LEFT_ARM_ON, Constants.INTAKE_LEFT_ARM_OFF);
+    m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_RIGHT_ARM_ON, Constants.INTAKE_RIGHT_ARM_OFF);
+  }
+
+  public void toggleIntake(){
+    if (DoubleSolenoid.Value.kOff == m_leftArm.get()){
+      extendIntake();
+      
+    }
+   else if (m_rightArm.get() == m_leftArm.get()){
+      m_leftArm.toggle();
+      m_rightArm.toggle();
+    }
+  }
+
+  public void extendIntake()
+  {
+    m_leftArm.set(DoubleSolenoid.Value.kForward);
+    m_rightArm.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void retractIntake()
+  {
+    m_leftArm.set(DoubleSolenoid.Value.kReverse);
+    m_rightArm.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  public void startMotor(double speed)
+  {
+    m_intakeMotor.set(speed);
+  }
+
+  public void stopMotor()
+  {
+    m_intakeMotor.set(0);
   }
 
   @Override

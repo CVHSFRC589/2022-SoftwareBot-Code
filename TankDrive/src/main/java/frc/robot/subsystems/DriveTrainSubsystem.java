@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
  
 public class DriveTrainSubsystem extends SubsystemBase {
-    private final CANSparkMax m_leftMotor = new CANSparkMax(Constants.kLeftMotorPort, MotorType.kBrushless);
-    private final CANSparkMax m_rightMotor = new CANSparkMax(Constants.kRightMotorPort, MotorType.kBrushless);
+    private final CANSparkMax m_leftMotor = new CANSparkMax(Constants.DRIVE_LEFT_MOTOR_PORT, MotorType.kBrushless);
+    private final CANSparkMax m_rightMotor = new CANSparkMax(Constants.DRIVE_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
     private final RelativeEncoder leftEncoder = m_leftMotor.getEncoder();
     private final RelativeEncoder rightEncoder = m_rightMotor.getEncoder();

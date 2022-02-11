@@ -21,12 +21,14 @@ public class AutoPatternOne extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new driveToDistance(48,.3, drive), //.3 Minimum Speed
-      new Pause(1),
+      new Pause(.5),
       new turnDegrees(0.25, 90, drive),
+      new Pause(.5),
       new driveToDistance(36, 0.3, drive),
       new Pause(1),
       new turnDegrees(0.25, 90, drive),
       new ExtendBothArms(climb),
+      new Pause(1),
       new RetractBothArms(climb)
     );
   }

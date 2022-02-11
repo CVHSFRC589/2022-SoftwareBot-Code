@@ -13,11 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 
-//import frc.robot.commands.*;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.Drive_Commands.*;
 import frc.robot.commands.Shooter_Commands.*;
-import frc.robot.commands.AutoPatternOne;
 import frc.robot.commands.Climber_Commands.*;
 
  
@@ -32,6 +31,7 @@ public class RobotContainer {
   private final DriveTrainSubsystem m_drivetrain = new DriveTrainSubsystem();
   private final ShooterSubsystem m_shooter= new ShooterSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
+  private final IntakeSubsystem m_intake = new IntakeSubsystem();
 
   //joysticks we are going to use
   private final Joystick m_joystick0 = new Joystick(0);
@@ -80,6 +80,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings()
   {
+   /**Joystick 0 Buttons**/
+   
     //Driving buttons
     JoystickButton j0SpeedIncr = new JoystickButton(m_joystick0, Constants.INCREASE_DRIVE_SPEED_BUTTON);
     JoystickButton j0SpeedDecr = new JoystickButton(m_joystick0, Constants.DECREASE_DRIVE_SPEED_BUTTON);
@@ -94,7 +96,16 @@ public class RobotContainer {
     j0GoToDistance.whenPressed(new driveToDistance(78,.3, m_drivetrain));
     j0TurnRight.whenPressed(new turnDegrees(.1, 90, m_drivetrain));
     j0ChangeDriveState.whenPressed(new toggleDriveState(m_drivetrain));
+
+
+   //Intake buttons
+     JoystickButton j0ToggleIntakeArms = new JoystickButton(m_joystick0, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
+     JoystickButton j0StartIntakeMotor = new JoystickButton(m_joystick0, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
+     
+     j0ToggleIntakeArms.whenPressed(new ToggleIntakeArm( m_intake));
+     j0StartIntakeMotor.whenPressed(new SetIntakeMotor( m_intake, 0.4));
     
+    /**Joystick 1 Buttons**/
 
     //Shooting buttons
     JoystickButton j1Shoot = new JoystickButton(m_joystick1, Constants.START_SHOOTER_MOTOR_BUTTON);
@@ -119,6 +130,9 @@ public class RobotContainer {
  
      j1Extend.whenPressed(new ExtendBothArms( m_climber));
      j1Retract.whenPressed(new RetractBothArms( m_climber));
+
+
+
   }
  
   /**

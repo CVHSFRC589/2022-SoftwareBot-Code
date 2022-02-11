@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Compressor;
@@ -18,8 +19,8 @@ public class ClimberSubsystem extends SubsystemBase {
   private final Compressor m_compressor;
 
   public ClimberSubsystem() {
-    m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1,2);
-    m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 3,4);
+    m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_LEFT_ARM_ON, Constants.CLIMBER_LEFT_ARM_OFF);
+    m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_RIGHT_ARM_ON, Constants.CLIMBER_RIGHT_ARM_OFF);
     m_compressor = new Compressor(PneumaticsModuleType.CTREPCM); //Also turns on the compressor
     // m_compressor.enableDigital();
     m_compressor.disable();
