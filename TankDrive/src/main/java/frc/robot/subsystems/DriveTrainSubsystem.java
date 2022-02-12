@@ -6,10 +6,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.LimelightAiming;
  
 public class DriveTrainSubsystem extends SubsystemBase {
     private final CANSparkMax m_leftMotor = new CANSparkMax(Constants.DRIVE_LEFT_MOTOR_PORT, MotorType.kBrushless);
@@ -20,6 +24,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
  
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
     private static BooleanSupplier driveType = () -> true;
+    private static LimelightAiming m_aiming = new LimelightAiming();
+    
 
     private double m_scaleFactor = 0.8;
  
@@ -76,8 +82,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public double getLeftEncoderInches()
     {
-        double distanceInches = leftEncoder.getPosition()*Constants.driveWheelCircum/Constants.gearRatio;
-        return distanceInches;
+        return leftEncoder.getPosition()*Constants.driveWheelCircum/Constants.gearRatio;
     }
 
     public double getRightEncoderInches()
@@ -87,7 +92,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public double getAverageEncoderInches(){
       double avgEncoderInches = (Math.abs(getRightEncoderInches())+Math.abs(getLeftEncoderInches()))/2;
-      SmartDashboard.putNumber("AvgEncoderInches", avgEncoderInches);
       return avgEncoderInches;
     }
 
@@ -101,9 +105,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
         rightEncoder.setPosition(position);
     }
 
+    public void updateShuffleboard()
+    {
+      SmartDashboard.putNumber("LeftMotorEncoderDistanceInches", getLeftEncoderInches());
+      SmartDashboard.putNumber("RightMotorEncoderDistanceInches", getRightEncoderInches());
+      SmartDashboard.putNumber("LeftMotorVelocityRPM", leftEncoder.getVelocity());
+      SmartDashboard.putNumber("RightMotorVelocityRPM", rightEncoder.getVelocity());
+    }
+
       /** Call log method every loop. */
   @Override
   public void periodic() {
+    m_aiming.updateLimelightValues();
+    updateShuffleboard();
     //log();
   }
 }

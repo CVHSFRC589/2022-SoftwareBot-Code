@@ -28,7 +28,7 @@ public final class Constants {
     public static final int INTAKE_LEFT_ARM_OFF = 5;
     public static final int INTAKE_RIGHT_ARM_ON = 6;
     public static final int INTAKE_RIGHT_ARM_OFF = 7;
-    
+
     
 
     //Joystick 0 Buttons
@@ -41,6 +41,9 @@ public final class Constants {
     public static final int RESET_AVERAGE_SHOOTER_AMPS_BUTTON = 7;
     public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
     public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
+    public static final int FACE_TARGET_BUTTON = 10;
+    //public static final int EMPTY_BUTTON = 11;
+
 
 
     //Joystick 1 Buttons

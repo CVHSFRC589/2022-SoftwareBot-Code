@@ -62,8 +62,13 @@ public class RobotContainer {
 
        //m_shooter.setDefaultCommand(new Shoot(m_shooter));
 
-    SmartDashboard.putNumber("LeftMotorEncoder", m_drivetrain.getLeftEncoderInches());
-    SmartDashboard.putNumber("RightMotorEncoder", m_drivetrain.getRightEncoderInches());
+      SmartDashboard.putData(m_drivetrain);
+      SmartDashboard.putData(m_climber);
+      SmartDashboard.putData(m_shooter);
+      SmartDashboard.putData(m_intake);
+      SmartDashboard.updateValues();
+
+      m_drivetrain.updateShuffleboard();
 
     SmartDashboard.putNumber("ShooterEncoder", m_shooter.getShooterSpeed());
     System.out.println("Shooterworkingyay: " + m_shooter.getShooterSpeed());
@@ -81,7 +86,7 @@ public class RobotContainer {
   private void configureButtonBindings()
   {
    /**Joystick 0 Buttons**/
-   
+
     //Driving buttons
     JoystickButton j0SpeedIncr = new JoystickButton(m_joystick0, Constants.INCREASE_DRIVE_SPEED_BUTTON);
     JoystickButton j0SpeedDecr = new JoystickButton(m_joystick0, Constants.DECREASE_DRIVE_SPEED_BUTTON);
@@ -89,21 +94,23 @@ public class RobotContainer {
     JoystickButton j0GoToDistance = new JoystickButton(m_joystick0, Constants.AUTO_DRIVE_DISTANCE_BUTTON);
     JoystickButton j0TurnRight= new JoystickButton(m_joystick0, Constants.TURN_RIGHT_BUTTON);
     JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
+    JoystickButton j0FaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_BUTTON);
 
     j0SpeedIncr.whenPressed(new setSpeedScale(1,m_drivetrain));
     j0SpeedDecr.whenPressed(new setSpeedScale(0.5,m_drivetrain));  
     j0FreezeDrive.whenPressed(new setSpeedScale(0,m_drivetrain));
-    j0GoToDistance.whenPressed(new driveToDistance(78,.3, m_drivetrain));
-    j0TurnRight.whenPressed(new turnDegrees(.1, 90, m_drivetrain));
+    j0GoToDistance.whenPressed(new driveToDistance(78,0.3, m_drivetrain));
+    j0TurnRight.whenPressed(new turnDegrees(0.1, 90, m_drivetrain));
     j0ChangeDriveState.whenPressed(new toggleDriveState(m_drivetrain));
+    j0FaceTarget.whenPressed(new FaceTarget(0.2, m_drivetrain));
 
 
    //Intake buttons
-     JoystickButton j0ToggleIntakeArms = new JoystickButton(m_joystick0, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
-     JoystickButton j0StartIntakeMotor = new JoystickButton(m_joystick0, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
+     JoystickButton j1ToggleIntakeArms = new JoystickButton(m_joystick1, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
+     JoystickButton j1StartIntakeMotor = new JoystickButton(m_joystick1, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
      
-     j0ToggleIntakeArms.whenPressed(new ToggleIntakeArm( m_intake));
-     j0StartIntakeMotor.whenPressed(new SetIntakeMotor( m_intake, 0.4));
+     j1ToggleIntakeArms.whenPressed(new ToggleIntakeArm( m_intake));
+     j1StartIntakeMotor.whenPressed(new SetIntakeMotor( m_intake, 0.4));
     
     /**Joystick 1 Buttons**/
 

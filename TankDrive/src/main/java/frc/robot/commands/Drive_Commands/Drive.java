@@ -40,11 +40,6 @@ public class Drive extends CommandBase {
         {
             m_drivetrain.drive(m_leftY.getAsDouble(), m_leftX.getAsDouble());
         }
-        
-       // m_drivetrain.setMotors(m_leftY.getAsDouble(), m_rightY.getAsDouble());
-        SmartDashboard.putNumber("LeftMotorEncoderDistanceInches", m_drivetrain.getLeftEncoderInches());
-        SmartDashboard.putNumber("RightMotorEncoderDistanceInches", m_drivetrain.getRightEncoderInches());
-        //System.out.println("encoderworkingyay: " + m_drivetrain.getLeft());
     }
  
   // Make this return true when this Command no longer needs to run execute()
