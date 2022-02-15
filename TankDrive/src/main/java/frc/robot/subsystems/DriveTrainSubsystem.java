@@ -6,10 +6,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
+// import edu.wpi.first.util.sendable.Sendable;
+// import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -27,13 +26,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private static LimelightAiming m_aiming = new LimelightAiming();
     
 
-    private double m_scaleFactor = 0.8;
+    private double m_scaleFactor = 1;
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
 
-        m_leftMotor.setInverted(true);
+        m_leftMotor.setInverted(false);
         m_rightMotor.setInverted(false); //swap inverted
         reset();
     }
@@ -53,7 +52,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       setLeftEncoder(0);
       setRightEncoder(0);
       setMotors(0,0);
-      m_scaleFactor = .5;
+      m_scaleFactor = 1;
     }
 
     public void setMotors(double leftSpeed, double rightSpeed){

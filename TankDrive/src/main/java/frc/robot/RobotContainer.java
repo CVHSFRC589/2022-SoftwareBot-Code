@@ -37,8 +37,7 @@ public class RobotContainer {
   private final Joystick m_joystick0 = new Joystick(0);
   private final Joystick m_joystick1 = new Joystick(1);
 
-  private double m_shooterSpeed = .2;
-  private CommandBase m_autoCommand;
+  private double m_shooterSpeed = .8;
 
   SendableChooser<CommandBase> m_chooser = new SendableChooser<>();
   
@@ -117,14 +116,15 @@ public class RobotContainer {
 
     //Shooting buttons
     JoystickButton j1Shoot = new JoystickButton(m_joystick1, Constants.START_SHOOTER_MOTOR_BUTTON);
-    JoystickButton j1MaxSpeed = new JoystickButton(m_joystick1, Constants.MAX_SHOOTER_SPEED_BUTTON);
+    JoystickButton j1Feed = new JoystickButton(m_joystick1, Constants.SHOOTER_FEEDER_MOTOR_BUTTON);
     JoystickButton j1Stop = new JoystickButton(m_joystick1, Constants.SHOOTER_STOP_BUTTON);
     JoystickButton j1IncreaseSpeed = new JoystickButton(m_joystick1, Constants.INCREASE_SHOOTER_SPEED_BUTTON);
     JoystickButton j1DecreaseSpeed = new JoystickButton(m_joystick1, Constants.DECREASE_SHOOTER_SPEED_BUTTON);
     JoystickButton j1ToggleAverageAmps = new JoystickButton(m_joystick1, Constants.TOGGLE_AVERAGE_SHOOTER_AMPS_BUTTON);
     JoystickButton j1ResetAverageAmps = new JoystickButton(m_joystick1, Constants.RESET_AVERAGE_SHOOTER_AMPS_BUTTON);
 
-    j1MaxSpeed.whenPressed(new SetShooterSpeed(1, m_shooter));
+    j1Feed.whenHeld(new FeederStart(m_shooter));
+    j1Feed.whenReleased(new FeederStop(m_shooter));
     j1Stop.whenPressed(new SetShooterSpeed(0, m_shooter));
     j1Shoot.whenPressed(new SetShooterSpeed(m_shooterSpeed, m_shooter));
     j1IncreaseSpeed.whenPressed(new ChangeShooterSpeed(.1, m_shooter));
@@ -150,9 +150,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    m_autoCommand = new AutoPatternOne(m_drivetrain, m_climber);
     return m_chooser.getSelected();
-    //return m_autoCommand;
  }
  
 }

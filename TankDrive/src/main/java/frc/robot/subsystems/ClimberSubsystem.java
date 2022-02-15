@@ -58,7 +58,7 @@ public class ClimberSubsystem extends SubsystemBase {
     m_rightArm.set(DoubleSolenoid.Value.kReverse);
     SmartDashboard.putString("Right Solenoid", "Retracted");
   }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

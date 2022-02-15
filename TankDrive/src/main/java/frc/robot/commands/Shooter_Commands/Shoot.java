@@ -5,6 +5,7 @@
 package frc.robot.commands.Shooter_Commands;
 
 import frc.robot.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
@@ -39,7 +40,7 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     m_shootSubsystem.shoot();
-    System.out.println("Shooter Speed: "+m_shootSubsystem.getEncoderSpeed());
+    SmartDashboard.putNumber("Shooter Speed: ", m_shootSubsystem.getShooterEncoderSpeed());
   }
 
   // Called once the command ends or is interrupted.

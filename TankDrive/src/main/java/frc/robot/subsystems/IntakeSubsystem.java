@@ -18,7 +18,8 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystemyay. */
   private final DoubleSolenoid m_leftArm;
   private final DoubleSolenoid m_rightArm;
-  private final CANSparkMax m_intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_PORT, MotorType.kBrushless);;
+  private final CANSparkMax m_intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_PORT, MotorType.kBrushless);
+  private final RelativeEncoder m_intakeEncoder = m_intakeMotor.getEncoder();
 
   public IntakeSubsystem() {
     m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_LEFT_ARM_ON, Constants.INTAKE_LEFT_ARM_OFF);
@@ -40,12 +41,14 @@ public class IntakeSubsystem extends SubsystemBase {
   {
     m_leftArm.set(DoubleSolenoid.Value.kForward);
     m_rightArm.set(DoubleSolenoid.Value.kForward);
+    SmartDashboard.putString("Intake Solenoids", "Extended");
   }
 
   public void retractIntake()
   {
     m_leftArm.set(DoubleSolenoid.Value.kReverse);
     m_rightArm.set(DoubleSolenoid.Value.kReverse);
+    SmartDashboard.putString("Intake Solenoids", "Retracted");
   }
 
   public void startMotor(double speed)
@@ -56,6 +59,11 @@ public class IntakeSubsystem extends SubsystemBase {
   public void stopMotor()
   {
     m_intakeMotor.set(0);
+  }
+
+  public double getIntakeMotorSpeed()
+  {
+    return m_intakeEncoder.getVelocity();
   }
 
   @Override

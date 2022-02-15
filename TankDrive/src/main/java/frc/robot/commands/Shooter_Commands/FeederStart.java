@@ -5,29 +5,18 @@
 package frc.robot.commands.Shooter_Commands;
 
 import frc.robot.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
-public class SetShooterSpeed extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystem m_shootSubsystem;
-  private double m_speed = .1;
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public SetShooterSpeed(double speed, ShooterSubsystem subsystem) {
-    
-      m_speed = speed;
-    
-    
-    m_shootSubsystem = subsystem;
+public class FeederStart extends CommandBase {
+  /** Creates a new Feed. */
+  private final ShooterSubsystem m_ShooterSubsystem;
+
+  public FeederStart(ShooterSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_ShooterSubsystem = subsystem;
     addRequirements(subsystem);
   }
-
-  
 
   // Called when the command is initially scheduled.
   @Override
@@ -36,17 +25,19 @@ public class SetShooterSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.setShooterSpeed(m_speed);
-    m_shootSubsystem.shoot();
+    m_ShooterSubsystem.feed(1);
+    SmartDashboard.putNumber("Feeder Speed: ", m_ShooterSubsystem.getFeederEncoderSpeed());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_ShooterSubsystem.feed(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
