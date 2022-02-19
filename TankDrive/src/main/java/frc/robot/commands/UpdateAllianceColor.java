@@ -4,15 +4,22 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.VisualFeedbackSubsystem;
 
-public class SetVisualFeedbackMode extends CommandBase {
-  private String m_pattern;
+public class UpdateAllianceColor extends InstantCommand {
+  private VisualFeedbackSubsystem m_vfs;
+  private NetworkTable m_table;
+  private NetworkTableEntry m_patternOver;
   /** Creates a new SetVisualFeedbackMode. */
-  public SetVisualFeedbackMode(String pattern) {
+  public UpdateAllianceColor(VisualFeedbackSubsystem vfs) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_pattern = pattern;
+    m_vfs = vfs;
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+    m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
   }
 
   // Called when the command is initially scheduled.
@@ -21,15 +28,13 @@ public class SetVisualFeedbackMode extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_vfs.setAllianceColor();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+  public void end(boolean interrupted) {
+    m_patternOver.setString("done");
   }
 }

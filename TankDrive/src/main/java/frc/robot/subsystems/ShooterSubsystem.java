@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,8 +19,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private final CANSparkMax m_shooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_shooterEncoder = m_shooterMotor.getEncoder();
   private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
-  private final RelativeEncoder m_feederEncoder = m_shooterMotor.getEncoder();
-  private double m_shooterSpeed = 0.1;
+  private final RelativeEncoder m_feederEncoder = m_feederMotor.getEncoder();
+  private double m_shooterSpeed = 0.7;
   private double m_feederSpeed = 0;
   private int m_count = 0;
   private double m_previousAmps = 0;
@@ -27,10 +28,17 @@ public class ShooterSubsystem extends SubsystemBase {
   private double m_maxAmps = 0;
   private static BooleanSupplier isShooting = () -> false;
   private double m_leverValue;
+  private NetworkTable m_table;
+  private NetworkTableEntry m_patternOver;
+
+
+
 
 
   /** Creates a new ExampleSubsystem. */
   public ShooterSubsystem() {
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+    m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
 
     m_shooterEncoder.setPosition(0);
     m_shooterMotor.setInverted(true);
@@ -38,9 +46,16 @@ public class ShooterSubsystem extends SubsystemBase {
     m_feederMotor.setInverted(true);
   }
 
-  // public void shoot(){
-    // m_shooterMotor.set(m_shooterSpeed);
-
+  public void shoot(double leverValue) { 
+    m_leverValue = leverValue;
+    if(isShooting.getAsBoolean())
+    {
+      m_shooterMotor.set(m_shooterSpeed+(-0.15*m_leverValue));
+    }
+    else
+    {
+      m_shooterMotor.set(0);
+    }
     // if(m_average){
     //   m_previousAmps += m_shooterMotor.getOutputCurrent();
     //   SmartDashboard.putNumber("Average Amps: ", m_previousAmps/m_count);
@@ -51,33 +66,22 @@ public class ShooterSubsystem extends SubsystemBase {
     //     SmartDashboard.putNumber("Maximum Amps", m_maxAmps);
     //   }
     // }
-  //}
-  public void shoot(double leverValue) { //TODO: we lost comms when we tried m_shooterSpeed set at 0.7
-    m_leverValue = leverValue;
-    if(isShooting.getAsBoolean())
-    {
-      m_shooterMotor.set(m_shooterSpeed+(-0.15*m_leverValue));
-    }
-    else
-    {
-      m_shooterMotor.set(0);
-    }
   }
 
-  public void feed(double speed){ //do it for a certain number of times and then stop...  
+  public void feed(double speed){ 
     m_feederSpeed = speed;
     m_feederMotor.set(m_feederSpeed);
   }
 
   public void toggleAverage(){
-    System.out.println("Before: " + m_average);
+    // System.out.println("Before: " + m_average);
     m_average = !m_average;
-    System.out.println("After: " + m_average);
+    // System.out.println("After: " + m_average);
   }
   
   public void resetAverage(){
    // System.out.println("Previous Average Amps: "+ m_previousAmps/m_count);
-    SmartDashboard.putNumber("Previous Average Amps", m_previousAmps/m_count);
+    // SmartDashboard.putNumber("Previous Average Amps", m_previousAmps/m_count);
     m_previousAmps = 0;
     // m_maxAmps = 0;
     m_count = 1;
@@ -99,10 +103,14 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void toggleShooting() {
-    if(isShooting.getAsBoolean()) 
+    if(isShooting.getAsBoolean()){
         isShooting = () -> false;
-    else
+        m_patternOver.setString("done");
+    }
+    else{
         isShooting = () -> true;
+        m_patternOver.setString("nope");
+    }
   }
 
   public double getShooterEncoderSpeed(){
@@ -118,9 +126,9 @@ public class ShooterSubsystem extends SubsystemBase {
   public void updateShuffleboard()
   {
     SmartDashboard.putNumber("Feeder Speed: ", m_feederSpeed);
-    SmartDashboard.putNumber("Feeder Current: ", m_feederMotor.getOutputCurrent());
+    // SmartDashboard.putNumber("Feeder Current: ", m_feederMotor.getOutputCurrent());
     SmartDashboard.putNumber("Shooter Speed: ", m_shooterSpeed+(-0.15*m_leverValue));
-    SmartDashboard.putNumber("Shooter Current: ", m_shooterMotor.getOutputCurrent());
+    // SmartDashboard.putNumber("Shooter Current: ", m_shooterMotor.getOutputCurrent());
     SmartDashboard.putNumber("ShootMotorVelocityRPM", m_shooterEncoder.getVelocity());
     SmartDashboard.putNumber("FeedMotorVelocityRPM", m_feederEncoder.getVelocity());
   }

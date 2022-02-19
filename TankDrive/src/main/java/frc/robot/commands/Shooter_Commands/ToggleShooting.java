@@ -4,6 +4,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
  
 public class ToggleShooting extends InstantCommand {
+   
     private final ShooterSubsystem m_shooter;
     /**
      * ToggleShooting Command

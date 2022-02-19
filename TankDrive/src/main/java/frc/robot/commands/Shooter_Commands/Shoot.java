@@ -20,6 +20,7 @@ public class Shoot extends CommandBase {
   private DoubleSupplier m_lever;
   private NetworkTable m_table;
   private NetworkTableEntry m_pattern;
+  private NetworkTableEntry m_patternOver;
   /**
    * Creates a new ExampleCommand.
    *
@@ -30,7 +31,7 @@ public class Shoot extends CommandBase {
     m_shootSubsystem = subsystem;
     m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
     m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
-
+    m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -47,14 +48,34 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     m_shootSubsystem.shoot(m_lever.getAsDouble());
-    m_pattern.setString("red");
-    SmartDashboard.putNumber("Shooter Speed: ", m_shootSubsystem.getShooterEncoderSpeed());
+    if(m_shootSubsystem.getShooterEncoderSpeed() > 25){
+      if(m_shootSubsystem.getShooterEncoderSpeed() < 667){
+        m_pattern.setString("red");
+      }
+      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*2){
+        m_pattern.setString("red orange");
+      }
+      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*3){
+        m_pattern.setString("orange");
+      }
+      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*4){
+        m_pattern.setString("gold");
+      }
+      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*5){
+        m_pattern.setString("yellow");
+      }
+      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*6){
+        m_pattern.setString("lawn green");
+      }
+      else{
+        m_pattern.setString("lime");
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_pattern.setString(Constants.DEFAULT_COLOR);
   }
 
   // Returns true when the command should end.

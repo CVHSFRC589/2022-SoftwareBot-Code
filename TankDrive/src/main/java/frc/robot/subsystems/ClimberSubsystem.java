@@ -17,7 +17,7 @@ public class ClimberSubsystem extends SubsystemBase {
   private final DoubleSolenoid m_leftArm;
   private final DoubleSolenoid m_rightArm;
   private final Compressor m_compressor;
-
+  
   public ClimberSubsystem() {
     m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_LEFT_ARM_ON, Constants.CLIMBER_LEFT_ARM_OFF);
     m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_RIGHT_ARM_ON, Constants.CLIMBER_RIGHT_ARM_OFF);
@@ -39,6 +39,7 @@ public class ClimberSubsystem extends SubsystemBase {
   {
     m_leftArm.set(DoubleSolenoid.Value.kForward);
     SmartDashboard.putString("Left Solenoid", "Extended");
+    
   }
 
   public void reachRight()
@@ -51,6 +52,7 @@ public class ClimberSubsystem extends SubsystemBase {
   {
     m_leftArm.set(DoubleSolenoid.Value.kReverse);
     SmartDashboard.putString("Left Solenoid", "Retracted");
+    
   }
 
   public void pullRight()

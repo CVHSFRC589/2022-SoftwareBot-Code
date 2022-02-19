@@ -14,10 +14,10 @@ package frc.robot;
  */
 public final class Constants {
     //Motor/Solenoid Ports
-    public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11
+    public static final int DRIVE_LEFT_MOTOR_PORT = 21; //11
     public static final int DRIVE_RIGHT_MOTOR_PORT = 20; //12
     public static final int SHOOTER_MOTOR_PORT = 12; //20
-    public static final int FEEDER_MOTOR_PORT = 21; //21
+    public static final int FEEDER_MOTOR_PORT = 11; //21
     public static final int INTAKE_MOTOR_PORT = 30; //30
     public static final int VISUAL_FEEDBACK_MOTOR_PORT = 0; //PWM port 0
 
@@ -80,5 +80,6 @@ public final class Constants {
     //misc
     public static final String VISUAL_FEEDBACK_TABLE_NAME = "Visual Feedback";
     public static final String VISUAL_FEEDBACK_TABLE_ENTRY_NAME = "pattern";
-    public static final String DEFAULT_COLOR = "gold";
+    public static final String PATTERN_FINISHED_ENTRY_NAME = "pattern done";
+    
 }

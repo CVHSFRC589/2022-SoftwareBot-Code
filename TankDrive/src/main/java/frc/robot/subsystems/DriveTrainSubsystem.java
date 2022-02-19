@@ -116,7 +116,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     m_aiming.updateLimelightValues();
-    updateShuffleboard();
+    //updateShuffleboard();
     //log();
   }
 }

@@ -16,6 +16,7 @@ public class DriveToGivenTargetDistance extends CommandBase {
   private LimeLightAiming m_limeLight;
   private NetworkTable m_table;
   private NetworkTableEntry m_pattern;
+  private NetworkTableEntry m_patternOver;
   /** Creates a new DriveToGivenTargetDistance. */
   public DriveToGivenTargetDistance(double distance, LimeLightAiming limeLight, DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,6 +25,7 @@ public class DriveToGivenTargetDistance extends CommandBase {
     m_limeLight = limeLight;
     m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
     m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
+    m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
   }
 
   // Called when the command is initially scheduled.
@@ -39,13 +41,14 @@ public class DriveToGivenTargetDistance extends CommandBase {
     else{
       m_drive.setMotors(0.2,0.2);
     }
-    m_pattern.setString("red");
+    m_patternOver.setString("nope");
+    m_pattern.setString("hot pink");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_pattern.setString(Constants.DEFAULT_COLOR);
+    m_patternOver.setString("done");
   }
 
   // Returns true when the command should end.

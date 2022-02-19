@@ -8,17 +8,25 @@ import java.util.HashMap;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
+
 
 public class VisualFeedbackSubsystem extends SubsystemBase {
   /** Creates a new VisualFeedbackSubsystem. */
   private final PWMSparkMax m_visualFeedbackDevice = new PWMSparkMax(Constants.VISUAL_FEEDBACK_MOTOR_PORT);
   private HashMap<String,Double> m_colorMap = new HashMap<String,Double>();
+  private String defaultColor = "violet";
   private NetworkTable m_table;
   private NetworkTableEntry m_pattern;
+  private NetworkTableEntry m_patternOver;
+  private DriverStation.Alliance m_alliance;
+
   public VisualFeedbackSubsystem() {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
     m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
+    m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
+    
 
     m_colorMap.put("hot pink", 0.57);
     m_colorMap.put("dark red", 0.59);
@@ -44,18 +52,40 @@ public class VisualFeedbackSubsystem extends SubsystemBase {
     m_colorMap.put("black", 0.99);
     m_colorMap.put("twinkles", 0.51);
     m_colorMap.put("strobe", 0.35);
-
-    m_pattern.setString(Constants.DEFAULT_COLOR);
+    m_colorMap.put("confetti", -0.87);
+    m_colorMap.put("rainbow party palette", -0.97);
+    
+    // m_pattern.setString(defaultColor);
   }
-
+  public void setAllianceColor(){
+    m_alliance = DriverStation.getAlliance();
+    if(m_alliance.equals(DriverStation.Alliance.Red)){
+      defaultColor = "red";
+    }
+    else if(m_alliance.equals(DriverStation.Alliance.Blue)){
+      defaultColor = "blue";
+    }
+  }
   private void giveVisualFeedback(String color){
     m_visualFeedbackDevice.set(m_colorMap.get(color));
+  }
+  
+  private boolean allDone(){
+    if(m_patternOver.getString("").equals("done")){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    giveVisualFeedback(m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME).getString("violet"));
-  
+    if(allDone()){
+      m_pattern.setString(defaultColor);
+    }
+    giveVisualFeedback(m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME).getString(defaultColor));
   }
 }

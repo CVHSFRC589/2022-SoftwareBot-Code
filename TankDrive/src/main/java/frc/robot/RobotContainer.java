@@ -43,12 +43,14 @@ public class RobotContainer {
 
   SendableChooser<CommandBase> m_chooser = new SendableChooser<>();
   
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_chooser.setDefaultOption("Simple Auto", new AutoPatternOne(m_drivetrain, m_climber));
     m_chooser.addOption("Drive Forward", new DriveToDistance(36, 0.3, m_drivetrain));
     m_chooser.addOption("Simple Auto + Aim", new AutoPatternTwo(m_drivetrain, m_limeLight));
     SmartDashboard.putData(m_chooser);
+    SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
     
     m_drivetrain.setDefaultCommand( //for arcade drive
        new Drive(
@@ -62,7 +64,7 @@ public class RobotContainer {
     //     )
     //  );
 
-      m_shooter.setDefaultCommand(new Shoot(() -> m_joystick0.getZ(), m_shooter));
+      m_shooter.setDefaultCommand(new Shoot(() -> m_joystick1.getZ(), m_shooter));
 
       SmartDashboard.putData(m_drivetrain);
       SmartDashboard.putData(m_climber);
