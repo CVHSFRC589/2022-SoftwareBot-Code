@@ -5,10 +5,10 @@
 package frc.robot.commands.Shooter_Commands;
 
 import frc.robot.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /** An example command that uses an example subsystem. */
-public class SetShooterSpeed extends CommandBase {
+public class SetShooterSpeed extends InstantCommand {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_shootSubsystem;
   private double m_speed = .1;
@@ -37,16 +37,9 @@ public class SetShooterSpeed extends CommandBase {
   @Override
   public void execute() {
     m_shootSubsystem.setShooterSpeed(m_speed);
-    m_shootSubsystem.shoot();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
 }

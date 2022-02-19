@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.LimelightAiming;
+import frc.robot.LimeLightAiming;
  
 public class DriveTrainSubsystem extends SubsystemBase {
     private final CANSparkMax m_leftMotor = new CANSparkMax(Constants.DRIVE_LEFT_MOTOR_PORT, MotorType.kBrushless);
@@ -23,17 +23,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
  
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
     private static BooleanSupplier driveType = () -> true;
-    private static LimelightAiming m_aiming = new LimelightAiming();
+    private static LimeLightAiming m_aiming = new LimeLightAiming();
     
 
-    private double m_scaleFactor = 1;
+    private double m_scaleFactor = 0.5;
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
 
-        m_leftMotor.setInverted(false);
-        m_rightMotor.setInverted(false); //swap inverted
+        m_leftMotor.setInverted(true); //true
+        m_rightMotor.setInverted(false); //false
         reset();
     }
  
@@ -52,7 +52,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       setLeftEncoder(0);
       setRightEncoder(0);
       setMotors(0,0);
-      m_scaleFactor = 1;
+      m_scaleFactor = 0.5;
     }
 
     public void setMotors(double leftSpeed, double rightSpeed){

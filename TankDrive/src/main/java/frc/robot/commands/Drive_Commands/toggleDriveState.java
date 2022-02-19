@@ -3,7 +3,7 @@ package frc.robot.commands.Drive_Commands;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
  
-public class toggleDriveState extends CommandBase {
+public class ToggleDriveState extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
     /**
      * toggleDriveState Command
@@ -12,7 +12,7 @@ public class toggleDriveState extends CommandBase {
      * drivetrain is the subsystem to drive
      */
    
-    public toggleDriveState(DriveTrainSubsystem drivetrain) {
+    public ToggleDriveState(DriveTrainSubsystem drivetrain) {
         m_drivetrain = drivetrain;
 
         addRequirements(m_drivetrain);

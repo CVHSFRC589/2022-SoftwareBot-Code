@@ -8,7 +8,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
  
-public class turnDegrees extends CommandBase {
+public class TurnDegrees extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
     private double m_speed = 0;
     private double m_distanceInches = 0;
@@ -17,7 +17,7 @@ public class turnDegrees extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public turnDegrees(double speed, double degrees, DriveTrainSubsystem subsystem) {
+  public TurnDegrees(double speed, double degrees, DriveTrainSubsystem subsystem) {
     m_drivetrain = subsystem;
     m_speed = speed;
     m_distanceInches = degrees*Constants.robotTurnCircum/360;

@@ -5,20 +5,18 @@
 package frc.robot.commands.Drive_Commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.LimeLight;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class FaceTarget extends CommandBase {
+public class LineUpTarget extends CommandBase {
   /** Creates a new FaceTarget. */
-  private LimeLight m_limeLight;
+  private LimeLight m_limeLight = new LimeLight();
   private DriveTrainSubsystem m_drivetrain;
   private double m_startSpeed;
-  private double m_startEncoders;
 
-  public FaceTarget(double startingSpeed, LimeLight limeLight, DriveTrainSubsystem subsystem) {
+  public LineUpTarget(double startingSpeed,LimeLight limeLight, DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_limeLight = limeLight;
+    m_limeLight= limeLight;
     m_drivetrain = subsystem;
     m_startSpeed = startingSpeed;
   }
@@ -26,26 +24,24 @@ public class FaceTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_startEncoders = m_drivetrain.getAverageEncoderInches();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(m_limeLight.getIsTargetFound()){
-      // if(Math.abs(m_limeLight.getdegRotationToTarget())/31/3>= 0.0)
-      // {
-      //   double speed = m_limeLight.getdegRotationToTarget()/31/3;
-      //   m_drivetrain.setMotors(-speed, speed);
-      // }
-      // else{
-        double direction = Math.abs(m_limeLight.getdegRotationToTarget())/m_limeLight.getdegRotationToTarget();
-        m_drivetrain.setMotors(-direction*m_startSpeed, direction*m_startSpeed);
-      // }
+      if(m_limeLight.getdegVerticalToTarget() > 0.0)
+      {
+        m_drivetrain.setMotors(-m_startSpeed, -m_startSpeed);
+      }
+      else{
+        
+        m_drivetrain.setMotors(m_startSpeed, m_startSpeed);
+      }
     }
     else
     {
-      m_drivetrain.setMotors(-0.2, 0.2);
+      System.out.println("No Target Found");
     }
   }
 
@@ -62,15 +58,10 @@ public class FaceTarget extends CommandBase {
   @Override
   public boolean isFinished() {
      if(m_limeLight.getIsTargetFound()){
-       if(Math.abs(m_limeLight.getdegRotationToTarget()) <= .25){
+       if(Math.abs(m_limeLight.getdegVerticalToTarget()) <= .25){
          return true;
        }
      }
-     else if(m_drivetrain.getAverageEncoderInches() >= m_startEncoders + Constants.robotTurnCircum)
-     {
-       return true;
-     }
      return false;
-    
   }
 }

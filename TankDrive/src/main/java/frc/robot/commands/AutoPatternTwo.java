@@ -10,13 +10,14 @@ import frc.robot.commands.Drive_Commands.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.LimeLight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoPatternOne extends SequentialCommandGroup {
+public class AutoPatternTwo extends SequentialCommandGroup {
   /** Creates a new AutoPatternOne. */
-  public AutoPatternOne(DriveTrainSubsystem drive, ClimberSubsystem climb) {
+  public AutoPatternTwo(DriveTrainSubsystem drive, LimeLight limeLight) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -27,9 +28,8 @@ public class AutoPatternOne extends SequentialCommandGroup {
       new DriveToDistance(36, 0.3, drive),
       new Pause(1),
       new TurnDegrees(0.25, 90, drive),
-      new ExtendBothArms(climb),
-      new Pause(1),
-      new RetractBothArms(climb)
+      new FaceTarget(0.075, limeLight, drive),
+      new LineUpTarget(0.2, limeLight, drive)
     );
   }
 }

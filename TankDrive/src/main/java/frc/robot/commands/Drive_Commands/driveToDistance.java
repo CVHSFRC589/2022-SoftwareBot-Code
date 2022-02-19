@@ -6,14 +6,14 @@ package frc.robot.commands.Drive_Commands;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
  
-public class driveToDistance extends CommandBase {
+public class DriveToDistance extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
     private double m_distanceInches = 0;
     private final double m_speed;
   /**
    * @param subsystem The subsystem used by this command.
    */
-  public driveToDistance(double distanceinches, double speed, DriveTrainSubsystem drivetrain) {
+  public DriveToDistance(double distanceinches, double speed, DriveTrainSubsystem drivetrain) {
     m_drivetrain = drivetrain;
     m_speed = speed;
     m_distanceInches = distanceinches;

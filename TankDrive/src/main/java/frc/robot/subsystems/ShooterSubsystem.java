@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -17,12 +19,14 @@ public class ShooterSubsystem extends SubsystemBase {
   private final RelativeEncoder m_shooterEncoder = m_shooterMotor.getEncoder();
   private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_feederEncoder = m_shooterMotor.getEncoder();
-  private double m_shooterSpeed = 0;
+  private double m_shooterSpeed = 0.1;
   private double m_feederSpeed = 0;
   private int m_count = 0;
   private double m_previousAmps = 0;
   private boolean m_average = false;
   private double m_maxAmps = 0;
+  private static BooleanSupplier isShooting = () -> false;
+  private double m_leverValue;
 
 
   /** Creates a new ExampleSubsystem. */
@@ -34,18 +38,29 @@ public class ShooterSubsystem extends SubsystemBase {
     m_feederMotor.setInverted(true);
   }
 
-  public void shoot(){
-    m_shooterMotor.set(m_shooterSpeed);
+  // public void shoot(){
+    // m_shooterMotor.set(m_shooterSpeed);
 
-    if(m_average){
-      m_previousAmps += m_shooterMotor.getOutputCurrent();
-      SmartDashboard.putNumber("Average Amps: ", m_previousAmps/m_count);
-      m_count++;
-      if(m_shooterMotor.getOutputCurrent() > m_maxAmps)
-      {
-        m_maxAmps = m_shooterMotor.getOutputCurrent();
-        SmartDashboard.putNumber("Maximum Amps", m_maxAmps);
-      }
+    // if(m_average){
+    //   m_previousAmps += m_shooterMotor.getOutputCurrent();
+    //   SmartDashboard.putNumber("Average Amps: ", m_previousAmps/m_count);
+    //   m_count++;
+    //   if(m_shooterMotor.getOutputCurrent() > m_maxAmps)
+    //   {
+    //     m_maxAmps = m_shooterMotor.getOutputCurrent();
+    //     SmartDashboard.putNumber("Maximum Amps", m_maxAmps);
+    //   }
+    // }
+  //}
+  public void shoot(double leverValue) { //TODO: we lost comms when we tried m_shooterSpeed set at 0.7
+    m_leverValue = leverValue;
+    if(isShooting.getAsBoolean())
+    {
+      m_shooterMotor.set(m_shooterSpeed+(-0.15*m_leverValue));
+    }
+    else
+    {
+      m_shooterMotor.set(0);
     }
   }
 
@@ -83,6 +98,12 @@ public class ShooterSubsystem extends SubsystemBase {
     return m_shooterSpeed;
   }
 
+  public void toggleShooting() {
+    if(isShooting.getAsBoolean()) 
+        isShooting = () -> false;
+    else
+        isShooting = () -> true;
+  }
 
   public double getShooterEncoderSpeed(){
     return m_shooterEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
@@ -93,14 +114,15 @@ public class ShooterSubsystem extends SubsystemBase {
     return m_feederEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
     //change constant to actual gear ratio later
   }
+  
   public void updateShuffleboard()
   {
     SmartDashboard.putNumber("Feeder Speed: ", m_feederSpeed);
     SmartDashboard.putNumber("Feeder Current: ", m_feederMotor.getOutputCurrent());
-    SmartDashboard.putNumber("Shooter Speed: ", m_shooterSpeed);
+    SmartDashboard.putNumber("Shooter Speed: ", m_shooterSpeed+(-0.15*m_leverValue));
     SmartDashboard.putNumber("Shooter Current: ", m_shooterMotor.getOutputCurrent());
-    SmartDashboard.putNumber("ShooterMotorVelocityRPM", m_shooterEncoder.getVelocity());
-    SmartDashboard.putNumber("FeederMotorVelocityRPM", m_feederEncoder.getVelocity());
+    SmartDashboard.putNumber("ShootMotorVelocityRPM", m_shooterEncoder.getVelocity());
+    SmartDashboard.putNumber("FeedMotorVelocityRPM", m_feederEncoder.getVelocity());
   }
   @Override
   public void periodic() {
