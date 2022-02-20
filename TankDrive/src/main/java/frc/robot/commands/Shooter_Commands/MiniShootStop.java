@@ -7,11 +7,11 @@ package frc.robot.commands.Shooter_Commands;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class FeederStart extends CommandBase {
+public class MiniShootStop extends CommandBase {
   /** Creates a new Feed. */
   private final ShooterSubsystem m_ShooterSubsystem;
 
-  public FeederStart(ShooterSubsystem subsystem) {
+  public MiniShootStop(ShooterSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_ShooterSubsystem = subsystem;
     addRequirements(subsystem);
@@ -24,18 +24,16 @@ public class FeederStart extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ShooterSubsystem.feed(0.5);
+    m_ShooterSubsystem.miniShoot(0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_ShooterSubsystem.feed(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

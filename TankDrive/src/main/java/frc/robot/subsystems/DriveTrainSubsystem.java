@@ -81,12 +81,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public double getLeftEncoderInches()
     {
-        return leftEncoder.getPosition()*Constants.driveWheelCircum/Constants.gearRatio;
+        return leftEncoder.getPosition()*Constants.DRIVE_WHEEL_CIRCUM/Constants.DRIVE_GEAR_RATIO;
     }
 
     public double getRightEncoderInches()
     {
-        return rightEncoder.getPosition()*Constants.driveWheelCircum/Constants.gearRatio;
+        return rightEncoder.getPosition()*Constants.DRIVE_WHEEL_CIRCUM/Constants.DRIVE_GEAR_RATIO;
     }
 
     public double getAverageEncoderInches(){
@@ -106,17 +106,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public void updateShuffleboard()
     {
-      SmartDashboard.putNumber("LeftMotorEncoderDistanceInches", getLeftEncoderInches());
-      SmartDashboard.putNumber("RightMotorEncoderDistanceInches", getRightEncoderInches());
-      SmartDashboard.putNumber("LeftMotorVelocityRPM", leftEncoder.getVelocity());
-      SmartDashboard.putNumber("RightMotorVelocityRPM", rightEncoder.getVelocity());
+      SmartDashboard.putNumber("LeftMotorDistanceInches", getLeftEncoderInches());
+      SmartDashboard.putNumber("RightMotorDistanceInches", getRightEncoderInches());
+      // SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
+      // SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
     }
 
       /** Call log method every loop. */
   @Override
   public void periodic() {
-    m_aiming.updateLimelightValues();
-    //updateShuffleboard();
+    // m_aiming.updateLimelightValues();
+    updateShuffleboard();
     //log();
   }
 }

@@ -20,7 +20,7 @@ public class TurnDegrees extends CommandBase {
   public TurnDegrees(double speed, double degrees, DriveTrainSubsystem subsystem) {
     m_drivetrain = subsystem;
     m_speed = speed;
-    m_distanceInches = degrees*Constants.robotTurnCircum/360;
+    m_distanceInches = degrees*Constants.ROBOT_TURN_CIRCUM/360;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }

@@ -5,7 +5,6 @@
 package frc.robot.commands.Shooter_Commands;
 
 import frc.robot.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FeederStop extends CommandBase {
@@ -26,7 +25,6 @@ public class FeederStop extends CommandBase {
   @Override
   public void execute() {
     m_ShooterSubsystem.feed(0);
-    SmartDashboard.putNumber("Feeder Speed: ", m_ShooterSubsystem.getFeederEncoderSpeed());
   }
 
   // Called once the command ends or is interrupted.

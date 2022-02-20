@@ -66,7 +66,7 @@ public class FaceTarget extends CommandBase {
          return true;
        }
      }
-     else if(m_drivetrain.getAverageEncoderInches() >= m_startEncoders + Constants.robotTurnCircum)
+     else if(m_drivetrain.getAverageEncoderInches() >= m_startEncoders + Constants.ROBOT_TURN_CIRCUM)
      {
        return true;
      }

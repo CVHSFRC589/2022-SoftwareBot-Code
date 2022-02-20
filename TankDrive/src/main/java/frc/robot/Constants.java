@@ -14,13 +14,12 @@ package frc.robot;
  */
 public final class Constants {
     //Motor/Solenoid Ports
-    public static final int DRIVE_LEFT_MOTOR_PORT = 21; //11
-    public static final int DRIVE_RIGHT_MOTOR_PORT = 20; //12
-    public static final int SHOOTER_MOTOR_PORT = 12; //20
-    public static final int FEEDER_MOTOR_PORT = 11; //21
-    public static final int INTAKE_MOTOR_PORT = 30; //30
+    public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11 
+    public static final int DRIVE_RIGHT_MOTOR_PORT = 12; //12
+    public static final int SHOOTER_MOTOR_PORT = 30; //21    
+    public static final int FEEDER_MOTOR_PORT = 20; //20     
+    public static final int INTAKE_MOTOR_PORT = 21; //30     
     public static final int VISUAL_FEEDBACK_MOTOR_PORT = 0; //PWM port 0
-
 
     public static final int CLIMBER_LEFT_ARM_ON = 0;
     public static final int CLIMBER_LEFT_ARM_OFF = 1;
@@ -55,7 +54,7 @@ public final class Constants {
     public static final int TOGGLE_SHOOTING_BUTTON = 3;
     public static final int INCREASE_SHOOTER_SPEED_BUTTON = 4;
     public static final int DECREASE_SHOOTER_SPEED_BUTTON = 5;
-    public static final int TOGGLE_AVERAGE_SHOOTER_AMPS_BUTTON = 6;
+    public static final int MINI_SHOOT_BUTTON = 6;
     public static final int RESET_AVERAGE_SHOOTER_AMPS_BUTTON = 7;
     public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
     public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
@@ -66,13 +65,13 @@ public final class Constants {
     
 
     //Robot Measurement Constants
-    public static final int radius = 3;
-    public static final double robotTurnCircum = 2*Math.PI*9.875;    
-    public static final double driveWheelCircum = 2*3.141592*radius;
-    public static final double gearRatio = 10.71;
-    public static final double SHOOTER_GEAR_RATIO = 1;
+    public static final int DRIVE_WHEEL_RADIUS = 3;
+    public static final double ROBOT_TURN_CIRCUM = Math.PI*27; //9.875 radius on sofie
+    public static final double DRIVE_WHEEL_CIRCUM = 2*Math.PI*DRIVE_WHEEL_RADIUS;
+    public static final double DRIVE_GEAR_RATIO = 10.71;
+    public static final double SHOOTER_GEAR_RATIO = 1.25;
 
-    public static final double HUB_HEIGHT = 40;
+    public static final double HUB_HEIGHT = 104;
     public static final double LIMELIGHT_HEIGHT = 8;
     public static final double LIMELIGHT_MOUNT_ANGLE = 32;
     public static final double SHOOTING_DISTANCE = 36; //Arbitrary num, We dont have a shooter yet

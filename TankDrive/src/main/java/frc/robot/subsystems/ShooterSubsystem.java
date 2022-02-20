@@ -20,12 +20,12 @@ public class ShooterSubsystem extends SubsystemBase {
   private final RelativeEncoder m_shooterEncoder = m_shooterMotor.getEncoder();
   private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_feederEncoder = m_feederMotor.getEncoder();
-  private double m_shooterSpeed = 0.7;
+  private double m_shooterSpeed = 0.3;
   private double m_feederSpeed = 0;
-  private int m_count = 0;
-  private double m_previousAmps = 0;
+  // private int m_count = 0;
+  // private double m_previousAmps = 0;
   private boolean m_average = false;
-  private double m_maxAmps = 0;
+  // private double m_maxAmps = 0;
   private static BooleanSupplier isShooting = () -> false;
   private double m_leverValue;
   private NetworkTable m_table;
@@ -43,7 +43,7 @@ public class ShooterSubsystem extends SubsystemBase {
     m_shooterEncoder.setPosition(0);
     m_shooterMotor.setInverted(true);
     m_feederEncoder.setPosition(0);
-    m_feederMotor.setInverted(true);
+    m_feederMotor.setInverted(false);
   }
 
   public void shoot(double leverValue) { 
@@ -68,6 +68,10 @@ public class ShooterSubsystem extends SubsystemBase {
     // }
   }
 
+  public void miniShoot(double speed){
+    m_shooterMotor.set(speed);
+  }
+
   public void feed(double speed){ 
     m_feederSpeed = speed;
     m_feederMotor.set(m_feederSpeed);
@@ -80,18 +84,16 @@ public class ShooterSubsystem extends SubsystemBase {
   }
   
   public void resetAverage(){
-   // System.out.println("Previous Average Amps: "+ m_previousAmps/m_count);
-    // SmartDashboard.putNumber("Previous Average Amps", m_previousAmps/m_count);
-    m_previousAmps = 0;
-    // m_maxAmps = 0;
-    m_count = 1;
+  //   System.out.println("Previous Average Amps: "+ m_previousAmps/m_count);
+  //    SmartDashboard.putNumber("Previous Average Amps", m_previousAmps/m_count);
+  //   m_previousAmps = 0;
+  //    m_maxAmps = 0;
+  //   m_count = 1;
   }
 
   public void changeSpeed(double speed){
-    System.out.println("old speed: " + m_shooterSpeed);
     if(m_shooterSpeed+speed>=0 && m_shooterSpeed+speed<=1){
       m_shooterSpeed+=speed;
-      System.out.println("new speed: " + m_shooterSpeed);
     }
   }
   public void setShooterSpeed(double speed){
@@ -129,8 +131,9 @@ public class ShooterSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Feeder Current: ", m_feederMotor.getOutputCurrent());
     SmartDashboard.putNumber("Shooter Speed: ", m_shooterSpeed+(-0.15*m_leverValue));
     // SmartDashboard.putNumber("Shooter Current: ", m_shooterMotor.getOutputCurrent());
-    SmartDashboard.putNumber("ShootMotorVelocityRPM", m_shooterEncoder.getVelocity());
-    SmartDashboard.putNumber("FeedMotorVelocityRPM", m_feederEncoder.getVelocity());
+    SmartDashboard.putNumber("ShootMotorRPM", m_shooterEncoder.getVelocity());
+    SmartDashboard.putNumber("FeedMotorRPM", m_feederEncoder.getVelocity());
+    SmartDashboard.putBoolean("ShooterMotorRunning",isShooting.getAsBoolean());
   }
   @Override
   public void periodic() {

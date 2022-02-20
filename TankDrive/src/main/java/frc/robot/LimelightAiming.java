@@ -17,7 +17,7 @@ public class LimeLightAiming extends LimeLight{
     {
       SmartDashboard.putNumber("Limelight X", m_Limelight.getdegRotationToTarget());
       SmartDashboard.putNumber("Limelight Y", m_Limelight.getdegVerticalToTarget());
-      SmartDashboard.putNumber("Limelight Target Area", m_Limelight.getTargetArea());
+      SmartDashboard.putNumber("Target Area", m_Limelight.getTargetArea());
       SmartDashboard.putNumber("Estimated Target Distance", estimateTargetDistance());
       SmartDashboard.putString("Limelight Target", "Target found");
     }
