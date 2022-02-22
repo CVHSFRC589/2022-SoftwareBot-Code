@@ -6,7 +6,7 @@ package frc.robot;
  
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+//import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -95,7 +95,7 @@ public class RobotContainer {
 
     //Driving buttons
     JoystickButton j0DriveTurbo = new JoystickButton(m_joystick0, Constants.DRIVE_MAX_SPEED_BUTTON);
-   // JoystickButton j0FreezeDrive= new JoystickButton(m_joystick0, Constants.FREEZE_DRIVE_TRAIN_BUTTON);
+    JoystickButton j0ShootWithRPMInput = new JoystickButton(m_joystick0, Constants.SHOOTER_WITH_INPUT_RPM);
     // JoystickButton j0GoToDistance = new JoystickButton(m_joystick0, Constants.AUTO_DRIVE_DISTANCE_BUTTON);
     // JoystickButton j0TurnRight= new JoystickButton(m_joystick0, Constants.TURN_RIGHT_BUTTON);
     JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
@@ -105,7 +105,7 @@ public class RobotContainer {
 
     j0DriveTurbo.whenHeld(new SetSpeedScale(0.85,m_drivetrain));
     j0DriveTurbo.whenReleased((new SetSpeedScale(0.5,m_drivetrain)));
-    // j0FreezeDrive.whenPressed(new SetSpeedScale(0,m_drivetrain));
+    j0ShootWithRPMInput.whenPressed(new ShootRPM(1800, m_shooter));
     // j0GoToDistance.whenPressed(new DriveToDistance(78,0.3, m_drivetrain));
     // j0TurnRight.whenPressed(new TurnDegrees(0.1, 90, m_drivetrain));
     j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
@@ -125,19 +125,21 @@ public class RobotContainer {
     //Shooting buttons
     JoystickButton j2ToggleShooting = new JoystickButton(m_joystick2, Constants.TOGGLE_SHOOTING_BUTTON);
     JoystickButton j2Feed = new JoystickButton(m_joystick2, Constants.SHOOTER_FEEDER_MOTOR_BUTTON);
-    JoystickButton j2IncreaseSpeed = new JoystickButton(m_joystick2, Constants.INCREASE_SHOOTER_SPEED_BUTTON);
-    JoystickButton j2DecreaseSpeed = new JoystickButton(m_joystick2, Constants.DECREASE_SHOOTER_SPEED_BUTTON);
+    JoystickButton j2IncreaseSpeedTenths = new JoystickButton(m_joystick2, Constants.INCREASE_SHOOTER_SPEED_TENTHS_BUTTON);
+    JoystickButton j2IncreaseSpeedHundredths = new JoystickButton(m_joystick2, Constants.INCREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON);
+    JoystickButton j2DecreaseSpeedTenths = new JoystickButton(m_joystick2, Constants.DECREASE_SHOOTER_SPEED_TENTHS_BUTTON);
+    JoystickButton j2DecreaseSpeedHundredths = new JoystickButton(m_joystick1, Constants.DECREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON);
     JoystickButton j2MiniShoot = new JoystickButton(m_joystick2, Constants.MINI_SHOOT_BUTTON);
-    // JoystickButton j1ResetAverageAmps = new JoystickButton(m_joystick1, Constants.RESET_AVERAGE_SHOOTER_AMPS_BUTTON);
-
+    
     j2Feed.whenHeld(new FeederStart(m_shooter));
     j2Feed.whenReleased(new FeederStop(m_shooter));
     j2ToggleShooting.whenPressed(new ToggleShooting(m_shooter));
-    j2IncreaseSpeed.whenPressed(new ChangeShooterSpeed(.1, m_shooter));
-    j2DecreaseSpeed.whenPressed(new ChangeShooterSpeed(-.1, m_shooter));
+    j2IncreaseSpeedTenths.whenPressed(new ChangeShooterSpeed(.1, m_shooter));
+    j2IncreaseSpeedHundredths.whenPressed(new ChangeShooterSpeed(.01, m_shooter));
+    j2DecreaseSpeedTenths.whenPressed(new ChangeShooterSpeed(-.1, m_shooter));
+    j2DecreaseSpeedHundredths.whenPressed(new ChangeShooterSpeed(-0.01, m_shooter));
     j2MiniShoot.whenHeld(new MiniShootStart(m_shooter));
     j2MiniShoot.whenReleased(new MiniShootStop(m_shooter));
-    // j1ResetAverageAmps.whenPressed(new ResetAverageAmps(m_shooter));
 
      //Climbing buttons
      JoystickButton j2Extend = new JoystickButton(m_joystick2, Constants.EXTEND_CLIMBER_ARMS_BUTTON);

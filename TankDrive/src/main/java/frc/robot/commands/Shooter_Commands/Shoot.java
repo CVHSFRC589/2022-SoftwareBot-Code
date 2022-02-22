@@ -16,7 +16,8 @@ import frc.robot.Constants;
 public class Shoot extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_shootSubsystem;
-  private double m_lever;
+  // private double m_lever;
+  private DoubleSupplier m_lever;
   private NetworkTable m_table;
   private NetworkTableEntry m_pattern;
   /**
@@ -25,14 +26,6 @@ public class Shoot extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   public Shoot(DoubleSupplier lever, ShooterSubsystem subsystem) {
-    m_lever = lever.getAsDouble();
-    m_shootSubsystem = subsystem;
-    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
-    m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
-  }
-  public Shoot(double lever, ShooterSubsystem subsystem) {
     m_lever = lever;
     m_shootSubsystem = subsystem;
     m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
@@ -40,6 +33,14 @@ public class Shoot extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
+  // public Shoot(double lever, ShooterSubsystem subsystem) {
+  //   m_lever = lever;
+  //   m_shootSubsystem = subsystem;
+  //   m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+  //   m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
+  //   // Use addRequirements() here to declare subsystem dependencies.
+  //   addRequirements(subsystem);
+  // }
   
 
   // Called when the command is initially scheduled.
@@ -51,7 +52,7 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.shoot(m_lever);
+    m_shootSubsystem.shoot(m_lever.getAsDouble());
     if(m_shootSubsystem.getShooterEncoderSpeed() > 25){
       if(m_shootSubsystem.getShooterEncoderSpeed() < 667){
         m_pattern.setString("red");

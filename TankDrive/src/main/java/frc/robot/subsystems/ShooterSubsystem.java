@@ -20,7 +20,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final RelativeEncoder m_shooterEncoder = m_shooterMotor.getEncoder();
   private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_feederEncoder = m_feederMotor.getEncoder();
-  private double m_shooterSpeed = 0.3;
+  private double m_shooterSpeed = 0.7;
   private double m_feederSpeed = 0;
   // private int m_count = 0;
   // private double m_previousAmps = 0;
@@ -66,6 +66,9 @@ public class ShooterSubsystem extends SubsystemBase {
     //     SmartDashboard.putNumber("Maximum Amps", m_maxAmps);
     //   }
     // }
+  }
+  public void shootInput(double motorInput) { 
+    m_shooterMotor.set(motorInput);
   }
 
   public void miniShoot(double speed){
@@ -116,7 +119,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getShooterEncoderSpeed(){
-    return m_shooterEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
+    // return m_shooterEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
+    return m_shooterEncoder.getVelocity();
     //change constant to actual gear ratio later
   }
 

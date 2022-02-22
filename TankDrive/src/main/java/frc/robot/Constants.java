@@ -16,10 +16,10 @@ public final class Constants {
     //Motor/Solenoid Ports
     public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11 
     public static final int DRIVE_RIGHT_MOTOR_PORT = 12; //12
-    public static final int SHOOTER_MOTOR_PORT = 30; //21    
+    public static final int SHOOTER_MOTOR_PORT = 30; //21 --> probably going to change (??)  
     public static final int FEEDER_MOTOR_PORT = 20; //20     
     public static final int INTAKE_MOTOR_PORT = 21; //30     
-    public static final int VISUAL_FEEDBACK_MOTOR_PORT = 0; //PWM port 0
+    public static final int VISUAL_FEEDBACK_MOTOR_PORT = 9; //PWM port 9
 
     public static final int CLIMBER_LEFT_ARM_ON = 0;
     public static final int CLIMBER_LEFT_ARM_OFF = 1;
@@ -34,7 +34,7 @@ public final class Constants {
     
 
     //Joystick 0 Buttons
-    //public static final int EMPTY_BUTTON = 1;
+    public static final int SHOOTER_WITH_INPUT_RPM = 1;
     public static final int DRIVE_MAX_SPEED_BUTTON = 2;
     public static final int FREEZE_DRIVE_TRAIN_BUTTON = 3;
     //public static final int EMPTY_BUTTON = 4;
@@ -47,15 +47,14 @@ public final class Constants {
     public static final int LINE_UP_TARGET_BUTTON = 11;
 
 
-
-    //Joystick 1 Buttons
+    //Joystick 2 Buttons
     public static final int SHOOTER_FEEDER_MOTOR_BUTTON = 1;
-    // public static final int empty = 2;
+    public static final int MINI_SHOOT_BUTTON = 2;
     public static final int TOGGLE_SHOOTING_BUTTON = 3;
-    public static final int INCREASE_SHOOTER_SPEED_BUTTON = 4;
-    public static final int DECREASE_SHOOTER_SPEED_BUTTON = 5;
-    public static final int MINI_SHOOT_BUTTON = 6;
-    public static final int RESET_AVERAGE_SHOOTER_AMPS_BUTTON = 7;
+    public static final int INCREASE_SHOOTER_SPEED_TENTHS_BUTTON = 4;
+    public static final int DECREASE_SHOOTER_SPEED_TENTHS_BUTTON = 5;
+    public static final int INCREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON = 6;
+    public static final int DECREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON = 7;
     public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
     public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
     public static final int RETRACT_CLIMBER_ARMS_BUTTON = 10;

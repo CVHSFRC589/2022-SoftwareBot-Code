@@ -23,7 +23,7 @@ public class AutoPatternScrimmage extends SequentialCommandGroup {
       new DriveToDistance(-84,.3, drive), //.3 Minimum Speed
       new Pause(.5),
       new ToggleShooting(shoot),
-      new Shoot(0, shoot),
+      // new Shoot(0, shoot),
       new Pause(3),
       new FeederStart(shoot),
       new Pause(1.5),
