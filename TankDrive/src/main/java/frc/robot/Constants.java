@@ -15,11 +15,11 @@ package frc.robot;
 public final class Constants {
     //Motor/Solenoid Ports
     public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11 
-    public static final int DRIVE_RIGHT_MOTOR_PORT = 12; //12
-    public static final int SHOOTER_MOTOR_PORT = 30; //21 --> probably going to change (??)  
+    public static final int DRIVE_RIGHT_MOTOR_PORT = 30; //12
+    public static final int SHOOTER_MOTOR_PORT = 12; //21 --> probably going to change (30)  
     public static final int FEEDER_MOTOR_PORT = 20; //20     
-    public static final int INTAKE_MOTOR_PORT = 21; //30     
-    public static final int VISUAL_FEEDBACK_MOTOR_PORT = 9; //PWM port 9
+    public static final int INTAKE_MOTOR_PORT = 21; //30 (21)     
+    public static final int VISUAL_FEEDBACK_MOTOR_PORT = 9; //PWM port 9 on both
 
     public static final int CLIMBER_LEFT_ARM_ON = 0;
     public static final int CLIMBER_LEFT_ARM_OFF = 1;
@@ -79,5 +79,14 @@ public final class Constants {
     public static final String VISUAL_FEEDBACK_TABLE_NAME = "Visual Feedback";
     public static final String VISUAL_FEEDBACK_TABLE_ENTRY_NAME = "pattern";
     public static final String PATTERN_FINISHED_ENTRY_NAME = "pattern done";
-    
+    public static final double MAX_SHOOTER_RPM = 4900.0;
+    public static final double STARTING_SHOOTER_RPM = 2500;
+
+    public static final double kP = 5e-5; 
+    public static final double kI = 1e-6;
+    public static final double kD = 5e-5; 
+    public static final double kIz = 0; 
+    public static final double kFF = 0.000015; 
+    public static final double kMaxOutput = 1; 
+    public static final double kMinOutput = -1;
 }

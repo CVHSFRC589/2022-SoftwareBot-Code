@@ -31,7 +31,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
-
         m_leftMotor.setInverted(true); //true
         m_rightMotor.setInverted(false); //false
         reset();

@@ -8,6 +8,8 @@ import java.util.function.BooleanSupplier;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAlternateEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.*;
@@ -15,31 +17,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ShooterSubsystem extends SubsystemBase {
-  //private final CANSparkMax m_shooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR_PORT, MotorType.kBrushless);
-  private final CANSparkMax m_shooterMotor = new CANSparkMax(666, MotorType.kBrushless);
+public class ShooterSubsystemPID extends SubsystemBase {
+  private final CANSparkMax m_shooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_shooterEncoder = m_shooterMotor.getEncoder();
-  // private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
-  private final CANSparkMax m_feederMotor = new CANSparkMax(404, MotorType.kBrushless);
-  
+  private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_feederEncoder = m_feederMotor.getEncoder();
-  private double m_shooterSpeed = 0.7;
+  private final SparkMaxPIDController m_shooterPIDController = m_shooterMotor.getPIDController();
+  private double m_shooterRPM = Constants.STARTING_SHOOTER_RPM;
   private double m_feederSpeed = 0;
   // private int m_count = 0;
   // private double m_previousAmps = 0;
   private boolean m_average = false;
   // private double m_maxAmps = 0;
   private static BooleanSupplier isShooting = () -> false;
-  private double m_leverValue;
+  private double m_leverRPM;
   private NetworkTable m_table;
   private NetworkTableEntry m_patternOver;
 
-
-
-
-
-  /** Creates a new ExampleSubsystem. */
-  public ShooterSubsystem() {
+  /** Creates a new ShooterSubsystemPID. */
+  public ShooterSubsystemPID() {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
 
@@ -47,31 +43,31 @@ public class ShooterSubsystem extends SubsystemBase {
     m_shooterMotor.setInverted(true);
     m_feederEncoder.setPosition(0);
     m_feederMotor.setInverted(false);
+
+    // set PID coefficients
+    m_shooterPIDController.setP(Constants.kP);
+    m_shooterPIDController.setI(Constants.kI);
+    m_shooterPIDController.setD(Constants.kD);
+    m_shooterPIDController.setIZone(Constants.kIz);
+    m_shooterPIDController.setFF(Constants.kFF);
+    m_shooterPIDController.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
   }
 
   public void shoot(double leverValue) { 
-    m_leverValue = leverValue;
+    m_leverRPM = leverValue*-.15*Constants.MAX_SHOOTER_RPM;
     if(isShooting.getAsBoolean())
     {
-      m_shooterMotor.set(m_shooterSpeed+(-0.15*m_leverValue));
+      //m_shooterMotor.set(m_shooterRPM+(-0.15*m_leverValue));
+      m_shooterPIDController.setReference(m_shooterRPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
     }
     else
     {
-      m_shooterMotor.set(0);
+      m_shooterPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
     }
-    // if(m_average){
-    //   m_previousAmps += m_shooterMotor.getOutputCurrent();
-    //   SmartDashboard.putNumber("Average Amps: ", m_previousAmps/m_count);
-    //   m_count++;
-    //   if(m_shooterMotor.getOutputCurrent() > m_maxAmps)
-    //   {
-    //     m_maxAmps = m_shooterMotor.getOutputCurrent();
-    //     SmartDashboard.putNumber("Maximum Amps", m_maxAmps);
-    //   }
-    // }
   }
-  public void shootInput(double motorInput) { 
-    m_shooterMotor.set(motorInput);
+  
+  public void shootRPM(double RPM) { 
+    m_shooterPIDController.setReference(RPM, CANSparkMax.ControlType.kVelocity);
   }
 
   public void miniShoot(double speed){
@@ -98,16 +94,16 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void changeSpeed(double speed){
-    if(m_shooterSpeed+speed>=0 && m_shooterSpeed+speed<=1){
-      m_shooterSpeed+=speed;
+    if(m_shooterRPM+speed>=0 && m_shooterRPM+speed<=1){
+      m_shooterRPM+=speed;
     }
   }
   public void setShooterSpeed(double speed){
-    m_shooterSpeed = speed;
+    m_shooterRPM = speed;
   }
 
   public double getShooterSpeed(){
-    return m_shooterSpeed;
+    return m_shooterRPM;
   }
 
   public void toggleShooting() {
@@ -136,7 +132,7 @@ public class ShooterSubsystem extends SubsystemBase {
   {
     SmartDashboard.putNumber("Feeder Speed: ", m_feederSpeed);
     // SmartDashboard.putNumber("Feeder Current: ", m_feederMotor.getOutputCurrent());
-    SmartDashboard.putNumber("Shooter Speed: ", m_shooterSpeed+(-0.15*m_leverValue));
+    SmartDashboard.putNumber("Shooter Speed: ", m_shooterRPM+m_leverRPM);
     // SmartDashboard.putNumber("Shooter Current: ", m_shooterMotor.getOutputCurrent());
     SmartDashboard.putNumber("ShootMotorRPM", m_shooterEncoder.getVelocity());
     SmartDashboard.putNumber("FeedMotorRPM", m_feederEncoder.getVelocity());

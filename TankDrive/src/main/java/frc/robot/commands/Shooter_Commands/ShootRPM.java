@@ -4,26 +4,20 @@
 
 package frc.robot.commands.Shooter_Commands;
 
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShooterSubsystemPID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.networktables.*;
-import frc.robot.Constants;
 
 /** An example command that uses an example subsystem. */
 public class ShootRPM extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystem m_shootSubsystem;
+  private final ShooterSubsystemPID m_shootSubsystem;
   private double m_RPM;
-  private double motorInput = 0;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShootRPM(double RPM, ShooterSubsystem subsystem) {
+  public ShootRPM(double RPM, ShooterSubsystemPID subsystem) {
     m_RPM = RPM;
     m_shootSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -38,16 +32,16 @@ public class ShootRPM extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_shootSubsystem.getShooterEncoderSpeed() < m_RPM)
-    {
-      motorInput += Math.pow(m_RPM-m_shootSubsystem.getShooterEncoderSpeed(), 2)/100000000;
-    }
-    else if(m_shootSubsystem.getShooterEncoderSpeed() > m_RPM)
-    {
-      motorInput -= Math.pow(m_RPM-m_shootSubsystem.getShooterEncoderSpeed(), 2)/100000000;
-    }     
+    // if(m_shootSubsystem.getShooterEncoderSpeed() < (m_RPM + 5))
+    // {
+    //   motorInput += Math.pow(m_RPM-m_shootSubsystem.getShooterEncoderSpeed(), 2)/100000000 + 0.0001;
+    // }
+    // else if(m_shootSubsystem.getShooterEncoderSpeed() > (m_RPM - 5))
+    // {
+    //   motorInput -= Math.pow(m_RPM-m_shootSubsystem.getShooterEncoderSpeed(), 2)/100000000 + 0.0001;
+    // }     
 
-    m_shootSubsystem.shootInput(motorInput);
+    m_shootSubsystem.shootRPM(m_RPM);
     // parabola opens upward
   }
 

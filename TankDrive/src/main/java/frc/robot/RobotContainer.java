@@ -40,6 +40,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final LimeLightAiming m_limeLight = new LimeLightAiming();
   private final VisualFeedbackSubsystem m_VFS = new VisualFeedbackSubsystem();//VFS means visualfeedbacksubsystem
+  private final ShooterSubsystemPID m_shooterPID= new ShooterSubsystemPID();
 
   //joysticks we are going to use
   private final Joystick m_joystick0 = new Joystick(0);
@@ -71,6 +72,7 @@ public class RobotContainer {
     //  );
 
       m_shooter.setDefaultCommand(new Shoot(() -> m_joystick2.getZ(), m_shooter));
+      m_shooterPID.setDefaultCommand(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
 
       SmartDashboard.putData(m_drivetrain);
       SmartDashboard.putData(m_climber);
@@ -105,7 +107,7 @@ public class RobotContainer {
 
     j0DriveTurbo.whenHeld(new SetSpeedScale(0.85,m_drivetrain));
     j0DriveTurbo.whenReleased((new SetSpeedScale(0.5,m_drivetrain)));
-    j0ShootWithRPMInput.whenPressed(new ShootRPM(1800, m_shooter));
+    j0ShootWithRPMInput.whenPressed(new ShootRPM(1900, m_shooterPID));
     // j0GoToDistance.whenPressed(new DriveToDistance(78,0.3, m_drivetrain));
     // j0TurnRight.whenPressed(new TurnDegrees(0.1, 90, m_drivetrain));
     j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
@@ -133,7 +135,7 @@ public class RobotContainer {
     
     j2Feed.whenHeld(new FeederStart(m_shooter));
     j2Feed.whenReleased(new FeederStop(m_shooter));
-    j2ToggleShooting.whenPressed(new ToggleShooting(m_shooter));
+    j2ToggleShooting.whenPressed(new TogglePIDShooting(m_shooterPID));//TODO: Swap out ShooterSubsystem for ShooterSubsystemPID
     j2IncreaseSpeedTenths.whenPressed(new ChangeShooterSpeed(.1, m_shooter));
     j2IncreaseSpeedHundredths.whenPressed(new ChangeShooterSpeed(.01, m_shooter));
     j2DecreaseSpeedTenths.whenPressed(new ChangeShooterSpeed(-.1, m_shooter));

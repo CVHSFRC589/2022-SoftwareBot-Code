@@ -8,12 +8,17 @@ import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.PatternMap;
+
 public class RetractBothArms extends CommandBase {
   /** Creates a new raiseBothArms. */
   private ClimberSubsystem m_climber;
   private NetworkTable m_table;
   private NetworkTableEntry m_pattern;
   private NetworkTableEntry m_patternOver;
+  //private double[] patterns = {-0.97, -0.95, -0.93, -0.89, -0.79, -0.61, -0.57, -0.53, -0.41, -0.29, -0.21, -0.17, -0.07, -0.01, 0.13};
+  private PatternMap patterns = new PatternMap();
+  private int iterator = 0;
 
   public RetractBothArms(ClimberSubsystem subsystem) {
     m_climber=subsystem;
@@ -35,8 +40,10 @@ public class RetractBothArms extends CommandBase {
     m_climber.pullLeft();
     m_climber.pullRight();
     m_patternOver.setString("nope");
-    m_pattern.setString("rainbow party palette");
-
+    m_pattern.setString(patterns.getPattern(iterator));
+    if(iterator<patterns.getPatternsNum()) { //Number of 5V patterns
+      iterator++;
+    } else {iterator=0;}      //TODO: Color cycle
   }
 
   // Called once the command ends or is interrupted.
