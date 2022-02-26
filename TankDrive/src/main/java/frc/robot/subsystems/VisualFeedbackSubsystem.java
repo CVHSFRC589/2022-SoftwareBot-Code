@@ -20,6 +20,7 @@ public class VisualFeedbackSubsystem extends SubsystemBase {
   private NetworkTableEntry m_patternOver;
   private DriverStation.Alliance m_alliance;
   private PatternMap m_patternMap;
+  private boolean m_override;
 
   public VisualFeedbackSubsystem() {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
@@ -36,12 +37,17 @@ public class VisualFeedbackSubsystem extends SubsystemBase {
       defaultColor = "blue";
     }
   }
+  public void toggleOverride()
+{
+    m_override = !m_override;
+  }
   private void giveVisualFeedback(String color){
     m_visualFeedbackDevice.set(m_patternMap.getPattern(color));
   }
   
   private boolean allDone(){
-    if(m_patternOver.getString("").equals("done")){
+    if(m_patternOver.getString("").equals("done"))
+    {
       return true;
     }
     else
@@ -53,7 +59,10 @@ public class VisualFeedbackSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(allDone()){
+    if(m_override){
+      m_pattern.setString("black");
+    }
+    else if(allDone()){
       m_pattern.setString(defaultColor);
     }
     giveVisualFeedback(m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME).getString(defaultColor));

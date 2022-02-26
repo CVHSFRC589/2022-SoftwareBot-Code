@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FeederStop extends CommandBase {
   /** Creates a new Feed. */
-  private final ShooterSubsystemPID m_ShooterSubsystem;
+  private final ShooterSubsystemPID m_shootSubsystem;
 
   public FeederStop(ShooterSubsystemPID subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_ShooterSubsystem = subsystem;
+    m_shootSubsystem = subsystem;
     addRequirements(subsystem);
   }
 
@@ -24,7 +24,7 @@ public class FeederStop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ShooterSubsystem.feed(0);
+    m_shootSubsystem.feed(0);
   }
 
   // Called once the command ends or is interrupted.

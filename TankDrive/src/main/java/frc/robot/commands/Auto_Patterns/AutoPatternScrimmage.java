@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Auto_Patterns;
+import frc.robot.Constants;
 import frc.robot.commands.Pause;
 import frc.robot.commands.Drive_Commands.*;
 import frc.robot.commands.Shooter_Commands.*;
@@ -22,13 +23,13 @@ public class AutoPatternScrimmage extends SequentialCommandGroup {
     addCommands(
       new DriveToDistance(-84,.3, drive), //.3 Minimum Speed
       new Pause(.5),
-      new TogglePIDShooting(shoot),
+      new ShootRPM(Constants.CLOSE_SHOOTING_RPM, shoot),
       // new Shoot(0, shoot),
       new Pause(3),
       new FeederStart(shoot),
       new Pause(1.5),
       new FeederStop(shoot),
-      new TogglePIDShooting(shoot)
+      new ShootRPM(0, shoot)
     );
   }
 }

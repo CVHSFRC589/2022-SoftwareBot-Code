@@ -22,8 +22,8 @@ public class ClimberSubsystem extends SubsystemBase {
     m_leftArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_LEFT_ARM_ON, Constants.CLIMBER_LEFT_ARM_OFF);
     m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_RIGHT_ARM_ON, Constants.CLIMBER_RIGHT_ARM_OFF);
     m_compressor = new Compressor(PneumaticsModuleType.CTREPCM); //Also turns on the compressor
-    // m_compressor.enableDigital();
-    m_compressor.disable();
+    m_compressor.enableDigital();
+    // m_compressor.disable();
     
     
   }

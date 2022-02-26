@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.BooleanSupplier;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -24,17 +22,14 @@ public class ShooterSubsystemPID extends SubsystemBase {
   private final SparkMaxPIDController m_shooterPIDController = m_shooterMotor.getPIDController();
   private double m_shooterRPM = Constants.STARTING_SHOOTER_RPM;
   private double m_feederSpeed = 0;
-  private static BooleanSupplier isShooting = () -> false;
   private double m_leverRPM;
   private NetworkTable m_table;
-  private NetworkTableEntry m_patternOver;
   private NetworkTableEntry m_rpm;
 
 
   /** Creates a new ShooterSubsystemPID. */
   public ShooterSubsystemPID() {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
-    m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
     m_rpm = m_table.getEntry(Constants.SHOOTER_RPM_ENTRY_NAME);
     m_rpm.setDouble(Constants.MAX_SHOOTER_RPM*.25);
 
@@ -54,19 +49,12 @@ public class ShooterSubsystemPID extends SubsystemBase {
 
   public void shoot(double leverValue) { 
     m_leverRPM = leverValue*-.075*Constants.MAX_SHOOTER_RPM;
-    if(isShooting.getAsBoolean())
-    {
-      //m_shooterMotor.set(m_shooterRPM+(-0.15*m_leverValue));
-      m_shooterPIDController.setReference(m_shooterRPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
-    }
-    else
-    {
-      m_shooterPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-    }
+    m_shooterPIDController.setReference(m_shooterRPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
   }
 
-  public void shootRPM(double RPM) { 
-    m_shooterPIDController.setReference(RPM, CANSparkMax.ControlType.kVelocity);
+  public void shootRPM(double RPM, double leverValue) { 
+    m_leverRPM = leverValue*-.075*Constants.MAX_SHOOTER_RPM;
+    m_shooterPIDController.setReference(RPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
   }
 
   public void feed(double speed){ 
@@ -87,32 +75,6 @@ public class ShooterSubsystemPID extends SubsystemBase {
     return m_shooterRPM;
   }
 
-  public void toggleShooting() {
-    if(isShooting.getAsBoolean()){
-        isShooting = () -> false;
-        m_patternOver.setString("done");
-    }
-    else{
-        isShooting = () -> true;
-        m_patternOver.setString("nope");
-    }
-  }
-
-  public void setShooting(boolean shooting) {
-    if(!shooting){
-        isShooting = () -> false;
-        m_patternOver.setString("done");
-    }
-    else{
-        isShooting = () -> true;
-        m_patternOver.setString("nope");
-    }
-  }
-
-  public boolean getShooting(){
-    return isShooting.getAsBoolean();
-  }
-
   public double getShooterEncoderSpeed(){
     // return m_shooterEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
     return m_shooterEncoder.getVelocity();
@@ -126,13 +88,10 @@ public class ShooterSubsystemPID extends SubsystemBase {
   
   public void updateShuffleboard()
   {
-    SmartDashboard.putNumber("Feeder Speed: ", m_feederSpeed);
-    // SmartDashboard.putNumber("Feeder Current: ", m_feederMotor.getOutputCurrent());
     SmartDashboard.putNumber("Shooter Speed: ", m_shooterRPM+m_leverRPM);
-    // SmartDashboard.putNumber("Shooter Current: ", m_shooterMotor.getOutputCurrent());
     SmartDashboard.putNumber("ShootMotorRPM", m_shooterEncoder.getVelocity());
     SmartDashboard.putNumber("FeedMotorRPM", m_feederEncoder.getVelocity());
-    SmartDashboard.putBoolean("ShooterMotorRunning",isShooting.getAsBoolean());
+    SmartDashboard.putNumber("LeverValue", m_leverRPM/.075/Constants.MAX_SHOOTER_RPM);
   }
   @Override
   public void periodic() {

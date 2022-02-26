@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimeLightAiming;
+import frc.robot.ControlMode.StreamType;
  
 public class DriveTrainSubsystem extends SubsystemBase {
     private final CANSparkMax m_leftMotor = new CANSparkMax(Constants.DRIVE_LEFT_MOTOR_PORT, MotorType.kBrushless);
@@ -103,6 +104,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
         rightEncoder.setPosition(position);
     }
 
+    public void switchPIP()
+    {
+      if(m_aiming.getStream().equals(StreamType.kPiPSecondary)){
+        m_aiming.setStream(StreamType.kPiPMain);
+      }else
+      {
+        m_aiming.setStream(StreamType.kPiPSecondary);
+      } 
+    }
+
     public void updateShuffleboard()
     {
       SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());
@@ -115,7 +126,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     m_aiming.updateLimelightValues();
-    updateShuffleboard();
+    //updateShuffleboard();
     //log();
   }
 }

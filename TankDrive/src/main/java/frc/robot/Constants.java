@@ -40,7 +40,7 @@ public final class Constants {
     //public static final int EMPTY_BUTTON = 4;
     public static final int GO_TO_TARGET_DISTANCE_BUTTON = 5;
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
-    //public static final int EMPTY_BUTTON = 7;
+    public static final int TOGGLE_LED_BUTTON = 7;
     public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
     public static final int TURN_RIGHT_BUTTON = 9;
     public static final int FACE_TARGET_BUTTON = 10;

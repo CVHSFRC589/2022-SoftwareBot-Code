@@ -59,6 +59,8 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
     SmartDashboard.putData("SetRPM", new SetRPMFromShuffleboard(m_shooterPID));
+    SmartDashboard.putData("SwitchPiP", new SwitchPIP(m_drivetrain));
+
 
     m_drivetrain.setDefaultCommand( //for arcade drive or tank drive
        new Drive(
@@ -66,22 +68,12 @@ public class RobotContainer {
         )
      );
 
-     //  m_drivetrain.setDefaultCommand( //for no driving
-    //    new Drive(
-    //       () -> 0,() ->  0,() -> 0, m_drivetrain
-    //     )
-    //  );
-
-      // m_shooter.setDefaultCommand(new Shoot(() -> m_joystick2.getZ(), m_shooter));
-      m_shooterPID.setDefaultCommand(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
-
       SmartDashboard.putData(m_drivetrain);
       SmartDashboard.putData(m_climber);
       SmartDashboard.putData(m_shooterPID);
       //SmartDashboard.putData(m_intake);
       SmartDashboard.updateValues();
 
-      m_drivetrain.updateShuffleboard();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -116,14 +108,12 @@ public class RobotContainer {
     j0LineUpTarget.whenPressed(new LineUpTarget(0.1, m_limeLight, m_drivetrain));
     j0GoToTargetDistance.whenPressed(new DriveToGivenTargetDistance(Constants.SHOOTING_DISTANCE, m_limeLight, m_drivetrain));
 
-   //Intake buttons
-     JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
-     JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
-     
-     j2ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
-     j2StartIntakeMotor.whenPressed(new SetIntakeMotor(m_intake, 0.4));
+     //Toggle VFS
+     //Intake buttons
+     JoystickButton j0ToggleVisualFeedback = new JoystickButton(m_joystick0, Constants.TOGGLE_LED_BUTTON);
+     j0ToggleVisualFeedback.whenPressed(new ToggleLEDs(m_VFS));
 
-    /**Joystick 1 Buttons**/
+    /**Joystick 2 Buttons**/
 
     //Shooting buttons
     JoystickButton j2ToggleShooting = new JoystickButton(m_joystick2, Constants.TOGGLE_SHOOTING_BUTTON);
@@ -134,9 +124,9 @@ public class RobotContainer {
     
     j2Feed.whenHeld(new FeederStart(m_shooterPID));
     j2Feed.whenReleased(new FeederStop(m_shooterPID));
-    j2ToggleShooting.whenPressed(new TogglePIDShooting(m_shooterPID));//TODO: Swap out ShooterSubsystem for ShooterSubsystemPID
-    j2CloseShoot.whenPressed(new ShootRPM(Constants.CLOSE_SHOOTING_RPM, m_shooterPID));
-    j2FarShoot.whenPressed(new ShootRPM(Constants.FAR_SHOOTING_RPM, m_shooterPID));  
+    j2ToggleShooting.toggleWhenPressed(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
+    j2CloseShoot.toggleWhenPressed(new ShootRPM(Constants.CLOSE_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));
+    j2FarShoot.toggleWhenPressed(new ShootRPM(Constants.FAR_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));  
     j2MiniShoot.whenHeld(new ShootRPM(250,m_shooterPID));
     j2MiniShoot.whenReleased(new ShootRPM(0,m_shooterPID));
 
@@ -146,6 +136,13 @@ public class RobotContainer {
  
      j2Extend.whenPressed(new ExtendBothArms(m_climber));
      j2Retract.whenPressed(new RetractBothArms(m_climber));
+
+      //Intake buttons
+      JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
+      JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
+      
+      j2ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
+      j2StartIntakeMotor.whenPressed(new SetIntakeMotor(m_intake, 0.4));
   }
  
   /**

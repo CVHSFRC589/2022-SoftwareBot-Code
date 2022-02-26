@@ -33,12 +33,13 @@ public class SetRPMFromShuffleboard extends CommandBase {
 
   @Override
   public void execute(){
-    m_shooter.shootRPM(m_rpm.getDouble(0));
+    m_shooter.shootRPM(m_rpm.getDouble(0), 0);
   }
 
 
   @Override
   public void end(boolean interrupted) {
+    m_shooter.shootRPM(0, 0);
   }
 
   
@@ -46,6 +47,6 @@ public class SetRPMFromShuffleboard extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_rpm.getDouble(0) == 0;
   }
 }
