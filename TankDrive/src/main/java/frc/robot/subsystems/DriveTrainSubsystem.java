@@ -105,8 +105,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public void updateShuffleboard()
     {
-      SmartDashboard.putNumber("LeftMotorDistanceInches", getLeftEncoderInches());
-      SmartDashboard.putNumber("RightMotorDistanceInches", getRightEncoderInches());
+      SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());
+      SmartDashboard.putNumber("RightInches", getRightEncoderInches());
       // SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
       // SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
     }
@@ -114,7 +114,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       /** Call log method every loop. */
   @Override
   public void periodic() {
-    // m_aiming.updateLimelightValues();
+    m_aiming.updateLimelightValues();
     updateShuffleboard();
     //log();
   }

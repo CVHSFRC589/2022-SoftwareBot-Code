@@ -20,6 +20,7 @@ public class LimeLightAiming extends LimeLight{
       SmartDashboard.putNumber("Target Area", m_Limelight.getTargetArea());
       SmartDashboard.putNumber("Estimated Target Distance", estimateTargetDistance());
       SmartDashboard.putString("Limelight Target", "Target found");
+      SmartDashboard.putNumber("Estimated RPM", inchesToRPM(estimateTargetDistance()));
     }
     else{
       SmartDashboard.putString("Limelight Target", "No Target found");
@@ -32,10 +33,15 @@ public class LimeLightAiming extends LimeLight{
     double finangle = Constants.LIMELIGHT_MOUNT_ANGLE + m_Limelight.getdegVerticalToTarget();
     finangle = Math.toRadians(finangle);
     double finratio = Math.tan(finangle); //Math.tan takes in radians
-    SmartDashboard.putNumber("FinHeight", finheight);
-    SmartDashboard.putNumber("Finratio", finratio);
-    SmartDashboard.putNumber("Finangle", finangle);
+    // SmartDashboard.putNumber("FinHeight", finheight);
+    // SmartDashboard.putNumber("Finratio", finratio);
+    // SmartDashboard.putNumber("Finangle", finangle);
 
     return (finheight)/finratio;
+  }
+
+  public double inchesToRPM(double inches){
+    return -2126 + 117*inches + (-1.14*Math.pow(inches, 2))+3.67e-3*Math.pow(inches, 3);
+
   }
 }

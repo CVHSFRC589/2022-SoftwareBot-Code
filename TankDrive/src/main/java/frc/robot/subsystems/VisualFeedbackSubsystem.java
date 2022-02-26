@@ -22,7 +22,7 @@ public class VisualFeedbackSubsystem extends SubsystemBase {
   private PatternMap m_patternMap;
 
   public VisualFeedbackSubsystem() {
-    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
     m_patternMap = new PatternMap();

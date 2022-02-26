@@ -18,7 +18,7 @@ public final class Constants {
     public static final int DRIVE_RIGHT_MOTOR_PORT = 30; //12
     public static final int SHOOTER_MOTOR_PORT = 12; //21 --> probably going to change (30)  
     public static final int FEEDER_MOTOR_PORT = 20; //20     
-    public static final int INTAKE_MOTOR_PORT = 21; //30 (21)     
+    public static final int INTAKE_MOTOR_PORT = 21; //30  
     public static final int VISUAL_FEEDBACK_MOTOR_PORT = 9; //PWM port 9 on both
 
     public static final int CLIMBER_LEFT_ARM_ON = 0;
@@ -51,10 +51,10 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_MOTOR_BUTTON = 1;
     public static final int MINI_SHOOT_BUTTON = 2;
     public static final int TOGGLE_SHOOTING_BUTTON = 3;
-    public static final int INCREASE_SHOOTER_SPEED_TENTHS_BUTTON = 4;
-    public static final int DECREASE_SHOOTER_SPEED_TENTHS_BUTTON = 5;
-    public static final int INCREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON = 6;
-    public static final int DECREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON = 7;
+    public static final int CLOSE_SHOOTING_BUTTON = 4;
+    public static final int FAR_SHOOTING_BUTTON = 5;
+    // public static final int EMPTY_BUTTON = 6;
+    // public static final int EMPTY_BUTTON = 7;
     public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
     public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
     public static final int RETRACT_CLIMBER_ARMS_BUTTON = 10;
@@ -70,17 +70,21 @@ public final class Constants {
     public static final double DRIVE_GEAR_RATIO = 10.71;
     public static final double SHOOTER_GEAR_RATIO = 1.25;
 
-    public static final double HUB_HEIGHT = 104;
+    public static final double HUB_HEIGHT = 36;//108
     public static final double LIMELIGHT_HEIGHT = 8;
-    public static final double LIMELIGHT_MOUNT_ANGLE = 32;
+    public static final double LIMELIGHT_MOUNT_ANGLE = 35;
     public static final double SHOOTING_DISTANCE = 36; //Arbitrary num, We dont have a shooter yet
 
     //misc
-    public static final String VISUAL_FEEDBACK_TABLE_NAME = "Visual Feedback";
-    public static final String VISUAL_FEEDBACK_TABLE_ENTRY_NAME = "pattern";
-    public static final String PATTERN_FINISHED_ENTRY_NAME = "pattern done";
+    public static final String NETWORK_TABLE_NAME = "Visual Feedback";
+    public static final String VISUAL_FEEDBACK_TABLE_ENTRY_NAME = "VF Pattern";
+    public static final String PATTERN_FINISHED_ENTRY_NAME = "VF Pattern done";
+    public static final String SHOOTER_RPM_ENTRY_NAME = "Shooter RPM";
     public static final double MAX_SHOOTER_RPM = 4900.0;
     public static final double STARTING_SHOOTER_RPM = 2500;
+    public static final double CLOSE_SHOOTING_RPM = 1000;   //x ft from hub
+    public static final double MEDIUM_SHOOTING_RPM = 13; //y ft from hub
+    public static final double FAR_SHOOTING_RPM = 2000; //z ft from hub
 
     public static final double kP = 5e-5; 
     public static final double kI = 1e-6;
@@ -89,4 +93,9 @@ public final class Constants {
     public static final double kFF = 0.000015; 
     public static final double kMaxOutput = 1; 
     public static final double kMinOutput = -1;
+
+    
+
+
+
 }

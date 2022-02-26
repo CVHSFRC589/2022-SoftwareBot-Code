@@ -9,26 +9,26 @@ import frc.robot.commands.Shooter_Commands.*;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShooterSubsystemPID;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoPatternScrimmage extends SequentialCommandGroup {
   /** Creates a new AutoPatternOne. */
-  public AutoPatternScrimmage(DriveTrainSubsystem drive, ShooterSubsystem shoot) {
+  public AutoPatternScrimmage(DriveTrainSubsystem drive, ShooterSubsystemPID shoot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new DriveToDistance(-84,.3, drive), //.3 Minimum Speed
       new Pause(.5),
-      new ToggleShooting(shoot),
+      new TogglePIDShooting(shoot),
       // new Shoot(0, shoot),
       new Pause(3),
       new FeederStart(shoot),
       new Pause(1.5),
       new FeederStop(shoot),
-      new ToggleShooting(shoot)
+      new TogglePIDShooting(shoot)
     );
   }
 }

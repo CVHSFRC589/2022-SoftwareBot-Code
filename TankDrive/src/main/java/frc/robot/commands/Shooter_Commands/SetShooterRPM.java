@@ -4,20 +4,23 @@
 
 package frc.robot.commands.Shooter_Commands;
 
-import frc.robot.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ShooterSubsystemPID;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /** An example command that uses an example subsystem. */
-public class ToggleAverageAmps extends CommandBase {
+public class SetShooterRPM extends InstantCommand {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystem m_shootSubsystem;
-  
+  private final ShooterSubsystemPID m_shootSubsystem;
+  private double m_speed = .1;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ToggleAverageAmps(ShooterSubsystem subsystem) {
+  public SetShooterRPM(double speed, ShooterSubsystemPID subsystem) {
+    
+      m_speed = speed;
+    
     
     m_shootSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,16 +36,10 @@ public class ToggleAverageAmps extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.toggleAverage();
+    m_shootSubsystem.setShooterSpeed(m_speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
 }

@@ -4,14 +4,14 @@
 
 package frc.robot.commands.Shooter_Commands;
 
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShooterSubsystemPID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FeederStop extends CommandBase {
   /** Creates a new Feed. */
-  private final ShooterSubsystem m_ShooterSubsystem;
+  private final ShooterSubsystemPID m_ShooterSubsystem;
 
-  public FeederStop(ShooterSubsystem subsystem) {
+  public FeederStop(ShooterSubsystemPID subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_ShooterSubsystem = subsystem;
     addRequirements(subsystem);

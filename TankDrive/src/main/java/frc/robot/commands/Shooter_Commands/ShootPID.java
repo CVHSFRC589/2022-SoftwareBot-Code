@@ -26,7 +26,7 @@ public class ShootPID extends CommandBase {
   public ShootPID(DoubleSupplier lever, ShooterSubsystemPID subsystem) {
     m_lever = lever;
     m_shootSubsystemPID = subsystem;
-    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);

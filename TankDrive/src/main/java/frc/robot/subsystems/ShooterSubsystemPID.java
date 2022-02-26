@@ -8,7 +8,6 @@ import java.util.function.BooleanSupplier;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -25,19 +24,19 @@ public class ShooterSubsystemPID extends SubsystemBase {
   private final SparkMaxPIDController m_shooterPIDController = m_shooterMotor.getPIDController();
   private double m_shooterRPM = Constants.STARTING_SHOOTER_RPM;
   private double m_feederSpeed = 0;
-  // private int m_count = 0;
-  // private double m_previousAmps = 0;
-  private boolean m_average = false;
-  // private double m_maxAmps = 0;
   private static BooleanSupplier isShooting = () -> false;
   private double m_leverRPM;
   private NetworkTable m_table;
   private NetworkTableEntry m_patternOver;
+  private NetworkTableEntry m_rpm;
+
 
   /** Creates a new ShooterSubsystemPID. */
   public ShooterSubsystemPID() {
-    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
+    m_rpm = m_table.getEntry(Constants.SHOOTER_RPM_ENTRY_NAME);
+    m_rpm.setDouble(Constants.MAX_SHOOTER_RPM*.25);
 
     m_shooterEncoder.setPosition(0);
     m_shooterMotor.setInverted(true);
@@ -54,7 +53,7 @@ public class ShooterSubsystemPID extends SubsystemBase {
   }
 
   public void shoot(double leverValue) { 
-    m_leverRPM = leverValue*-.15*Constants.MAX_SHOOTER_RPM;
+    m_leverRPM = leverValue*-.075*Constants.MAX_SHOOTER_RPM;
     if(isShooting.getAsBoolean())
     {
       //m_shooterMotor.set(m_shooterRPM+(-0.15*m_leverValue));
@@ -65,13 +64,9 @@ public class ShooterSubsystemPID extends SubsystemBase {
       m_shooterPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
     }
   }
-  
+
   public void shootRPM(double RPM) { 
     m_shooterPIDController.setReference(RPM, CANSparkMax.ControlType.kVelocity);
-  }
-
-  public void miniShoot(double speed){
-    m_shooterMotor.set(speed);
   }
 
   public void feed(double speed){ 
@@ -79,27 +74,13 @@ public class ShooterSubsystemPID extends SubsystemBase {
     m_feederMotor.set(m_feederSpeed);
   }
 
-  public void toggleAverage(){
-    // System.out.println("Before: " + m_average);
-    m_average = !m_average;
-    // System.out.println("After: " + m_average);
-  }
-  
-  public void resetAverage(){
-  //   System.out.println("Previous Average Amps: "+ m_previousAmps/m_count);
-  //    SmartDashboard.putNumber("Previous Average Amps", m_previousAmps/m_count);
-  //   m_previousAmps = 0;
-  //    m_maxAmps = 0;
-  //   m_count = 1;
-  }
-
   public void changeSpeed(double speed){
     if(m_shooterRPM+speed>=0 && m_shooterRPM+speed<=1){
       m_shooterRPM+=speed;
     }
   }
-  public void setShooterSpeed(double speed){
-    m_shooterRPM = speed;
+  public void setShooterSpeed(double newRPM){
+    m_shooterRPM = newRPM;
   }
 
   public double getShooterSpeed(){
@@ -115,6 +96,21 @@ public class ShooterSubsystemPID extends SubsystemBase {
         isShooting = () -> true;
         m_patternOver.setString("nope");
     }
+  }
+
+  public void setShooting(boolean shooting) {
+    if(!shooting){
+        isShooting = () -> false;
+        m_patternOver.setString("done");
+    }
+    else{
+        isShooting = () -> true;
+        m_patternOver.setString("nope");
+    }
+  }
+
+  public boolean getShooting(){
+    return isShooting.getAsBoolean();
   }
 
   public double getShooterEncoderSpeed(){

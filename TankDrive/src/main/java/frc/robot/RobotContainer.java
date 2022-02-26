@@ -35,7 +35,7 @@ import frc.robot.commands.Climber_Commands.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem m_drivetrain = new DriveTrainSubsystem();
-  private final ShooterSubsystem m_shooter= new ShooterSubsystem();
+  //private final ShooterSubsystem m_shooter= new ShooterSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final LimeLightAiming m_limeLight = new LimeLightAiming();
@@ -55,10 +55,11 @@ public class RobotContainer {
   public RobotContainer() {
     m_chooser.setDefaultOption("Simple Auto", new AutoPatternOne(m_drivetrain, m_climber));
     m_chooser.addOption("Simple Auto + Aim", new AutoPatternTwo(m_drivetrain, m_limeLight));
-    m_chooser.addOption("Scrimmage Auto Drive+Shoot", new AutoPatternScrimmage(m_drivetrain, m_shooter));
+    m_chooser.addOption("Scrimmage Auto Drive+Shoot", new AutoPatternScrimmage(m_drivetrain, m_shooterPID));
     SmartDashboard.putData(m_chooser);
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
-    
+    SmartDashboard.putData("SetRPM", new SetRPMFromShuffleboard(m_shooterPID));
+
     m_drivetrain.setDefaultCommand( //for arcade drive or tank drive
        new Drive(
        () -> m_joystick0.getY(), () -> m_joystick1.getY(), () -> m_joystick0.getX(), m_drivetrain //2nd getY should be joystick 1
@@ -71,13 +72,13 @@ public class RobotContainer {
     //     )
     //  );
 
-      m_shooter.setDefaultCommand(new Shoot(() -> m_joystick2.getZ(), m_shooter));
+      // m_shooter.setDefaultCommand(new Shoot(() -> m_joystick2.getZ(), m_shooter));
       m_shooterPID.setDefaultCommand(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
 
       SmartDashboard.putData(m_drivetrain);
       SmartDashboard.putData(m_climber);
-      SmartDashboard.putData(m_shooter);
-      SmartDashboard.putData(m_intake);
+      SmartDashboard.putData(m_shooterPID);
+      //SmartDashboard.putData(m_intake);
       SmartDashboard.updateValues();
 
       m_drivetrain.updateShuffleboard();
@@ -127,21 +128,17 @@ public class RobotContainer {
     //Shooting buttons
     JoystickButton j2ToggleShooting = new JoystickButton(m_joystick2, Constants.TOGGLE_SHOOTING_BUTTON);
     JoystickButton j2Feed = new JoystickButton(m_joystick2, Constants.SHOOTER_FEEDER_MOTOR_BUTTON);
-    JoystickButton j2IncreaseSpeedTenths = new JoystickButton(m_joystick2, Constants.INCREASE_SHOOTER_SPEED_TENTHS_BUTTON);
-    JoystickButton j2IncreaseSpeedHundredths = new JoystickButton(m_joystick2, Constants.INCREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON);
-    JoystickButton j2DecreaseSpeedTenths = new JoystickButton(m_joystick2, Constants.DECREASE_SHOOTER_SPEED_TENTHS_BUTTON);
-    JoystickButton j2DecreaseSpeedHundredths = new JoystickButton(m_joystick1, Constants.DECREASE_SHOOTER_SPEED_HUNDREDTHS_BUTTON);
     JoystickButton j2MiniShoot = new JoystickButton(m_joystick2, Constants.MINI_SHOOT_BUTTON);
+    JoystickButton j2CloseShoot = new JoystickButton(m_joystick2, Constants.CLOSE_SHOOTING_BUTTON);
+    JoystickButton j2FarShoot = new JoystickButton(m_joystick2, Constants.FAR_SHOOTING_BUTTON);
     
-    j2Feed.whenHeld(new FeederStart(m_shooter));
-    j2Feed.whenReleased(new FeederStop(m_shooter));
+    j2Feed.whenHeld(new FeederStart(m_shooterPID));
+    j2Feed.whenReleased(new FeederStop(m_shooterPID));
     j2ToggleShooting.whenPressed(new TogglePIDShooting(m_shooterPID));//TODO: Swap out ShooterSubsystem for ShooterSubsystemPID
-    j2IncreaseSpeedTenths.whenPressed(new ChangeShooterSpeed(.1, m_shooter));
-    j2IncreaseSpeedHundredths.whenPressed(new ChangeShooterSpeed(.01, m_shooter));
-    j2DecreaseSpeedTenths.whenPressed(new ChangeShooterSpeed(-.1, m_shooter));
-    j2DecreaseSpeedHundredths.whenPressed(new ChangeShooterSpeed(-0.01, m_shooter));
-    j2MiniShoot.whenHeld(new MiniShootStart(m_shooter));
-    j2MiniShoot.whenReleased(new MiniShootStop(m_shooter));
+    j2CloseShoot.whenPressed(new ShootRPM(Constants.CLOSE_SHOOTING_RPM, m_shooterPID));
+    j2FarShoot.whenPressed(new ShootRPM(Constants.FAR_SHOOTING_RPM, m_shooterPID));  
+    j2MiniShoot.whenHeld(new ShootRPM(250,m_shooterPID));
+    j2MiniShoot.whenReleased(new ShootRPM(0,m_shooterPID));
 
      //Climbing buttons
      JoystickButton j2Extend = new JoystickButton(m_joystick2, Constants.EXTEND_CLIMBER_ARMS_BUTTON);

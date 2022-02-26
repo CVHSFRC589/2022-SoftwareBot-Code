@@ -8,7 +8,6 @@ import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.VisualFeedbackSubsystem;
-import frc.robot.PatternMap;
 
 public class UpdateAllianceColor extends InstantCommand {
   private VisualFeedbackSubsystem m_vfs;
@@ -18,7 +17,7 @@ public class UpdateAllianceColor extends InstantCommand {
   public UpdateAllianceColor(VisualFeedbackSubsystem vfs) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_vfs = vfs;
-    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
   }
 

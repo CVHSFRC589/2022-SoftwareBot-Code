@@ -16,7 +16,7 @@ public class ExtendBothArms extends CommandBase {
 
   public ExtendBothArms(ClimberSubsystem subsystem) {
     m_climber=subsystem;
-    m_table = NetworkTableInstance.getDefault().getTable(Constants.VISUAL_FEEDBACK_TABLE_NAME);
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
     // Use addRequirements() here to declare subsystem dependencies.
   }

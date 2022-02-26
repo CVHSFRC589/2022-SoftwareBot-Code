@@ -40,7 +40,7 @@ public class ShootRPM extends CommandBase {
     // {
     //   motorInput -= Math.pow(m_RPM-m_shootSubsystem.getShooterEncoderSpeed(), 2)/100000000 + 0.0001;
     // }     
-
+    m_shootSubsystem.setShooting(true);
     m_shootSubsystem.shootRPM(m_RPM);
     // parabola opens upward
   }
@@ -48,11 +48,12 @@ public class ShootRPM extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_shootSubsystem.setShooting(false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !m_shootSubsystem.getShooting() || m_RPM == 0; //button 3 doesnt stop when motor is running
   }
 }
