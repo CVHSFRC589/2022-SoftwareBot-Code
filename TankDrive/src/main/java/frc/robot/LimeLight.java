@@ -239,7 +239,7 @@ public class LimeLight {
     public Integer getPipelineInt(){
         NetworkTableEntry pipeline = m_table.getEntry("pipeline");
         Integer pipe = (int) pipeline.getDouble(0.0);
-        return pipe;
+        return pipe; //return 
     }
 
     /**

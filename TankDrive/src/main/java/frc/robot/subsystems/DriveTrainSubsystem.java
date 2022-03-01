@@ -114,6 +114,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
       } 
     }
 
+    public void setPipeline(int pipe)
+    {
+      m_aiming.setPipeline(pipe);
+    }
+
     public void updateShuffleboard()
     {
       SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());

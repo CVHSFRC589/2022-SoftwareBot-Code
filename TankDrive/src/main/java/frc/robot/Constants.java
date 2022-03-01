@@ -14,17 +14,17 @@ package frc.robot;
  */
 public final class Constants {
     //Motor/Solenoid Ports
-    public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11 
-    public static final int DRIVE_RIGHT_MOTOR_PORT = 30; //12
-    public static final int SHOOTER_MOTOR_PORT = 12; //21 --> probably going to change (30)  
-    public static final int FEEDER_MOTOR_PORT = 20; //20     
-    public static final int INTAKE_MOTOR_PORT = 21; //30  
+    public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11  
+    public static final int DRIVE_RIGHT_MOTOR_PORT = 12; //12
+    public static final int SHOOTER_MOTOR_PORT = 21; //21 --> probably going to change (30)//Revisit ports  
+    public static final int FEEDER_MOTOR_PORT = 20; //20     //Revisit ports
+    public static final int INTAKE_MOTOR_PORT = 30; //30  //Revisit ports
     public static final int VISUAL_FEEDBACK_MOTOR_PORT = 9; //PWM port 9 on both
 
-    public static final int CLIMBER_LEFT_ARM_ON = 0;
-    public static final int CLIMBER_LEFT_ARM_OFF = 1;
-    public static final int CLIMBER_RIGHT_ARM_ON = 2;
-    public static final int CLIMBER_RIGHT_ARM_OFF = 3;
+    public static final int CLIMBER_LEFT_ARM_ON = 1;
+    public static final int CLIMBER_LEFT_ARM_OFF = 0;
+    public static final int CLIMBER_RIGHT_ARM_ON = 3;
+    public static final int CLIMBER_RIGHT_ARM_OFF = 2;
     
     public static final int INTAKE_LEFT_ARM_ON = 4;
     public static final int INTAKE_LEFT_ARM_OFF = 5;
@@ -80,22 +80,17 @@ public final class Constants {
     public static final String VISUAL_FEEDBACK_TABLE_ENTRY_NAME = "VF Pattern";
     public static final String PATTERN_FINISHED_ENTRY_NAME = "VF Pattern done";
     public static final String SHOOTER_RPM_ENTRY_NAME = "Shooter RPM";
+    public static final String LIMELIGHT_PIPELINE_ENTRY_NAME = "pipeline";
     public static final double MAX_SHOOTER_RPM = 4900.0;
-    public static final double STARTING_SHOOTER_RPM = 2500;
+    public static final double STARTING_SHOOTER_RPM = 1000;
     public static final double CLOSE_SHOOTING_RPM = 1000;   //x ft from hub
-    public static final double MEDIUM_SHOOTING_RPM = 13; //y ft from hub
     public static final double FAR_SHOOTING_RPM = 2000; //z ft from hub
 
     public static final double kP = 5e-5; 
     public static final double kI = 1e-6;
     public static final double kD = 5e-5; 
     public static final double kIz = 0; 
-    public static final double kFF = 0.000015; 
+    public static final double kFF = 1.5e-5;
     public static final double kMaxOutput = 1; 
     public static final double kMinOutput = -1;
-
-    
-
-
-
 }
