@@ -62,6 +62,10 @@ public class ShooterSubsystemPID extends SubsystemBase {
     m_feederMotor.set(m_feederSpeed);
   }
 
+  public void stopShooter(){ 
+    m_shooterMotor.set(0);
+  }
+
   public void changeSpeed(double speed){
     if(m_shooterRPM+speed>=0 && m_shooterRPM+speed<=1){
       m_shooterRPM+=speed;

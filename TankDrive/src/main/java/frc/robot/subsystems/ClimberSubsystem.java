@@ -23,10 +23,9 @@ public class ClimberSubsystem extends SubsystemBase {
     m_rightArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_RIGHT_ARM_ON, Constants.CLIMBER_RIGHT_ARM_OFF);
     m_compressor = new Compressor(PneumaticsModuleType.CTREPCM); //Also turns on the compressor
     m_compressor.enableDigital();
-    // m_compressor.disable();
-    
-    
+    // m_compressor.disable();  
   }
+  
   public DoubleSolenoid.Value getLeftValue(){
     return m_leftArm.get();
   }
@@ -38,29 +37,50 @@ public class ClimberSubsystem extends SubsystemBase {
   public void reachLeft()
   {
     m_leftArm.set(DoubleSolenoid.Value.kForward);
-    SmartDashboard.putString("Left Solenoid", "Extended");
+    SmartDashboard.putBoolean("Left Climber", true);
     
   }
 
   public void reachRight()
   {
     m_rightArm.set(DoubleSolenoid.Value.kForward);
-    SmartDashboard.putString("Right Solenoid", "Extended");
+    SmartDashboard.putBoolean("Right Climber", true);
   }
 
   public void pullLeft()
   {
     m_leftArm.set(DoubleSolenoid.Value.kReverse);
-    SmartDashboard.putString("Left Solenoid", "Retracted");
+    SmartDashboard.putBoolean("Left Climber", false);
     
   }
 
   public void pullRight()
   {
     m_rightArm.set(DoubleSolenoid.Value.kReverse);
-    SmartDashboard.putString("Right Solenoid", "Retracted");
+    SmartDashboard.putBoolean("Right Climber", false);
   }
   
+  public void toggleLeftSolenoid(){
+    if(getLeftValue().equals(DoubleSolenoid.Value.kForward)){
+      pullLeft();
+    }
+    else
+    
+    {
+      reachLeft();
+    }
+  }
+
+  public void toggleRightSolenoid(){
+    if(getRightValue().equals(DoubleSolenoid.Value.kForward)){
+      pullRight();
+    }
+    else
+    
+    {
+      reachRight();
+    }
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

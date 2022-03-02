@@ -60,7 +60,7 @@ public class RobotContainer {
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
     SmartDashboard.putData("SetRPM", new SetRPMFromShuffleboard(m_shooterPID));
     SmartDashboard.putData("SwitchPiP", new SwitchPIP(m_drivetrain));
-    // SmartDashboard.putData("SetPipeline", new ChangeLimePipeline(m_drivetrain));
+    SmartDashboard.putData("SetPipeline", new ChangeLimePipeline(m_drivetrain));
 
     m_drivetrain.setDefaultCommand( //for arcade drive or tank drive
        new Drive(
@@ -90,19 +90,13 @@ public class RobotContainer {
 
     //Driving buttons
     JoystickButton j0DriveTurbo = new JoystickButton(m_joystick0, Constants.DRIVE_MAX_SPEED_BUTTON);
-    JoystickButton j0ShootWithRPMInput = new JoystickButton(m_joystick0, Constants.SHOOTER_WITH_INPUT_RPM);
-    // JoystickButton j0GoToDistance = new JoystickButton(m_joystick0, Constants.AUTO_DRIVE_DISTANCE_BUTTON);
-    // JoystickButton j0TurnRight= new JoystickButton(m_joystick0, Constants.TURN_RIGHT_BUTTON);
     JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
     JoystickButton j0FaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_BUTTON);
     JoystickButton j0LineUpTarget = new JoystickButton(m_joystick0, Constants.LINE_UP_TARGET_BUTTON);
     JoystickButton j0GoToTargetDistance = new JoystickButton(m_joystick0, Constants.GO_TO_TARGET_DISTANCE_BUTTON);
 
-    j0DriveTurbo.whenHeld(new SetSpeedScale(0.85,m_drivetrain));
-    j0DriveTurbo.whenReleased((new SetSpeedScale(0.5,m_drivetrain)));
-    j0ShootWithRPMInput.whenPressed(new ShootRPM(1900, m_shooterPID));
-    // j0GoToDistance.whenPressed(new DriveToDistance(78,0.3, m_drivetrain));
-    // j0TurnRight.whenPressed(new TurnDegrees(0.1, 90, m_drivetrain));
+    j0DriveTurbo.whenHeld(new SetSpeedScale(1.0,m_drivetrain));
+    j0DriveTurbo.whenReleased((new SetSpeedScale(0.8,m_drivetrain)));
     j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
     j0FaceTarget.whenPressed(new FaceTarget(0.15, m_limeLight, m_drivetrain));
     j0LineUpTarget.whenPressed(new LineUpTarget(0.1, m_limeLight, m_drivetrain));
@@ -131,18 +125,22 @@ public class RobotContainer {
     j2MiniShoot.whenReleased(new ShootRPM(0,m_shooterPID));
 
      //Climbing buttons
-     JoystickButton j2Extend = new JoystickButton(m_joystick2, Constants.EXTEND_CLIMBER_ARMS_BUTTON);
-     JoystickButton j2Retract = new JoystickButton(m_joystick2, Constants.RETRACT_CLIMBER_ARMS_BUTTON);
+    JoystickButton j2Extend = new JoystickButton(m_joystick2, Constants.EXTEND_CLIMBER_ARMS_BUTTON);
+    JoystickButton j2Retract = new JoystickButton(m_joystick2, Constants.RETRACT_CLIMBER_ARMS_BUTTON);
+    JoystickButton j2ToggleLeft = new JoystickButton(m_joystick2, Constants.TOGGLE_LEFT_CLIMBER_BUTTON);
+    JoystickButton j2ToggleRight = new JoystickButton(m_joystick2, Constants.TOGGLE_RIGHT_CLIMBER_BUTTON);
  
-     j2Extend.whenPressed(new ExtendBothArms(m_climber));
-     j2Retract.whenPressed(new RetractBothArms(m_climber));
+    j2Extend.whenPressed(new ExtendBothArms(m_climber));
+    j2Retract.whenPressed(new RetractBothArms(m_climber));
+    j2ToggleLeft.whenPressed(new ToggleLeftExtension(m_climber));
+    j2ToggleRight.whenPressed(new ToggleRightExtension(m_climber));
 
-      //Intake buttons
-      JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
-      JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
-      
-      j2ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
-      j2StartIntakeMotor.whenPressed(new SetIntakeMotor(m_intake, 0.4));
+    //Intake buttons
+    JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
+    JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
+    
+    j2ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
+    j2StartIntakeMotor.whenPressed(new SetIntakeMotor(m_intake, 0.4));
   }
  
   /**

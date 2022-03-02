@@ -89,7 +89,8 @@ public class ShootRPM extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     SmartDashboard.putBoolean("ShooterMotorRunning", false);
-    m_shootSubsystem.shootRPM(0, 0);
+    // m_shootSubsystem.shootRPM(0, 0);
+    m_shootSubsystem.stopShooter();
     m_patternOver.setString("done");
   }
 

@@ -27,7 +27,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private static LimeLightAiming m_aiming = new LimeLightAiming();
     
 
-    private double m_scaleFactor = 0.5;
+    private double m_scaleFactor = 0.8; //change to 1 later
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {

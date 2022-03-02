@@ -26,6 +26,16 @@ public class ChangeLimePipeline extends InstantCommand {
     m_pipe = (int)m_pipeline.getDouble(0);
   }
 
+
+
+  public ChangeLimePipeline(int pipe, DriveTrainSubsystem subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_drive = subsystem;
+    m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
+    m_pipeline = m_table.getEntry(Constants.LIMELIGHT_PIPELINE_ENTRY_NAME);
+    m_pipe = pipe;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
