@@ -27,7 +27,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private static LimeLightAiming m_aiming = new LimeLightAiming();
     
 
-    private double m_scaleFactor = 0.8; //change to 1 later
+    private double m_scaleFactor = 1; //Max
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
@@ -52,7 +52,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       setLeftEncoder(0);
       setRightEncoder(0);
       setMotors(0,0);
-      m_scaleFactor = 0.5;
+      m_scaleFactor = Constants.DRIVE_STARTING_SCALE_FACTOR;
     }
 
     public void setMotors(double leftSpeed, double rightSpeed){
@@ -126,6 +126,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       // SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
       // SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
     }
+
+    
 
       /** Call log method every loop. */
   @Override

@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -41,14 +40,14 @@ public class IntakeSubsystem extends SubsystemBase {
   {
     m_leftArm.set(DoubleSolenoid.Value.kForward);
     m_rightArm.set(DoubleSolenoid.Value.kForward);
-    SmartDashboard.putString("Intake Solenoids", "Extended");
+    // SmartDashboard.putString("Intake Solenoids", "Extended");
   }
 
   public void retractIntake()
   {
     m_leftArm.set(DoubleSolenoid.Value.kReverse);
     m_rightArm.set(DoubleSolenoid.Value.kReverse);
-    SmartDashboard.putString("Intake Solenoids", "Retracted");
+    // SmartDashboard.putString("Intake Solenoids", "Retracted");
   }
 
   public void startMotor(double speed)

@@ -15,8 +15,8 @@ public class LimeLightAiming extends LimeLight{
   {
     if(m_Limelight.getIsTargetFound())
     {
-      SmartDashboard.putNumber("Limelight X", Math.floor(m_Limelight.getdegRotationToTarget()*1000)/1000);
-      SmartDashboard.putNumber("Limelight Y", Math.floor(m_Limelight.getdegVerticalToTarget()*1000)/1000);
+      // SmartDashboard.putNumber("Limelight X", Math.floor(m_Limelight.getdegRotationToTarget()*1000)/1000);
+      // SmartDashboard.putNumber("Limelight Y", Math.floor(m_Limelight.getdegVerticalToTarget()*1000)/1000);
       // SmartDashboard.putNumber("Target Area", m_Limelight.getTargetArea());
       SmartDashboard.putNumber("Estimated Target Distance", Math.floor(estimateTargetDistance()*1000)/1000);
       SmartDashboard.putString("Limelight Target", "Target found");
@@ -36,12 +36,23 @@ public class LimeLightAiming extends LimeLight{
     // SmartDashboard.putNumber("FinHeight", finheight);
     // SmartDashboard.putNumber("Finratio", finratio);
     // SmartDashboard.putNumber("Finangle", finangle);
-
-    return (finheight)/finratio;
+    if(getIsTargetFound()){
+      return (finheight)/finratio;
+    }
+   return 0;
   }
 
+  public double estimateRPM(){
+    double rpm = inchesToRPM(estimateTargetDistance());
+    if(rpm>5000 || !getIsTargetFound()){
+      return Constants.STARTING_SHOOTER_RPM;
+    }
+    return rpm;
+  }
+  
   public double inchesToRPM(double inches){
-    return -2126 + 117*inches + (-1.14*Math.pow(inches, 2))+3.67e-3*Math.pow(inches, 3);
+    // return -2126 + 117*inches + (-1.14*Math.pow(inches, 2))+3.67e-3*Math.pow(inches, 3);
+    return 309 + 46.3*inches - 0.473*Math.pow(inches,2) + 1.62e-03*Math.pow(inches,3);
 
   }
 }

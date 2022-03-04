@@ -8,40 +8,40 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.LimeLight;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class LineUpTarget extends CommandBase {
+public class FaceTargetContinuous extends CommandBase {
   /** Creates a new FaceTarget. */
-  private LimeLight m_limeLight = new LimeLight();
+  private LimeLight m_limeLight;
   private DriveTrainSubsystem m_drivetrain;
   private double m_startSpeed;
 
-  public LineUpTarget(double startingSpeed,LimeLight limeLight, DriveTrainSubsystem subsystem) {
+  public FaceTargetContinuous(double startingSpeed, LimeLight limeLight, DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_limeLight= limeLight;
+    m_limeLight = limeLight;
     m_drivetrain = subsystem;
     m_startSpeed = startingSpeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(m_limeLight.getIsTargetFound()){
-      if(m_limeLight.getdegVerticalToTarget() > 0.0)
-      {
-        m_drivetrain.setMotors(-m_startSpeed, -m_startSpeed);
-      }
-      else{
-        
-        m_drivetrain.setMotors(m_startSpeed, m_startSpeed);
-      }
+      // if(Math.abs(m_limeLight.getdegRotationToTarget())/31/3>= 0.0)
+      // {
+      //   double speed = m_limeLight.getdegRotationToTarget()/31/3;
+      //   m_drivetrain.setMotors(-speed, speed);
+      // }
+      // else{
+        double direction = Math.abs(m_limeLight.getdegRotationToTarget())/m_limeLight.getdegRotationToTarget();
+        m_drivetrain.setMotors(-direction*m_startSpeed, direction*m_startSpeed);
+      // }
     }
     else
     {
-      System.out.println("No Target Found");
+      m_drivetrain.setMotors(-0.2, 0.2);
     }
   }
 
@@ -57,11 +57,6 @@ public class LineUpTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-     if(m_limeLight.getIsTargetFound()){
-       if(Math.abs(m_limeLight.getdegVerticalToTarget()) <= .25){
-         return true;
-       }
-     }
      return false;
   }
 }

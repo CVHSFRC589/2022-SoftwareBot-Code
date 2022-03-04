@@ -37,27 +37,27 @@ public class ClimberSubsystem extends SubsystemBase {
   public void reachLeft()
   {
     m_leftArm.set(DoubleSolenoid.Value.kForward);
-    SmartDashboard.putBoolean("Left Climber", true);
+    // SmartDashboard.putBoolean("Left Climber", true);
     
   }
 
   public void reachRight()
   {
     m_rightArm.set(DoubleSolenoid.Value.kForward);
-    SmartDashboard.putBoolean("Right Climber", true);
+    // SmartDashboard.putBoolean("Right Climber", true);
   }
 
   public void pullLeft()
   {
     m_leftArm.set(DoubleSolenoid.Value.kReverse);
-    SmartDashboard.putBoolean("Left Climber", false);
+    // SmartDashboard.putBoolean("Left Climber", false);
     
   }
 
   public void pullRight()
   {
     m_rightArm.set(DoubleSolenoid.Value.kReverse);
-    SmartDashboard.putBoolean("Right Climber", false);
+    // SmartDashboard.putBoolean("Right Climber", false);
   }
   
   public void toggleLeftSolenoid(){

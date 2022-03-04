@@ -28,9 +28,9 @@ public class AutoPatternOne extends SequentialCommandGroup {
       new DriveToDistance(36, 0.3, drive),
       new Pause(1),
       new TurnDegrees(0.25, 90, drive),
-      new ExtendBothArms(climb),
+      new ToggleClimberArms(climb),
       new Pause(1),
-      new RetractBothArms(climb)
+      new ToggleClimberArms(climb)
     );
   }
 }

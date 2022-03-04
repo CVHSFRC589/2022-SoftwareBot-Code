@@ -51,7 +51,7 @@ public class ShootRPM extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putBoolean("ShooterMotorRunning", true);
+    // SmartDashboard.putBoolean("ShooterMotorRunning", true);
     m_patternOver.setString("nope");
   }
 
@@ -88,7 +88,7 @@ public class ShootRPM extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putBoolean("ShooterMotorRunning", false);
+    // SmartDashboard.putBoolean("ShooterMotorRunning", false);
     // m_shootSubsystem.shootRPM(0, 0);
     m_shootSubsystem.stopShooter();
     m_patternOver.setString("done");

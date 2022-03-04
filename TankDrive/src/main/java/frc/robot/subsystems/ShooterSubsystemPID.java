@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.*;
@@ -31,12 +32,14 @@ public class ShooterSubsystemPID extends SubsystemBase {
   public ShooterSubsystemPID() {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_rpm = m_table.getEntry(Constants.SHOOTER_RPM_ENTRY_NAME);
-    m_rpm.setDouble(Constants.MAX_SHOOTER_RPM*.25);
+    m_rpm.setDouble(Constants.MAX_SHOOTER_RPM);
 
     m_shooterEncoder.setPosition(0);
     m_shooterMotor.setInverted(true);
     m_feederEncoder.setPosition(0);
     m_feederMotor.setInverted(false);
+    m_feederMotor.setIdleMode(IdleMode.kBrake);
+
 
     // set PID coefficients
     m_shooterPIDController.setP(Constants.kP);
@@ -53,7 +56,7 @@ public class ShooterSubsystemPID extends SubsystemBase {
   }
 
   public void shootRPM(double RPM, double leverValue) { 
-    m_leverRPM = leverValue*-.075*Constants.MAX_SHOOTER_RPM;
+    m_leverRPM = leverValue*-300;
     m_shooterPIDController.setReference(RPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
   }
 
@@ -92,10 +95,10 @@ public class ShooterSubsystemPID extends SubsystemBase {
   
   public void updateShuffleboard()
   {
-    SmartDashboard.putNumber("Shooter Speed: ", m_shooterRPM+m_leverRPM);
+    // SmartDashboard.putNumber("Shooter Speed: ", m_shooterRPM+m_leverRPM);
     SmartDashboard.putNumber("ShootMotorRPM", m_shooterEncoder.getVelocity());
-    SmartDashboard.putNumber("FeedMotorRPM", m_feederEncoder.getVelocity());
-    SmartDashboard.putNumber("LeverValue", m_leverRPM/.075/Constants.MAX_SHOOTER_RPM);
+    // SmartDashboard.putNumber("FeedMotorRPM", m_feederEncoder.getVelocity());
+    // SmartDashboard.putNumber("LeverValue", m_leverRPM/.075/Constants.MAX_SHOOTER_RPM);
   }
   @Override
   public void periodic() {
