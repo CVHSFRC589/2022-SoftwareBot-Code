@@ -85,7 +85,14 @@ public class ShootPID extends CommandBase {
   public void end(boolean interrupted) {
     // SmartDashboard.putBoolean("ShooterMotorRunning", false);
     // m_shootSubsystem.shootRPM(0, 0);
-    m_shootSubsystem.stopShooter();
+    if(!interrupted){
+      SmartDashboard.putBoolean("Shoot Interrrupted", interrupted);
+      System.out.println("----------------------interrupted: "+interrupted);
+      m_shootSubsystem.stopShooter();
+    }
+    else{
+      System.out.println("++++++++++++++++++++++++ Not interrupted: "+interrupted);
+    }
     m_patternOver.setString("done");  
   }
 

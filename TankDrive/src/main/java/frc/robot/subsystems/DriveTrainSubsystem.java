@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.Ultrasonic;
 // import edu.wpi.first.util.sendable.Sendable;
 // import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -23,8 +24,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private final RelativeEncoder rightEncoder = m_rightMotor.getEncoder();
  
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
-    private static BooleanSupplier driveType = () -> true;
+    private static BooleanSupplier driveType = () -> false;
     private static LimeLightAiming m_aiming = new LimeLightAiming();
+    private static Ultrasonic m_sonic = new Ultrasonic(Constants.ULTRASONIC_PING_CHANNEL, Constants.ULTRASONIC_ECHO_CHANNEL);
     
 
     private double m_scaleFactor = 1; //Max
@@ -32,8 +34,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
+        m_sonic.setEnabled(true);
         m_leftMotor.setInverted(true); //true
         m_rightMotor.setInverted(false); //false
+        setPipeline(1);
         reset();
     }
  
@@ -79,6 +83,35 @@ public class DriveTrainSubsystem extends SubsystemBase {
       return driveType;
     }
 
+
+    public void switchPIP()
+    {
+      if(m_aiming.getStream().equals(StreamType.kPiPSecondary)){
+        m_aiming.setStream(StreamType.kPiPMain);
+      }else
+      {
+        m_aiming.setStream(StreamType.kPiPSecondary);
+      } 
+    }
+
+    public void setPipeline(int pipe)
+    {
+      m_aiming.setPipeline(pipe);
+    }
+
+    public double getUltraDistInches()
+    {
+      return m_sonic.getRangeInches();
+    }
+
+    public void updateShuffleboard()
+    {
+      SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());
+      SmartDashboard.putNumber("RightInches", getRightEncoderInches());
+      // SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
+      // SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
+    }
+
     public double getLeftEncoderInches()
     {
         return leftEncoder.getPosition()*Constants.DRIVE_WHEEL_CIRCUM/Constants.DRIVE_GEAR_RATIO;
@@ -103,37 +136,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
     {
         rightEncoder.setPosition(position);
     }
-
-    public void switchPIP()
+    public LimeLightAiming getLimeLight()
     {
-      if(m_aiming.getStream().equals(StreamType.kPiPSecondary)){
-        m_aiming.setStream(StreamType.kPiPMain);
-      }else
-      {
-        m_aiming.setStream(StreamType.kPiPSecondary);
-      } 
+      return m_aiming;
     }
 
-    public void setPipeline(int pipe)
-    {
-      m_aiming.setPipeline(pipe);
+    /** Call log method every loop. */
+    @Override
+    public void periodic() {
+      m_aiming.updateLimelightValues();
+      //updateShuffleboard();
+      //log();
     }
-
-    public void updateShuffleboard()
-    {
-      SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());
-      SmartDashboard.putNumber("RightInches", getRightEncoderInches());
-      // SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
-      // SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
-    }
-
-    
-
-      /** Call log method every loop. */
-  @Override
-  public void periodic() {
-    m_aiming.updateLimelightValues();
-    //updateShuffleboard();
-    //log();
-  }
 }

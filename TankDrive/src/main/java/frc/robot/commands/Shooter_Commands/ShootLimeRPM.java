@@ -44,10 +44,10 @@ public class ShootLimeRPM extends CommandBase {
   @Override
   public void execute() {
     m_patternOver.setString("nah");
-    if(Math.abs((m_shootSpeed+m_lever.getAsDouble()*-300)-m_limelight.estimateRPM())>=25)
+    if(Math.abs((m_shootSpeed+m_lever.getAsDouble()*Constants.SHOOTING_LEVER_RPM_MULTIPLIER)-m_limelight.estimateRPM())>=25)
       m_shootSpeed=m_limelight.estimateRPM();
 
-    if(Math.abs((m_shootSpeed+m_lever.getAsDouble()*-300)-m_shoot.getShooterEncoderSpeed())<=15){
+    if(Math.abs((m_shootSpeed+m_lever.getAsDouble()*Constants.SHOOTING_LEVER_RPM_MULTIPLIER)-m_shoot.getShooterEncoderSpeed())<=15){
       m_pattern.setString("green");
     }else{
       m_pattern.setString("yellow");
@@ -59,7 +59,9 @@ public class ShootLimeRPM extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shoot.stopShooter();
+    if(!interrupted){
+      m_shoot.stopShooter();
+    }
     m_patternOver.setString("done");
   }
 

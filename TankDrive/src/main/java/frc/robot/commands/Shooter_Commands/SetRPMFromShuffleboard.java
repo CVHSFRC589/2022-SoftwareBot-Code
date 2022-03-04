@@ -40,7 +40,9 @@ public class SetRPMFromShuffleboard extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //m_shooter.shootRPM(0, 0);
-    m_shooter.stopShooter();
+    if(!interrupted){
+      m_shooter.stopShooter();
+    }
   }
 
   

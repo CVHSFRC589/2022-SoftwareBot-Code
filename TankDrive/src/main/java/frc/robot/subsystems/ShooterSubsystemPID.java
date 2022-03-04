@@ -18,14 +18,14 @@ import frc.robot.Constants;
 public class ShooterSubsystemPID extends SubsystemBase {
   private final CANSparkMax m_shooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_shooterEncoder = m_shooterMotor.getEncoder();
-  private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
-  private final RelativeEncoder m_feederEncoder = m_feederMotor.getEncoder();
+  // private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
+  // private final RelativeEncoder m_feederEncoder = m_feederMotor.getEncoder();
   private final SparkMaxPIDController m_shooterPIDController = m_shooterMotor.getPIDController();
   private double m_shooterRPM = Constants.STARTING_SHOOTER_RPM;
-  private double m_feederSpeed = 0;
   private double m_leverRPM;
   private NetworkTable m_table;
   private NetworkTableEntry m_rpm;
+  private boolean isShooting = false;
 
 
   /** Creates a new ShooterSubsystemPID. */
@@ -36,9 +36,9 @@ public class ShooterSubsystemPID extends SubsystemBase {
 
     m_shooterEncoder.setPosition(0);
     m_shooterMotor.setInverted(true);
-    m_feederEncoder.setPosition(0);
-    m_feederMotor.setInverted(false);
-    m_feederMotor.setIdleMode(IdleMode.kBrake);
+    // m_feederEncoder.setPosition(0);
+    // m_feederMotor.setInverted(false);
+    // m_feederMotor.setIdleMode(IdleMode.kBrake);
 
 
     // set PID coefficients
@@ -50,20 +50,37 @@ public class ShooterSubsystemPID extends SubsystemBase {
     m_shooterPIDController.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
   }
 
+  public void defaultShoot(double leverValue)
+  {
+    m_leverRPM = leverValue*Constants.SHOOTING_LEVER_RPM_MULTIPLIER;
+    if(isShooting){
+      m_shooterPIDController.setReference(m_shooterRPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
+    }else{
+      m_shooterMotor.set(0);
+    }
+  }
+
   public void shoot(double leverValue) { 
-    m_leverRPM = leverValue*-.075*Constants.MAX_SHOOTER_RPM;
+    m_leverRPM = leverValue*Constants.SHOOTING_LEVER_RPM_MULTIPLIER;
     m_shooterPIDController.setReference(m_shooterRPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
   }
 
   public void shootRPM(double RPM, double leverValue) { 
-    m_leverRPM = leverValue*-300;
+    m_leverRPM = leverValue*Constants.SHOOTING_LEVER_RPM_MULTIPLIER;
     m_shooterPIDController.setReference(RPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
   }
 
-  public void feed(double speed){ 
-    m_feederSpeed = speed;
-    m_feederMotor.set(m_feederSpeed);
+  public boolean getShooting(){
+    return isShooting;
   }
+  public void toggleShooting(){
+    isShooting = !isShooting;
+  }
+
+  // public void feed(double speed){ 
+  //   m_feederSpeed = speed;
+  //   m_feederMotor.set(m_feederSpeed);
+  // }
 
   public void stopShooter(){ 
     m_shooterMotor.set(0);
@@ -74,7 +91,7 @@ public class ShooterSubsystemPID extends SubsystemBase {
       m_shooterRPM+=speed;
     }
   }
-  public void setShooterSpeed(double newRPM){
+  public void setShooterRPM(double newRPM){
     m_shooterRPM = newRPM;
   }
 
@@ -88,10 +105,10 @@ public class ShooterSubsystemPID extends SubsystemBase {
     //change constant to actual gear ratio later
   }
 
-  public double getFeederEncoderSpeed(){
-    return m_feederEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
-    //change constant to actual gear ratio later
-  }
+  // public double getFeederEncoderSpeed(){
+  //   return m_feederEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
+  //   //change constant to actual gear ratio later
+  // }
   
   public void updateShuffleboard()
   {

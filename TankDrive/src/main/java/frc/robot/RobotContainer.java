@@ -16,9 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.commands.*;
-import frc.robot.commands.Auto_Patterns.AutoPatternOne;
-import frc.robot.commands.Auto_Patterns.AutoPatternScrimmage;
-import frc.robot.commands.Auto_Patterns.AutoPatternTwo;
+import frc.robot.commands.Auto_Patterns.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.Drive_Commands.*;
 import frc.robot.commands.Intake_Commands.SetIntakeMotor;
@@ -42,6 +40,7 @@ public class RobotContainer {
   private final LimeLightAiming m_limeLight = new LimeLightAiming();
   private final VisualFeedbackSubsystem m_VFS = new VisualFeedbackSubsystem();//VFS means visualfeedbacksubsystem
   private final ShooterSubsystemPID m_shooterPID= new ShooterSubsystemPID();
+  private final FeederSubsystem m_feeder = new FeederSubsystem();
 
   //joysticks we are going to use
   private final Joystick m_joystick0 = new Joystick(0);
@@ -54,9 +53,10 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_chooser.setDefaultOption("Simple Auto", new AutoPatternOne(m_drivetrain, m_climber));
+    m_chooser.setDefaultOption("Drive, Face, Shoot", new AutoPatternFour(m_drivetrain, m_shooterPID, m_feeder));
+    m_chooser.addOption("Simple Auto", new AutoPatternOne(m_drivetrain, m_climber));
     m_chooser.addOption("Simple Auto + Aim", new AutoPatternTwo(m_drivetrain, m_limeLight));
-    m_chooser.addOption("Scrimmage Auto Drive+Shoot", new AutoPatternScrimmage(m_drivetrain, m_shooterPID));
+    m_chooser.addOption("Scrimmage Auto Drive+Shoot", new AutoPatternScrimmage(m_drivetrain, m_shooterPID, m_feeder));
     SmartDashboard.putData(m_chooser);
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
     // SmartDashboard.putData("SetRPM", new SetRPMFromShuffleboard(m_shooterPID));
@@ -72,7 +72,7 @@ public class RobotContainer {
 
       // SmartDashboard.putData(m_drivetrain);
       // SmartDashboard.putData(m_climber);
-      // SmartDashboard.putData(m_shooterPID);
+      SmartDashboard.putData(m_shooterPID);
       //SmartDashboard.putData(m_intake);
       SmartDashboard.updateValues();
 
@@ -92,22 +92,24 @@ public class RobotContainer {
 
     //Driving buttons
     // JoystickButton j0DriveTurbo = new JoystickButton(m_joystick0, Constants.DRIVE_MAX_SPEED_BUTTON);
-    JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
+    //JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
     JoystickButton j0ToggleFaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_BUTTON);
     JoystickButton j0AbortDriveCommand = new JoystickButton(m_joystick0, Constants.STOP_DRIVE_TRAIN_BUTTON);
     JoystickButton j0GoToTargetDistance = new JoystickButton(m_joystick0, Constants.GO_TO_TARGET_DISTANCE_BUTTON);
 
     // j0DriveTurbo.whenHeld(new SetSpeedScale(1.0,m_drivetrain));
     // j0DriveTurbo.whenReleased((new SetSpeedScale(0.8,m_drivetrain)));
-    j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
+    //j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
     j0ToggleFaceTarget.toggleWhenPressed(new FaceTargetContinuous(0.15, m_limeLight, m_drivetrain));
     j0GoToTargetDistance.whenPressed(new DriveToGivenTargetDistance(Constants.SHOOTING_DISTANCE, m_limeLight, m_drivetrain));
     j0AbortDriveCommand.whenPressed(new StopDriveTrain(m_drivetrain));
     
     JoystickButton j0Feed = new JoystickButton(m_joystick0, Constants.SHOOTER_FEEDER_MOTOR_BUTTON);
+    JoystickButton j0FeedOne = new JoystickButton(m_joystick0, Constants.FEED_ONE_BALL_BUTTON);
 
-    j0Feed.whenHeld(new FeederStart(m_shooterPID));
-    j0Feed.whenReleased(new FeederStop(m_shooterPID));
+    j0Feed.whenHeld(new FeederStart(m_feeder));
+    j0Feed.whenReleased(new FeederStop(m_feeder));
+    j0FeedOne.whenPressed(new FeedOneBall(m_feeder));
 
 
      //Toggle VFS
@@ -118,16 +120,17 @@ public class RobotContainer {
 
     //Shooting buttons
     JoystickButton j2ToggleShooting = new JoystickButton(m_joystick2, Constants.TOGGLE_SHOOTING_BUTTON);
-    JoystickButton j2MiniShoot = new JoystickButton(m_joystick2, Constants.MINI_SHOOT_BUTTON);
+    JoystickButton j2SpitOutBall = new JoystickButton(m_joystick2, Constants.SPIT_OUT_BALL_BUTTON);
     JoystickButton j2CloseShoot = new JoystickButton(m_joystick2, Constants.CLOSE_SHOOTING_BUTTON);
     JoystickButton j2FarShoot = new JoystickButton(m_joystick2, Constants.FAR_SHOOTING_BUTTON);
     JoystickButton j2LimelightShoot = new JoystickButton(m_joystick2, Constants.LIMELIGHT_RPM_SHOOT_BUTTON);
+    JoystickButton j2StopShooter = new JoystickButton(m_joystick2, Constants.STOP_SHOOTER_BUTTON);
     
-    
+    j2StopShooter.whenPressed(new StopShooter(m_shooterPID));
     j2ToggleShooting.toggleWhenPressed(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
     j2CloseShoot.toggleWhenPressed(new ShootRPM(Constants.CLOSE_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));
     j2FarShoot.toggleWhenPressed(new ShootRPM(Constants.FAR_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));  
-    j2MiniShoot.toggleWhenPressed(new ShootRPM(250,m_shooterPID));
+    j2SpitOutBall.toggleWhenPressed(new ShootRPM(250,m_shooterPID));
     // j2MiniShoot.whenReleased(new ShootRPM(0,m_shooterPID));
     j2LimelightShoot.toggleWhenPressed(new ShootLimeRPM(() -> m_joystick2.getZ(),m_limeLight, m_shooterPID));
 

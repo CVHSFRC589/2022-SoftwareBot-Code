@@ -4,16 +4,17 @@
 
 package frc.robot.commands.Shooter_Commands;
 
-import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.Constants;
+import frc.robot.subsystems.FeederSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FeederStart extends CommandBase {
   /** Creates a new Feed. */
-  private final ShooterSubsystemPID m_shootSubsystem;
+  private final FeederSubsystem m_feeder;
 
-  public FeederStart(ShooterSubsystemPID subsystem) {
+  public FeederStart(FeederSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shootSubsystem = subsystem;
+    m_feeder = subsystem;
     addRequirements(subsystem);
   }
 
@@ -24,13 +25,13 @@ public class FeederStart extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.feed(0.5); //Changed from 3/2/22 testing
+    m_feeder.feed(Constants.FEEDER_MOTOR_SPEED); //Changed from 3/2/22 testing
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shootSubsystem.feed(0);
+    m_feeder.feed(0);
   }
 
   // Returns true when the command should end.

@@ -3,12 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Auto_Patterns;
-import frc.robot.Constants;
 import frc.robot.commands.Pause;
+import frc.robot.commands.Climber_Commands.*;
 import frc.robot.commands.Drive_Commands.*;
-import frc.robot.commands.Shooter_Commands.*;
-
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Shooter_Commands.FeedOneBall;
+import frc.robot.commands.Shooter_Commands.ShootLimeRPM;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ShooterSubsystemPID;
@@ -16,21 +16,14 @@ import frc.robot.subsystems.ShooterSubsystemPID;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoPatternScrimmage extends SequentialCommandGroup {
+public class DEMO_AutoPatternFour extends ParallelCommandGroup {
   /** Creates a new AutoPatternOne. */
-  public AutoPatternScrimmage(DriveTrainSubsystem drive, ShooterSubsystemPID shoot, FeederSubsystem feeder) {
+  public DEMO_AutoPatternFour(DriveTrainSubsystem drive, ShooterSubsystemPID shooter, FeederSubsystem feeder) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveToDistance(-84,.3, drive), //.3 Minimum Speed
-      new Pause(.5),
-      new ShootRPM(Constants.CLOSE_SHOOTING_RPM, shoot),
-      // new Shoot(0, shoot),
-      new Pause(3),
-      new FeederStart(feeder),
-      new Pause(1.5),
-      new FeederStop(feeder),
-      new ShootRPM(0, shoot)
+      new ShootLimeRPM(() -> 0, drive.getLimeLight(), shooter),
+      new FeedOneBall(feeder)
     );
   }
 }

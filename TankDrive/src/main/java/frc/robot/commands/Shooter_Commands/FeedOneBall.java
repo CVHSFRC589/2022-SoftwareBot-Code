@@ -4,36 +4,40 @@
 
 package frc.robot.commands.Shooter_Commands;
 
-import frc.robot.subsystems.FeederSubsystem;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.FeederSubsystem;
 
-public class FeederStop extends CommandBase {
-  /** Creates a new Feed. */
-  private final FeederSubsystem m_feeder;
-
-  public FeederStop(FeederSubsystem subsystem) {
+public class FeedOneBall extends CommandBase {
+  private FeederSubsystem m_feeder;
+  private Timer m_timer;
+  /** Creates a new FeedOneBall. */
+  public FeedOneBall(FeederSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_feeder = subsystem;
-    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_feeder.feed(Constants.FEEDER_MOTOR_SPEED);
+    m_timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_feeder.feed(0);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_feeder.feed(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return m_timer.hasElapsed(0.5);
   }
 }

@@ -16,8 +16,12 @@ public final class Constants {
     //Motor/Solenoid Ports
     public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11  
     public static final int DRIVE_RIGHT_MOTOR_PORT = 12; //12
+    public static final int ULTRASONIC_PING_CHANNEL = 0;//Arbitrary
+    public static final int ULTRASONIC_ECHO_CHANNEL = 1;//Arbitrary
+
     public static final int SHOOTER_MOTOR_PORT = 21; //21 Revisit ports  
     public static final int FEEDER_MOTOR_PORT = 20; //20     
+
     public static final int INTAKE_MOTOR_PORT = 30; //30  //Revisit ports
     public static final int VISUAL_FEEDBACK_MOTOR_PORT = 9; //PWM port 9 on both
 
@@ -35,8 +39,8 @@ public final class Constants {
 
     //Joystick 0 Buttons
     public static final int SHOOTER_FEEDER_MOTOR_BUTTON = 1;
-    // public static final int EMPTY_BUTTON = 2;
-    // public static final int EMPTY_BUTTON = 3;
+    public static final int FEED_ONE_BALL_BUTTON = 2;
+    public static final int REVERSE_FEEDER_MOTOR_BUTTON = 3;
     //public static final int EMPTY_BUTTON = 4;
     public static final int GO_TO_TARGET_DISTANCE_BUTTON = 5;
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
@@ -49,11 +53,11 @@ public final class Constants {
 
     //Joystick 2 Buttons
     public static final int TOGGLE_SHOOTING_BUTTON = 1;
-    public static final int MINI_SHOOT_BUTTON = 2;
+    public static final int SPIT_OUT_BALL_BUTTON = 2;
     public static final int LIMELIGHT_RPM_SHOOT_BUTTON = 3;
     public static final int CLOSE_SHOOTING_BUTTON = 4;
     public static final int FAR_SHOOTING_BUTTON = 5;
-    // public static final int TOGGLE_LEFT_CLIMBER_BUTTON = 6;
+    public static final int STOP_SHOOTER_BUTTON = 6;
     // public static final int TOGGLE_RIGHT_CLIMBER_BUTTON = 7;
     // public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
     // public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
@@ -84,9 +88,11 @@ public final class Constants {
     public static final String LIMELIGHT_PIPELINE_ENTRY_NAME = "new pipeline number";
     public static final double MAX_SHOOTER_RPM = 4900.0;
     public static final double STARTING_SHOOTER_RPM = 2200;
-    public static final double CLOSE_SHOOTING_RPM = 1000;   //x ft from hub
-    public static final double FAR_SHOOTING_RPM = 2000; //z ft from hub
+    public static final double CLOSE_SHOOTING_RPM = 1800;   //x ft from hub
+    public static final double FAR_SHOOTING_RPM = 2800; //z ft from hub
     public static final double DRIVE_STARTING_SCALE_FACTOR = 0.8;
+    public static final double FEEDER_MOTOR_SPEED = 0.3;
+    public static final double SHOOTING_LEVER_RPM_MULTIPLIER = -300;
 
     public static final double kP = 1e-4; //2.25 :)
     public static final double kI = 5e-7;
