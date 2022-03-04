@@ -24,7 +24,7 @@ public class FeederStart extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.feed(0.3); //Changed from 3/2/22 testing
+    m_shootSubsystem.feed(0.5); //Changed from 3/2/22 testing
   }
 
   // Called once the command ends or is interrupted.

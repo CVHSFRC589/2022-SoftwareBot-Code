@@ -36,7 +36,7 @@ public final class Constants {
     //Joystick 0 Buttons
     public static final int SHOOTER_FEEDER_MOTOR_BUTTON = 1;
     // public static final int EMPTY_BUTTON = 2;
-    public static final int FREEZE_DRIVE_TRAIN_BUTTON = 3;
+    // public static final int EMPTY_BUTTON = 3;
     //public static final int EMPTY_BUTTON = 4;
     public static final int GO_TO_TARGET_DISTANCE_BUTTON = 5;
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
