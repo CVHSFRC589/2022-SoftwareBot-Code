@@ -142,11 +142,11 @@ public class RobotContainer {
     // j2ToggleRight.whenPressed(new ToggleRightExtension(m_climber));
 
     //Intake buttons
-    JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
-    JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
+    // JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
+    // JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
     
-    j2ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
-    j2StartIntakeMotor.whenPressed(new SetIntakeMotor(m_intake, 0.4));
+    // j2ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
+    // j2StartIntakeMotor.whenPressed(new SetIntakeMotor(m_intake, 0.4));
   }
  
   /**

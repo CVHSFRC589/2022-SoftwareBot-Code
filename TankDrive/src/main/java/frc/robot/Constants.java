@@ -35,14 +35,14 @@ public final class Constants {
 
     //Joystick 0 Buttons
     public static final int SHOOTER_FEEDER_MOTOR_BUTTON = 1;
-    public static final int DRIVE_MAX_SPEED_BUTTON = 2;
+    // public static final int EMPTY_BUTTON = 2;
     public static final int FREEZE_DRIVE_TRAIN_BUTTON = 3;
     //public static final int EMPTY_BUTTON = 4;
     public static final int GO_TO_TARGET_DISTANCE_BUTTON = 5;
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
     public static final int TOGGLE_LED_BUTTON = 7;
     public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
-    public static final int TURN_RIGHT_BUTTON = 9;
+    // public static final int EMPTY_BUTTON = 9;
     public static final int FACE_TARGET_BUTTON = 10;
     public static final int STOP_DRIVE_TRAIN_BUTTON = 11;
 
@@ -55,8 +55,8 @@ public final class Constants {
     public static final int FAR_SHOOTING_BUTTON = 5;
     // public static final int TOGGLE_LEFT_CLIMBER_BUTTON = 6;
     // public static final int TOGGLE_RIGHT_CLIMBER_BUTTON = 7;
-    public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
-    public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
+    // public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
+    // public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
     // public static final int RETRACT_CLIMBER_ARMS_BUTTON = 10;
     public static final int TOGGLE_CLIMBER_ARMS_BUTTON = 11;
     
