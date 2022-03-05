@@ -52,13 +52,15 @@ public class ShootRPM extends CommandBase {
   @Override
   public void initialize() {
     // SmartDashboard.putBoolean("ShooterMotorRunning", true);
+    m_shootSubsystem.setShooting(true);
+    m_shootSubsystem.setShooterRPM(m_RPM);
     m_patternOver.setString("nope");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.shootRPM(m_RPM, m_lever.getAsDouble());
+    m_shootSubsystem.shoot(m_lever.getAsDouble());
     // parabola opens upward
     if(m_shootSubsystem.getShooterEncoderSpeed() > 25){
       if(m_shootSubsystem.getShooterEncoderSpeed() < 667){
@@ -90,9 +92,7 @@ public class ShootRPM extends CommandBase {
   public void end(boolean interrupted) {
     // SmartDashboard.putBoolean("ShooterMotorRunning", false);
     // m_shootSubsystem.shootRPM(0, 0);
-    if(!interrupted){
-      m_shootSubsystem.stopShooter();
-    }
+    m_shootSubsystem.setShooting(false);
     m_patternOver.setString("done");
   }
 

@@ -38,6 +38,7 @@ public class ShootLimeRPM extends CommandBase {
   @Override
   public void initialize() {
     m_shootSpeed = m_limelight.estimateRPM();
+    m_shoot.toggleShooting();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -52,16 +53,16 @@ public class ShootLimeRPM extends CommandBase {
     }else{
       m_pattern.setString("yellow");
     }
-    m_shoot.shootRPM(m_shootSpeed, m_lever.getAsDouble());
+    m_shoot.setShooterRPM(m_limelight.estimateRPM()+m_lever.getAsDouble()*Constants.SHOOTING_LEVER_RPM_MULTIPLIER);
+    m_shoot.shoot(m_lever.getAsDouble());
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(!interrupted){
-      m_shoot.stopShooter();
-    }
+    m_shoot.toggleShooting();
+    m_shoot.setShooterRPM(Constants.STARTING_SHOOTER_RPM);
     m_patternOver.setString("done");
   }
 

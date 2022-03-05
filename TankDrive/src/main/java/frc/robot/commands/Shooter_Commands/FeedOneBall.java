@@ -11,7 +11,7 @@ import frc.robot.subsystems.FeederSubsystem;
 
 public class FeedOneBall extends CommandBase {
   private FeederSubsystem m_feeder;
-  private Timer m_timer;
+  private Timer m_timer = new Timer();
   /** Creates a new FeedOneBall. */
   public FeedOneBall(FeederSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,6 +22,7 @@ public class FeedOneBall extends CommandBase {
   @Override
   public void initialize() {
     m_feeder.feed(Constants.FEEDER_MOTOR_SPEED);
+    m_timer.stop();
     m_timer.start();
   }
 
@@ -38,6 +39,6 @@ public class FeedOneBall extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_timer.hasElapsed(0.5);
+    return m_timer.hasElapsed(1);
   }
 }

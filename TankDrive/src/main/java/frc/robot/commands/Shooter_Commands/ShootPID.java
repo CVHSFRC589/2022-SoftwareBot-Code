@@ -48,6 +48,10 @@ public class ShootPID extends CommandBase {
   @Override
   public void initialize() {
     // SmartDashboard.putBoolean("ShooterMotorRunning", true);
+    // if(!m_shootSubsystem.isShooting()){
+    //   m_shootSubsystem.toggleShooting();
+    // }
+    m_shootSubsystem.setShooterRPM(Constants.STARTING_SHOOTER_RPM);
     m_patternOver.setString("nope");
   }
 

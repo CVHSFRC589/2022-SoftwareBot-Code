@@ -10,22 +10,25 @@ import frc.robot.commands.Drive_Commands.*;
 import frc.robot.commands.Shooter_Commands.FeedOneBall;
 import frc.robot.commands.Shooter_Commands.ShootLimeRPM;
 import frc.robot.commands.Shooter_Commands.StopShooter;
+import frc.robot.commands.UpdateAllianceColor;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.subsystems.VisualFeedbackSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoPatternFour extends SequentialCommandGroup {
   /** Creates a new AutoPatternOne. */
-  public AutoPatternFour(DriveTrainSubsystem drive, ShooterSubsystemPID shooter, FeederSubsystem feeder) {
+  public AutoPatternFour(DriveTrainSubsystem drive, ShooterSubsystemPID shooter, FeederSubsystem feeder, VisualFeedbackSubsystem vfs) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ChangeLimePipeline(1,drive),
-      new DriveToDistance(54,-.3, drive), //.3 Minimum Speed
+      new UpdateAllianceColor(vfs),
+      new DriveToDistance(54,-.7, drive), //.3 Minimum Speed
       new FaceTarget(0.1, drive.getLimeLight(), drive),
       //new DEMO_AutoPatternFour(drive, shooter)
       // new FeedOneBall(shooter)

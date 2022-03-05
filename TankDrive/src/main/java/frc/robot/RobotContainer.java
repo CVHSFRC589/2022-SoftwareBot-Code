@@ -53,8 +53,8 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_chooser.setDefaultOption("Drive, Face, Shoot", new AutoPatternFour(m_drivetrain, m_shooterPID, m_feeder));
-    m_chooser.addOption("Simple Auto", new AutoPatternOne(m_drivetrain, m_climber));
+    m_chooser.addOption("Simple Auto", new AutoPatternOne(m_drivetrain, m_climber, m_VFS));
+    m_chooser.setDefaultOption("Drive, Face, Shoot", new AutoPatternFour(m_drivetrain, m_shooterPID, m_feeder, m_VFS));
     m_chooser.addOption("Simple Auto + Aim", new AutoPatternTwo(m_drivetrain, m_limeLight));
     m_chooser.addOption("Scrimmage Auto Drive+Shoot", new AutoPatternScrimmage(m_drivetrain, m_shooterPID, m_feeder));
     SmartDashboard.putData(m_chooser);
@@ -69,6 +69,8 @@ public class RobotContainer {
        () -> m_joystick0.getY(), () -> m_joystick1.getY(), () -> m_joystick0.getX(), m_drivetrain //2nd getY should be joystick 1
         )
      );
+
+     m_shooterPID.setDefaultCommand(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
 
       // SmartDashboard.putData(m_drivetrain);
       // SmartDashboard.putData(m_climber);
@@ -127,7 +129,7 @@ public class RobotContainer {
     JoystickButton j2StopShooter = new JoystickButton(m_joystick2, Constants.STOP_SHOOTER_BUTTON);
     
     j2StopShooter.whenPressed(new StopShooter(m_shooterPID));
-    j2ToggleShooting.toggleWhenPressed(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
+    j2ToggleShooting.toggleWhenPressed(new ToggleShooting(m_shooterPID));
     j2CloseShoot.toggleWhenPressed(new ShootRPM(Constants.CLOSE_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));
     j2FarShoot.toggleWhenPressed(new ShootRPM(Constants.FAR_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));  
     j2SpitOutBall.toggleWhenPressed(new ShootRPM(250,m_shooterPID));

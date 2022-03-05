@@ -36,7 +36,7 @@ public class SetShooterRPM extends InstantCommand {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.setShooterSpeed(m_speed);
+    m_shootSubsystem.setShooterRPM(m_speed);
   }
 
   // Called once the command ends or is interrupted.

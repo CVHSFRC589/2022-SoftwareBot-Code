@@ -25,15 +25,13 @@ public class ShooterSubsystemPID extends SubsystemBase {
   private double m_leverRPM;
   private NetworkTable m_table;
   private NetworkTableEntry m_rpm;
-  private boolean isShooting = false;
-
+  private boolean m_isShooting = false;
 
   /** Creates a new ShooterSubsystemPID. */
   public ShooterSubsystemPID() {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_rpm = m_table.getEntry(Constants.SHOOTER_RPM_ENTRY_NAME);
     m_rpm.setDouble(Constants.MAX_SHOOTER_RPM);
-
     m_shooterEncoder.setPosition(0);
     m_shooterMotor.setInverted(true);
     // m_feederEncoder.setPosition(0);
@@ -50,31 +48,30 @@ public class ShooterSubsystemPID extends SubsystemBase {
     m_shooterPIDController.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
   }
 
-  public void defaultShoot(double leverValue)
+  public void shoot(double leverValue)
   {
     m_leverRPM = leverValue*Constants.SHOOTING_LEVER_RPM_MULTIPLIER;
-    if(isShooting){
+    if(m_isShooting){
       m_shooterPIDController.setReference(m_shooterRPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
     }else{
       m_shooterMotor.set(0);
     }
   }
 
-  public void shoot(double leverValue) { 
-    m_leverRPM = leverValue*Constants.SHOOTING_LEVER_RPM_MULTIPLIER;
-    m_shooterPIDController.setReference(m_shooterRPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
-  }
 
   public void shootRPM(double RPM, double leverValue) { 
     m_leverRPM = leverValue*Constants.SHOOTING_LEVER_RPM_MULTIPLIER;
     m_shooterPIDController.setReference(RPM + m_leverRPM, CANSparkMax.ControlType.kVelocity);
   }
 
-  public boolean getShooting(){
-    return isShooting;
+  public boolean isShooting(){
+    return m_isShooting;
   }
   public void toggleShooting(){
-    isShooting = !isShooting;
+    m_isShooting = !m_isShooting;
+  }
+  public void setShooting(boolean shoot){
+    m_isShooting = shoot;
   }
 
   // public void feed(double speed){ 
@@ -82,20 +79,16 @@ public class ShooterSubsystemPID extends SubsystemBase {
   //   m_feederMotor.set(m_feederSpeed);
   // }
 
-  public void stopShooter(){ 
+  public void stopShooter(){
+    m_isShooting = false; 
     m_shooterMotor.set(0);
   }
 
-  public void changeSpeed(double speed){
-    if(m_shooterRPM+speed>=0 && m_shooterRPM+speed<=1){
-      m_shooterRPM+=speed;
-    }
-  }
   public void setShooterRPM(double newRPM){
     m_shooterRPM = newRPM;
   }
 
-  public double getShooterSpeed(){
+  public double getShooterRPM(){
     return m_shooterRPM;
   }
 
