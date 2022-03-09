@@ -26,6 +26,11 @@ public class ShooterSubsystemPID extends SubsystemBase {
   private NetworkTable m_table;
   private NetworkTableEntry m_rpm;
   private boolean m_isShooting = false;
+  private NetworkTableEntry m_kP;
+  private NetworkTableEntry m_kI;
+  private NetworkTableEntry m_kD;
+  private NetworkTableEntry m_kIz;
+  private NetworkTableEntry m_kFF;
 
   /** Creates a new ShooterSubsystemPID. */
   public ShooterSubsystemPID() {
@@ -38,6 +43,18 @@ public class ShooterSubsystemPID extends SubsystemBase {
     // m_feederMotor.setInverted(false);
     // m_feederMotor.setIdleMode(IdleMode.kBrake);
 
+
+    m_kP = m_table.getEntry("kP");
+    m_kI = m_table.getEntry("kI");
+    m_kD = m_table.getEntry("kD");
+    m_kIz = m_table.getEntry("kIz");
+    m_kFF = m_table.getEntry("kFF");
+
+    m_kP.setDouble(Constants.kP);
+    m_kI.setDouble(Constants.kI);
+    m_kD.setDouble(Constants.kD);
+    m_kIz.setDouble(Constants.kIz);
+    m_kFF.setDouble(Constants.kFF);
 
     // set PID coefficients
     m_shooterPIDController.setP(Constants.kP);
@@ -91,11 +108,23 @@ public class ShooterSubsystemPID extends SubsystemBase {
   public double getShooterRPM(){
     return m_shooterRPM;
   }
+  
+  public void setShooterMotor(double speed){
+    m_shooterMotor.set(speed);
+  }
 
   public double getShooterEncoderSpeed(){
     // return m_shooterEncoder.getVelocity()* Constants.SHOOTER_GEAR_RATIO;
     return m_shooterEncoder.getVelocity();
     //change constant to actual gear ratio later
+  }
+
+  public void setPID(double kP, double kI, double kD, double kIz, double kFF){
+    m_shooterPIDController.setP(kP);
+    m_shooterPIDController.setI(kI);
+    m_shooterPIDController.setD(kD);
+    m_shooterPIDController.setIZone(kIz);
+    m_shooterPIDController.setFF(kFF);
   }
 
   // public double getFeederEncoderSpeed(){

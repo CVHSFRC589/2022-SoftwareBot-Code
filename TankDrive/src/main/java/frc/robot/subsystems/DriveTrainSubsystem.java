@@ -4,6 +4,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -37,19 +39,21 @@ public class DriveTrainSubsystem extends SubsystemBase {
         m_sonic.setEnabled(true);
         m_leftMotor.setInverted(true); //true
         m_rightMotor.setInverted(false); //false
+        m_leftMotor.setIdleMode(IdleMode.kBrake);
+        m_rightMotor.setIdleMode(IdleMode.kBrake);
         setPipeline(1);
         reset();
     }
  
     public void drive(double left, double right) {
-      if(driveType.getAsBoolean())
-      {
-        m_drive.tankDrive(left*m_scaleFactor, right*m_scaleFactor);
-      }
-      else
-      {
+     //if(driveType.getAsBoolean())
+      // {
+      //   m_drive.tankDrive(left*m_scaleFactor, right*m_scaleFactor);
+      // }
+      //else
+      // {
         m_drive.arcadeDrive(left*m_scaleFactor, -right*m_scaleFactor);
-      }
+      //}
     }
 
     public void reset(){
@@ -106,10 +110,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public void updateShuffleboard()
     {
-      SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());
-      SmartDashboard.putNumber("RightInches", getRightEncoderInches());
-      // SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
-      // SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
+      // SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());
+      // SmartDashboard.putNumber("RightInches", getRightEncoderInches());
+      SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
+      SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
+      SmartDashboard.putNumber("UltraSonic Inches", getUltraDistInches());
     }
 
     public double getLeftEncoderInches()
@@ -145,7 +150,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
       m_aiming.updateLimelightValues();
-      //updateShuffleboard();
+      updateShuffleboard();
       //log();
     }
 }

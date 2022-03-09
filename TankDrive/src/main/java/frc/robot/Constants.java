@@ -46,8 +46,8 @@ public final class Constants {
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
     public static final int TOGGLE_LED_BUTTON = 7;
     public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
-    // public static final int EMPTY_BUTTON = 9;
-    public static final int FACE_TARGET_BUTTON = 10;
+    public static final int FACE_TARGET_BUTTON = 9;
+    // public static final int EMPTY_BUTTON = 10; DO NOT USE
     public static final int STOP_DRIVE_TRAIN_BUTTON = 11;
 
 
@@ -58,10 +58,10 @@ public final class Constants {
     public static final int CLOSE_SHOOTING_BUTTON = 4;
     public static final int FAR_SHOOTING_BUTTON = 5;
     public static final int STOP_SHOOTER_BUTTON = 6;
-    // public static final int TOGGLE_RIGHT_CLIMBER_BUTTON = 7;
+    public static final int EAT_BALL_BUTTON = 7;
     // public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8; 
     // public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
-    // public static final int RETRACT_CLIMBER_ARMS_BUTTON = 10;
+    // public static final int RETRACT_CLIMBER_ARMS_BUTTON = 10; DO NOT USE
     public static final int TOGGLE_CLIMBER_ARMS_BUTTON = 11;
     
     
@@ -89,16 +89,16 @@ public final class Constants {
     public static final double MAX_SHOOTER_RPM = 4900.0;
     public static final double STARTING_SHOOTER_RPM = 2200;
     public static final double CLOSE_SHOOTING_RPM = 1800;   //x ft from hub
-    public static final double FAR_SHOOTING_RPM = 2800; //z ft from hub
+    public static final double FAR_SHOOTING_RPM = 2200; //z ft from hub
     public static final double DRIVE_STARTING_SCALE_FACTOR = 0.8;
     public static final double FEEDER_MOTOR_SPEED = 0.3;
     public static final double SHOOTING_LEVER_RPM_MULTIPLIER = -300;
 
-    public static final double kP = 1e-4; //2.25 :)
-    public static final double kI = 5e-7;
-    public static final double kD = 5e-5; 
+    public static final double kP = 0.0002; //2.25 :)
+    public static final double kI = 0.0000005;
+    public static final double kD = 0; 
     public static final double kIz = 0; 
-    public static final double kFF = 1.5e-5;
+    public static final double kFF = 0;
     public static final double kMaxOutput = 1; 
     public static final double kMinOutput = -1;
 }

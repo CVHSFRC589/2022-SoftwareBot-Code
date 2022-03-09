@@ -48,7 +48,7 @@ public class ShootLimeRPM extends CommandBase {
     if(Math.abs((m_shootSpeed+m_lever.getAsDouble()*Constants.SHOOTING_LEVER_RPM_MULTIPLIER)-m_limelight.estimateRPM())>=25)
       m_shootSpeed=m_limelight.estimateRPM();
 
-    if(Math.abs((m_shootSpeed+m_lever.getAsDouble()*Constants.SHOOTING_LEVER_RPM_MULTIPLIER)-m_shoot.getShooterEncoderSpeed())<=15){
+    if(Math.abs((m_shootSpeed+m_lever.getAsDouble()*Constants.SHOOTING_LEVER_RPM_MULTIPLIER)-m_shoot.getShooterEncoderSpeed())<=25){
       m_pattern.setString("green");
     }else{
       m_pattern.setString("yellow");
