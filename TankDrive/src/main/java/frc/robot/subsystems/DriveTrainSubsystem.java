@@ -8,9 +8,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
-// import edu.wpi.first.util.sendable.Sendable;
-// import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,15 +26,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
     private static BooleanSupplier driveType = () -> false;
     private static LimeLightAiming m_aiming = new LimeLightAiming();
-    private static Ultrasonic m_sonic = new Ultrasonic(Constants.ULTRASONIC_PING_CHANNEL, Constants.ULTRASONIC_ECHO_CHANNEL);
-    
+    private static AnalogInput m_sonic = new AnalogInput(Constants.ULTRASONIC_SENSOR_CHANNEL);
 
     private double m_scaleFactor = 1; //Max
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
         super();
-        m_sonic.setEnabled(true);
         m_leftMotor.setInverted(true); //true
         m_rightMotor.setInverted(false); //false
         m_leftMotor.setIdleMode(IdleMode.kBrake);
@@ -105,7 +101,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public double getUltraDistInches()
     {
-      return m_sonic.getRangeInches();
+      return m_sonic.getVoltage()*Constants.ULTRASONIC_VOLTAGE_MULTIPLIER;
     }
 
     public void updateShuffleboard()

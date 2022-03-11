@@ -52,35 +52,39 @@ public class ShootPID extends CommandBase {
     //   m_shootSubsystem.toggleShooting();
     // }
     m_shootSubsystem.setShooterRPM(Constants.STARTING_SHOOTER_RPM);
-    m_patternOver.setString("nope");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_shootSubsystem.shoot(m_lever.getAsDouble());
+    // double shootMotorSpeed = m_shootSubsystem.getShooterEncoderSpeed();
     if(m_shootSubsystem.getShooterEncoderSpeed() > 25){
-      if(m_shootSubsystem.getShooterEncoderSpeed() < 667){
-        m_pattern.setString("red");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*2){
-        m_pattern.setString("red orange");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*3){
-        m_pattern.setString("orange");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*4){
-        m_pattern.setString("gold");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*5){
-        m_pattern.setString("yellow");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*6){
-        m_pattern.setString("lawn green");
-      }
-      else{
+      m_patternOver.setString("nope");
+      if(Math.abs((m_shootSubsystem.getShooterRPM() + m_lever.getAsDouble() * Constants.SHOOTING_LEVER_RPM_MULTIPLIER) - m_shootSubsystem.getShooterEncoderSpeed()) < 25){ // if within 25 rpm of target speed, set LEDs to green
         m_pattern.setString("lime");
       }
+      // else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*2){
+      //   m_pattern.setString("red orange");
+      // }
+      // else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*3){
+      //   m_pattern.setString("orange");
+      // }
+      // else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*4){
+      //   m_pattern.setString("gold");
+      // }
+      // else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*5){
+      //   m_pattern.setString("yellow");
+      // }
+      // else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*6){
+      //   m_pattern.setString("lawn green");
+      // }
+      else{
+        m_pattern.setString("yellow");
+      }
+    }
+    else{
+      m_patternOver.setString("done");
     }
   }
 

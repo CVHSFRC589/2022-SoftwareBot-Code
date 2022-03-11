@@ -3,26 +3,24 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Auto_Patterns;
-
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.Pause;
-import frc.robot.commands.Drive_Commands.DriveToDistance;
-import frc.robot.commands.Drive_Commands.DriveToGivenTargetDistance;
-import frc.robot.commands.Shooter_Commands.ShootRPM;
+import frc.robot.commands.Shooter_Commands.FeedOneBall;
+import frc.robot.commands.Shooter_Commands.ShootLimeRPM;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ShooterSubsystemPID;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoShootDrive extends ParallelRaceGroup {
-  /** Creates a new AutoStartShooter. */
-  public AutoShootDrive(double rpm, double distance, ShooterSubsystemPID shoot, DriveTrainSubsystem drive) {
+public class ShootLime extends ParallelCommandGroup {
+  /** Creates a new AutoPatternOne. */
+  public ShootLime(DriveTrainSubsystem drive, ShooterSubsystemPID shooter, FeederSubsystem feeder) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ShootRPM(rpm, shoot),
-      new DriveToDistance(distance, -.6, drive)
+      new ShootLimeRPM(() -> 0, drive.getLimeLight(), shooter),
+      new FeedOneBall(feeder)
     );
   }
 }

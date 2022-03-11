@@ -4,15 +4,12 @@
 
 package frc.robot.commands.Drive_Commands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class StopDriveTrain extends InstantCommand {
-  private DriveTrainSubsystem m_drive;
-
+public class StopDriveTrain extends CommandBase {
+  private DriveTrainSubsystem m_drive; 
+  /** Creates a new StopDriveTrain. */
   public StopDriveTrain(DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = subsystem;
@@ -20,7 +17,22 @@ public class StopDriveTrain extends InstantCommand {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    System.out.println("\n+++++++++++++++STOP+++++++++++++++++\n");
     m_drive.reset();
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return true;
   }
 }

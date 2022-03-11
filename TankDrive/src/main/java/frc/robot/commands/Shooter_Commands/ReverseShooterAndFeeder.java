@@ -6,15 +6,12 @@ package frc.robot.commands.Shooter_Commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.FeederSubsystem;
-import frc.robot.subsystems.ShooterSubsystemPID;
 
 public class ReverseShooterAndFeeder extends CommandBase {
-  private ShooterSubsystemPID m_shooter;
   private FeederSubsystem m_feeder;
   /** Creates a new ReverseShooterFeeder. */
-  public ReverseShooterAndFeeder(ShooterSubsystemPID sSubsystem, FeederSubsystem fSubsystem) {
+  public ReverseShooterAndFeeder(FeederSubsystem fSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shooter = sSubsystem;
     m_feeder = fSubsystem;
   }
 
@@ -25,14 +22,12 @@ public class ReverseShooterAndFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // m_shooter.setShooterMotor(-.3);
     m_feeder.feed(-.3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_shooter.setShooterMotor(0);
     m_feeder.feed(0);
   }
 

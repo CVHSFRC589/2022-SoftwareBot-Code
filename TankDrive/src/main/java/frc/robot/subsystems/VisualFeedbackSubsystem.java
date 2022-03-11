@@ -38,7 +38,7 @@ public class VisualFeedbackSubsystem extends SubsystemBase {
     }
   }
   public void toggleOverride()
-{
+  {
     m_override = !m_override;
   }
   private void giveVisualFeedback(String color){

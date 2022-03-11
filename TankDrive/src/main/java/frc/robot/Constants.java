@@ -16,8 +16,8 @@ public final class Constants {
     //Motor/Solenoid Ports
     public static final int DRIVE_LEFT_MOTOR_PORT = 11; //11  
     public static final int DRIVE_RIGHT_MOTOR_PORT = 12; //12
-    public static final int ULTRASONIC_PING_CHANNEL = 0;//Arbitrary
-    public static final int ULTRASONIC_ECHO_CHANNEL = 1;//Arbitrary
+    public static final int ULTRASONIC_SENSOR_CHANNEL = 0;//Arbitrary
+    public static final int ULTRASONIC_VOLTAGE_MULTIPLIER = 1;//Arbitrary
 
     public static final int SHOOTER_MOTOR_PORT = 21; //21 Revisit ports  
     public static final int FEEDER_MOTOR_PORT = 20; //20     
@@ -41,12 +41,12 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_MOTOR_BUTTON = 1;
     public static final int FEED_ONE_BALL_BUTTON = 2;
     public static final int REVERSE_FEEDER_MOTOR_BUTTON = 3;
-    //public static final int EMPTY_BUTTON = 4;
+    public static final int FACE_TARGET_BUTTON = 4;
     public static final int GO_TO_TARGET_DISTANCE_BUTTON = 5;
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
     public static final int TOGGLE_LED_BUTTON = 7;
     public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
-    public static final int FACE_TARGET_BUTTON = 9;
+    public static final int FACE_TARGET_CONTINUOUS_BUTTON = 9;
     // public static final int EMPTY_BUTTON = 10; DO NOT USE
     public static final int STOP_DRIVE_TRAIN_BUTTON = 11;
 
@@ -78,7 +78,6 @@ public final class Constants {
     public static final double HUB_HEIGHT = 108;//108
     public static final double LIMELIGHT_HEIGHT = 26.5;
     public static final double LIMELIGHT_MOUNT_ANGLE = 32;
-    public static final double SHOOTING_DISTANCE = 60; //Arbitrary num, We dont have a shooter yet
 
     //misc
     public static final String NETWORK_TABLE_NAME = "Visual Feedback";
@@ -86,13 +85,17 @@ public final class Constants {
     public static final String PATTERN_FINISHED_ENTRY_NAME = "VF Pattern done";
     public static final String SHOOTER_RPM_ENTRY_NAME = "Shooter RPM";
     public static final String LIMELIGHT_PIPELINE_ENTRY_NAME = "new pipeline number";
+    public static final double DRIVE_STARTING_SCALE_FACTOR = 1;
+    
+    
+    //Shooting Constants
     public static final double MAX_SHOOTER_RPM = 4900.0;
     public static final double STARTING_SHOOTER_RPM = 2200;
     public static final double CLOSE_SHOOTING_RPM = 1800;   //x ft from hub
     public static final double FAR_SHOOTING_RPM = 2200; //z ft from hub
-    public static final double DRIVE_STARTING_SCALE_FACTOR = 0.8;
     public static final double FEEDER_MOTOR_SPEED = 0.3;
     public static final double SHOOTING_LEVER_RPM_MULTIPLIER = -300;
+    public static final double SHOOTING_DISTANCE = 60; //Arbitrary num, We dont have a shooter yet; 60
 
     public static final double kP = 0.0002; //2.25 :)
     public static final double kI = 0.0000005;

@@ -15,8 +15,6 @@ import frc.robot.subsystems.ShooterSubsystemPID;
 public class ShootOneBall extends ParallelRaceGroup {
   /** Creates a new AutoStartShooter. */
   public ShootOneBall(double rpm, double seconds, ShooterSubsystemPID subsystem) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShootRPM(rpm, subsystem),
       new Pause(seconds)

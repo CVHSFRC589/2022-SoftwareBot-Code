@@ -5,12 +5,9 @@
 package frc.robot.commands.Auto_Patterns;
 import frc.robot.commands.ChangeLimePipeline;
 import frc.robot.commands.Pause;
-import frc.robot.commands.Climber_Commands.*;
 import frc.robot.commands.Drive_Commands.*;
-import frc.robot.commands.Shooter_Commands.FeedOneBall;
 import frc.robot.commands.Shooter_Commands.FeederStart;
 import frc.robot.commands.Shooter_Commands.FeederStop;
-import frc.robot.commands.Shooter_Commands.ShootLimeRPM;
 import frc.robot.commands.Shooter_Commands.StopShooter;
 import frc.robot.commands.UpdateAllianceColor;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -25,22 +22,17 @@ import frc.robot.subsystems.VisualFeedbackSubsystem;
 public class APBackUpOnce extends SequentialCommandGroup {
   /** Creates a new AutoPatternOne. */
   public APBackUpOnce(DriveTrainSubsystem drive, ShooterSubsystemPID shooter, FeederSubsystem feeder, VisualFeedbackSubsystem vfs) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ChangeLimePipeline(1,drive),
       new UpdateAllianceColor(vfs),
       new Pause(6),
       new AutoStartShooter(2075, 5, shooter),
-      // new AutoShootDrive(2000, 52, shooter, drive),
-      // new Pause(2),
       new DriveToDistance(70, -.6, drive),
       new Pause(.5),
       new FeederStart(feeder),
       new Pause(1),
       new StopShooter(shooter),
       new FeederStop(feeder)
-      // new DriveToDistance(24, -.6, drive)
     );
   }
 }

@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -38,7 +38,6 @@ public class ClimberSubsystem extends SubsystemBase {
   {
     m_leftArm.set(DoubleSolenoid.Value.kForward);
     // SmartDashboard.putBoolean("Left Climber", true);
-    
   }
 
   public void reachRight()
@@ -51,7 +50,6 @@ public class ClimberSubsystem extends SubsystemBase {
   {
     m_leftArm.set(DoubleSolenoid.Value.kReverse);
     // SmartDashboard.putBoolean("Left Climber", false);
-    
   }
 
   public void pullRight()
@@ -65,7 +63,6 @@ public class ClimberSubsystem extends SubsystemBase {
       pullLeft();
     }
     else
-    
     {
       reachLeft();
     }
@@ -76,7 +73,6 @@ public class ClimberSubsystem extends SubsystemBase {
       pullRight();
     }
     else
-    
     {
       reachRight();
     }

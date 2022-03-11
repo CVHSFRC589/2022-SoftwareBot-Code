@@ -14,7 +14,7 @@ public class FaceTarget extends CommandBase {
   private LimeLight m_limeLight;
   private DriveTrainSubsystem m_drivetrain;
   private double m_startSpeed;
-  private double m_startEncoders;
+  private double m_initialEncoderValue;
 
   public FaceTarget(double startingSpeed, LimeLight limeLight, DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,7 +26,7 @@ public class FaceTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_startEncoders = m_drivetrain.getAverageEncoderInches();
+    m_initialEncoderValue = m_drivetrain.getAverageEncoderInches();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,7 +45,8 @@ public class FaceTarget extends CommandBase {
     }
     else
     {
-      m_drivetrain.setMotors(-0.2, 0.2);
+      m_drivetrain.setMotors(-0.1, 0.1);
+      // System.out.println("No Target");
     }
   }
 
@@ -56,21 +57,22 @@ public class FaceTarget extends CommandBase {
     if(!interrupted){
       System.out.println("Target Found");
     }
+    else {
+      System.out.println("\nInterrupted\n");
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-     if(m_limeLight.getIsTargetFound()){
-       if(Math.abs(m_limeLight.getdegRotationToTarget()) <= .25){
+     if(m_limeLight.getIsTargetFound() && (Math.abs(m_limeLight.getdegRotationToTarget()) <= .5)){
          return true;
-       }
      }
-     else if(m_drivetrain.getAverageEncoderInches() >= m_startEncoders + Constants.ROBOT_TURN_CIRCUM)
+     else if(m_drivetrain.getAverageEncoderInches() >= m_initialEncoderValue + 2*Constants.ROBOT_TURN_CIRCUM)
      {
        return true;
+       //Giving up so no infinite spin
      }
      return false;
-    
   }
 }

@@ -35,11 +35,13 @@ public class DriveToGivenTargetDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_distance > m_limeLight.estimateTargetDistance()){
-      m_drive.setMotors(-0.2, -0.2); //Swap negatives here and line 34, Limelight was on back of softwarebot
+    if(m_distance > m_limeLight.estimateTargetDistance())
+    {
+      m_drive.setMotors(0.2, 0.2); //Swap negatives here and line 34, Limelight was on back of softwarebot
     }
-    else{
-      m_drive.setMotors(0.2,0.2);
+    else
+  {
+      m_drive.setMotors(-0.2,-0.2);
     }
     m_patternOver.setString("nope");
     m_pattern.setString("hot pink");
