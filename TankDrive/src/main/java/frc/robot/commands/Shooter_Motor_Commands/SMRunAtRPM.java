@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooter_Commands;
+package frc.robot.commands.Shooter_Motor_Commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystemPID;
@@ -13,7 +13,7 @@ import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ShootRPM extends CommandBase {
+public class SMRunAtRPM extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystemPID m_shootSubsystem;
   private double m_RPM;
@@ -27,7 +27,7 @@ public class ShootRPM extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShootRPM(double RPM, ShooterSubsystemPID subsystem) {
+  public SMRunAtRPM(double RPM, ShooterSubsystemPID subsystem) {
     m_RPM = RPM;
     m_shootSubsystem = subsystem;
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
@@ -37,7 +37,7 @@ public class ShootRPM extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
-  public ShootRPM(double RPM, DoubleSupplier lever, ShooterSubsystemPID subsystem) {
+  public SMRunAtRPM(double RPM, DoubleSupplier lever, ShooterSubsystemPID subsystem) {
     m_RPM = RPM;
     m_lever = lever;
     m_shootSubsystem = subsystem;
@@ -59,30 +59,19 @@ public class ShootRPM extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shootSubsystem.shoot(m_lever.getAsDouble());
+    m_shootSubsystem.runShooterMotor(m_lever.getAsDouble());
     // parabola opens upward
-    if(m_shootSubsystem.getShooterEncoderSpeed() > 25){
-      if(m_shootSubsystem.getShooterEncoderSpeed() < 667){
-        m_pattern.setString("red");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*2){
-        m_pattern.setString("red orange");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*3){
-        m_pattern.setString("orange");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*4){
-        m_pattern.setString("gold");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*5){
-        m_pattern.setString("yellow");
-      }
-      else if(m_shootSubsystem.getShooterEncoderSpeed() < 667*6){
-        m_pattern.setString("lawn green");
+    if(m_shootSubsystem.getShooterEncoderSpeed() > Constants.SHOOTER_STOPPING_SPEED){
+      m_patternOver.setString("nope");
+      if(Math.abs((m_shootSubsystem.getShooterRPM() + m_lever.getAsDouble() * Constants.SHOOTING_LEVER_RPM_MULTIPLIER) - m_shootSubsystem.getShooterEncoderSpeed()) < Constants.SHOOTER_RPM_TOLERANCE){ // if within 25 rpm of target speed, set LEDs to green
+        m_pattern.setString("green");
       }
       else{
-        m_pattern.setString("lime");
+        m_pattern.setString("yellow");
       }
+    }
+    else{
+      m_patternOver.setString("done");
     }
   }
 

@@ -65,7 +65,7 @@ public class ShooterSubsystemPID extends SubsystemBase {
     m_shooterPIDController.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
   }
 
-  public void shoot(double leverValue)
+  public void runShooterMotor(double leverValue)
   {
     m_leverRPM = leverValue*Constants.SHOOTING_LEVER_RPM_MULTIPLIER;
     if(m_isShooting){

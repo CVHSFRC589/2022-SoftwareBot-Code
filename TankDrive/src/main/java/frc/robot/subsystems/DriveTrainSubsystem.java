@@ -28,7 +28,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private static LimeLightAiming m_aiming = new LimeLightAiming();
     private static AnalogInput m_sonic = new AnalogInput(Constants.ULTRASONIC_SENSOR_CHANNEL);
 
-    private double m_scaleFactor = 1; //Max
+    private double m_scaleFactor = Constants.DRIVE_STARTING_SCALE_FACTOR; //Max
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {

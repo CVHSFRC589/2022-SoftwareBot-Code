@@ -5,8 +5,10 @@
 package frc.robot.commands.Auto_Patterns;
 import frc.robot.commands.ChangeLimePipeline;
 import frc.robot.commands.Pause;
-import frc.robot.commands.Shooter_Commands.*;
 import frc.robot.commands.UpdateAllianceColor;
+import frc.robot.commands.Feeder_Commands.FeederStart;
+import frc.robot.commands.Feeder_Commands.FeederStop;
+import frc.robot.commands.Shooter_Motor_Commands.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -27,7 +29,7 @@ public class APCompetition1 extends SequentialCommandGroup {
       new ShootDriveBack(2075, 70, shooter, drive),     
       new FeederStart(feeder),
       new Pause(1),
-      new StopShooter(shooter),
+      new SMStop(shooter),
       new FeederStop(feeder)
     );
   }

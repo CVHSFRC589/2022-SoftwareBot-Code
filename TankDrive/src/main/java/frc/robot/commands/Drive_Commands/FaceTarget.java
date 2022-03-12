@@ -13,20 +13,25 @@ public class FaceTarget extends CommandBase {
   /** Creates a new FaceTarget. */
   private LimeLight m_limeLight;
   private DriveTrainSubsystem m_drivetrain;
-  private double m_startSpeed;
+  private double m_targetFoundSpeed;
   private double m_initialEncoderValue;
+  private double m_noTargetSpeed;
+  private boolean m_targetFound;
 
-  public FaceTarget(double startingSpeed, LimeLight limeLight, DriveTrainSubsystem subsystem) {
+  public FaceTarget(LimeLight limeLight, DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_limeLight = limeLight;
     m_drivetrain = subsystem;
-    m_startSpeed = startingSpeed;
+    m_targetFoundSpeed = 0.09;
+    m_noTargetSpeed = 0.15;
+    // addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_initialEncoderValue = m_drivetrain.getAverageEncoderInches();
+    m_targetFound = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,13 +44,20 @@ public class FaceTarget extends CommandBase {
       //   m_drivetrain.setMotors(-speed, speed);
       // }
       // else{
+        if(!m_targetFound){
+          System.out.println("---Target Found First Time---");
+          //m_drivetrain.setMotors(0,0);
+          // double direction = Math.abs(m_limeLight.getdegRotationToTarget())/m_limeLight.getdegRotationToTarget();
+          // m_drivetrain.setMotors(-direction*m_targetFoundSpeed,direction*m_targetFoundSpeed);
+        }
+        m_targetFound = true;
         double direction = Math.abs(m_limeLight.getdegRotationToTarget())/m_limeLight.getdegRotationToTarget();
-        m_drivetrain.setMotors(-direction*m_startSpeed, direction*m_startSpeed);
+        m_drivetrain.setMotors(-direction*m_targetFoundSpeed, direction*m_targetFoundSpeed);
       // }
     }
     else
     {
-      m_drivetrain.setMotors(-0.1, 0.1);
+      m_drivetrain.setMotors(-m_noTargetSpeed, m_noTargetSpeed);
       // System.out.println("No Target");
     }
   }
@@ -56,9 +68,8 @@ public class FaceTarget extends CommandBase {
     m_drivetrain.setMotors(0,0);
     if(!interrupted){
       System.out.println("Target Found");
-    }
-    else {
-      System.out.println("\nInterrupted\n");
+    }else{
+      System.out.println("Face Target Interrupted");
     }
   }
 

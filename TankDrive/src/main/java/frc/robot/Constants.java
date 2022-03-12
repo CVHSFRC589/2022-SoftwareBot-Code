@@ -46,7 +46,7 @@ public final class Constants {
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
     public static final int TOGGLE_LED_BUTTON = 7;
     public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
-    public static final int FACE_TARGET_CONTINUOUS_BUTTON = 9;
+    //public static final int EMPTY_BUTTON = 9;
     // public static final int EMPTY_BUTTON = 10; DO NOT USE
     public static final int STOP_DRIVE_TRAIN_BUTTON = 11;
 
@@ -93,6 +93,8 @@ public final class Constants {
     public static final double STARTING_SHOOTER_RPM = 2200;
     public static final double CLOSE_SHOOTING_RPM = 1800;   //x ft from hub
     public static final double FAR_SHOOTING_RPM = 2200; //z ft from hub
+    public static final double SHOOTER_STOPPING_SPEED = 750;
+    public static final double SHOOTER_RPM_TOLERANCE = 25;
     public static final double FEEDER_MOTOR_SPEED = 0.3;
     public static final double SHOOTING_LEVER_RPM_MULTIPLIER = -300;
     public static final double SHOOTING_DISTANCE = 60; //Arbitrary num, We dont have a shooter yet; 60

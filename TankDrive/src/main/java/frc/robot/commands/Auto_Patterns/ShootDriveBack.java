@@ -6,7 +6,7 @@ package frc.robot.commands.Auto_Patterns;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.commands.Drive_Commands.DriveToDistance;
-import frc.robot.commands.Shooter_Commands.ShootRPM;
+import frc.robot.commands.Shooter_Motor_Commands.SMRPM;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystemPID;
 
@@ -19,7 +19,7 @@ public class ShootDriveBack extends ParallelRaceGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ShootRPM(rpm, shoot),
+      new SMRPM(rpm, shoot),
       new DriveToDistance(distance, -.6, drive)
     );
   }

@@ -17,8 +17,8 @@ import frc.robot.commands.*;
 import frc.robot.commands.Auto_Patterns.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.Drive_Commands.*;
-// import frc.robot.commands.Intake_Commands.*;
-import frc.robot.commands.Shooter_Commands.*;
+import frc.robot.commands.Feeder_Commands.*;
+import frc.robot.commands.Shooter_Motor_Commands.*;
 import frc.robot.commands.Climber_Commands.*;
 
  
@@ -57,18 +57,18 @@ public class RobotContainer {
     // m_chooser.addOption("Drive Lime, Shoot, Turn Right", new AutoPatternLimelight(m_drivetrain, m_shooterPID, m_feeder, m_limeLight, m_VFS));
     SmartDashboard.putData(m_chooser);
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
-    // SmartDashboard.putData("SetRPM", new SetRPMFromShuffleboard(m_shooterPID));
+    SmartDashboard.putData("SetRPM", new SMRPMFromShuffleboard(m_shooterPID));
     // SmartDashboard.putData("SwitchPiP", new SwitchPIP(m_drivetrain));
     // SmartDashboard.putData("SetPipeline", new ChangeLimePipeline(m_drivetrain));
     SmartDashboard.putData("Toggle Limelight LEDs", new ToggleLimelightLEDs(m_limeLight));
-    SmartDashboard.putData(new SetShooterPID(m_shooterPID));
+    SmartDashboard.putData(new SMSetPID(m_shooterPID));
     m_drivetrain.setDefaultCommand( //for arcade drive or tank drive
        new Drive(
        () -> m_joystick0.getY(), () -> m_joystick1.getY(), () -> m_joystick0.getX(), m_drivetrain //2nd getY should be joystick 1
         )
      );
 
-     m_shooterPID.setDefaultCommand(new ShootPID(() -> m_joystick2.getZ(), m_shooterPID));
+     m_shooterPID.setDefaultCommand(new SMControl(() -> m_joystick2.getZ(), m_shooterPID));
 
       SmartDashboard.putData(m_drivetrain);
       // SmartDashboard.putData(m_climber);
@@ -93,10 +93,8 @@ public class RobotContainer {
     
     /*Joystick 0:*/
       //Driving buttons
-    //JoystickButton j0DriveTurbo = new JoystickButton(m_joystick0, Constants.DRIVE_MAX_SPEED_BUTTON);
     //JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
     JoystickButton j0GoToTargetDistance = new JoystickButton(m_joystick0, Constants.GO_TO_TARGET_DISTANCE_BUTTON);
-    JoystickButton j0ToggleFaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_CONTINUOUS_BUTTON);
     JoystickButton j0FaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_BUTTON);
     JoystickButton j0AbortDriveCommand = new JoystickButton(m_joystick0, Constants.STOP_DRIVE_TRAIN_BUTTON);
 
@@ -130,13 +128,10 @@ public class RobotContainer {
 
     /*Joystick 0:*/
       //Driving Buttons
-    //j0DriveTurbo.whenHeld(new SetSpeedScale(1.0,m_drivetrain));
-    //j0DriveTurbo.whenReleased((new SetSpeedScale(0.8,m_drivetrain)));
     //j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
-    j0ToggleFaceTarget.toggleWhenPressed(new FaceTargetContinuous(0.1, m_limeLight, m_drivetrain));
     j0GoToTargetDistance.whenPressed(new DriveToGivenTargetDistance(Constants.SHOOTING_DISTANCE, m_limeLight, m_drivetrain));
     j0AbortDriveCommand.whenPressed(new StopDriveTrain(m_drivetrain));
-    j0FaceTarget.toggleWhenPressed(new FaceTarget(0.1, m_limeLight, m_drivetrain));
+    j0FaceTarget.toggleWhenPressed(new FaceTarget(m_limeLight, m_drivetrain));
 
       //Feeding Buttons
     j0Feed.whenHeld(new FeederStart(m_feeder));
@@ -148,14 +143,13 @@ public class RobotContainer {
 
     /*Joystick 2:*/
       //Shooting Buttons
-    j2StopShooter.whenPressed(new StopShooter(m_shooterPID));
-    j2ToggleShooting.toggleWhenPressed(new ToggleShooting(m_shooterPID));
-    j2CloseShoot.toggleWhenPressed(new ShootRPM(Constants.CLOSE_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));
-    j2FarShoot.toggleWhenPressed(new ShootRPM(Constants.FAR_SHOOTING_RPM, () -> 0, m_shooterPID));  
-    j2SpitOutBall.toggleWhenPressed(new ShootRPM(250,m_shooterPID));
-    //j2MiniShoot.whenReleased(new ShootRPM(0,m_shooterPID));
-    j2LimelightShoot.toggleWhenPressed(new ShootLimeRPM(() -> m_joystick2.getZ(),m_limeLight, m_shooterPID));
-    j0EatBall.whenHeld(new ReverseShooterAndFeeder(m_feeder));
+    j2StopShooter.whenPressed(new SMStop(m_shooterPID));
+    j2ToggleShooting.toggleWhenPressed(new SMToggle(m_shooterPID));
+    j2CloseShoot.toggleWhenPressed(new SMRunAtRPM(Constants.CLOSE_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));
+    j2FarShoot.toggleWhenPressed(new SMRunAtRPM(Constants.FAR_SHOOTING_RPM, () -> 0, m_shooterPID));  
+    j2SpitOutBall.toggleWhenPressed(new SMRunAtRPM(250,m_shooterPID));
+    j2LimelightShoot.toggleWhenPressed(new SMLimeRPM(() -> m_joystick2.getZ(),m_limeLight, m_shooterPID));
+    j0EatBall.whenHeld(new ReverseFeeder(m_feeder));
 
       //Climbing Buttons
     j2ToggleClimberExtended.whenPressed(new ToggleClimberArms(m_climber));

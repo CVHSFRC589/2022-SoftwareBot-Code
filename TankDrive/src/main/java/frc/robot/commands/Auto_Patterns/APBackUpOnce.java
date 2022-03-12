@@ -6,9 +6,8 @@ package frc.robot.commands.Auto_Patterns;
 import frc.robot.commands.ChangeLimePipeline;
 import frc.robot.commands.Pause;
 import frc.robot.commands.Drive_Commands.*;
-import frc.robot.commands.Shooter_Commands.FeederStart;
-import frc.robot.commands.Shooter_Commands.FeederStop;
-import frc.robot.commands.Shooter_Commands.StopShooter;
+import frc.robot.commands.Feeder_Commands.*;
+import frc.robot.commands.Shooter_Motor_Commands.*;
 import frc.robot.commands.UpdateAllianceColor;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -31,7 +30,7 @@ public class APBackUpOnce extends SequentialCommandGroup {
       new Pause(.5),
       new FeederStart(feeder),
       new Pause(1),
-      new StopShooter(shooter),
+      new SMStop(shooter),
       new FeederStop(feeder)
     );
   }

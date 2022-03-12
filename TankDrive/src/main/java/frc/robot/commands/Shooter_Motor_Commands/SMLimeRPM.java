@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooter_Commands;
+package frc.robot.commands.Shooter_Motor_Commands;
 
 import java.util.function.DoubleSupplier;
 
@@ -13,7 +13,7 @@ import frc.robot.LimeLightAiming;
 import frc.robot.subsystems.ShooterSubsystemPID;
 
 
-public class ShootLimeRPM extends CommandBase {
+public class SMLimeRPM extends CommandBase {
   private LimeLightAiming m_limelight;
   private ShooterSubsystemPID m_shoot;
   private double m_shootSpeed;
@@ -23,7 +23,7 @@ public class ShootLimeRPM extends CommandBase {
   private NetworkTableEntry m_patternOver;
 
   /** Creates a new ShootLimeRPM. */
-  public ShootLimeRPM(DoubleSupplier lever, LimeLightAiming limelight, ShooterSubsystemPID subsystem) {
+  public SMLimeRPM(DoubleSupplier lever, LimeLightAiming limelight, ShooterSubsystemPID subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_lever = lever;
     m_limelight = limelight;
@@ -53,7 +53,7 @@ public class ShootLimeRPM extends CommandBase {
       m_pattern.setString("yellow");
     }
     m_shoot.setShooterRPM(m_limelight.estimateRPM()+m_lever.getAsDouble()*Constants.SHOOTING_LEVER_RPM_MULTIPLIER);
-    m_shoot.shoot(m_lever.getAsDouble());
+    m_shoot.runShooterMotor(m_lever.getAsDouble());
     
   }
 

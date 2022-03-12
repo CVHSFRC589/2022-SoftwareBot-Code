@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooter_Commands;
+package frc.robot.commands.Shooter_Motor_Commands;
 
 import frc.robot.subsystems.ShooterSubsystemPID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /** An example command that uses an example subsystem. */
-public class SetShooterRPM extends InstantCommand {
+public class SMRPM extends InstantCommand {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystemPID m_shootSubsystem;
   private double m_speed = .1;
@@ -17,7 +17,7 @@ public class SetShooterRPM extends InstantCommand {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public SetShooterRPM(double speed, ShooterSubsystemPID subsystem) {
+  public SMRPM(double speed, ShooterSubsystemPID subsystem) {
     
       m_speed = speed;
     
