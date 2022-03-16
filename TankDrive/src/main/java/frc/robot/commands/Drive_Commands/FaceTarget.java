@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Drive_Commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.LimeLight;
@@ -17,14 +18,17 @@ public class FaceTarget extends CommandBase {
   private double m_initialEncoderValue;
   private double m_noTargetSpeed;
   private boolean m_targetFound;
+  private double m_targetFoundRPM;
+  private double m_noTargetFoundRPM;
 
   public FaceTarget(LimeLight limeLight, DriveTrainSubsystem subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  
     m_limeLight = limeLight;
     m_drivetrain = subsystem;
-    m_targetFoundSpeed = 0.09;
-    m_noTargetSpeed = 0.15;
-    // addRequirements(subsystem);
+    m_targetFoundSpeed = 0.15;
+    m_noTargetSpeed = 0.25;
+    m_targetFoundRPM = 750; //125
+    m_noTargetFoundRPM = 1000; //450
   }
 
   // Called when the command is initially scheduled.
@@ -38,27 +42,16 @@ public class FaceTarget extends CommandBase {
   @Override
   public void execute() {
     if(m_limeLight.getIsTargetFound()){
-      // if(Math.abs(m_limeLight.getdegRotationToTarget())/31/3>= 0.0)
-      // {
-      //   double speed = m_limeLight.getdegRotationToTarget()/31/3;
-      //   m_drivetrain.setMotors(-speed, speed);
-      // }
-      // else{
-        if(!m_targetFound){
-          System.out.println("---Target Found First Time---");
-          //m_drivetrain.setMotors(0,0);
-          // double direction = Math.abs(m_limeLight.getdegRotationToTarget())/m_limeLight.getdegRotationToTarget();
-          // m_drivetrain.setMotors(-direction*m_targetFoundSpeed,direction*m_targetFoundSpeed);
-        }
-        m_targetFound = true;
         double direction = Math.abs(m_limeLight.getdegRotationToTarget())/m_limeLight.getdegRotationToTarget();
-        m_drivetrain.setMotors(-direction*m_targetFoundSpeed, direction*m_targetFoundSpeed);
+        SmartDashboard.putNumber("direction", direction);
+       // m_drivetrain.setMotors(-direction*m_targetFoundSpeed, direction*m_targetFoundSpeed);
+        m_drivetrain.setDriveMotorsRPM(-direction * m_targetFoundRPM, direction * m_targetFoundRPM);
       // }
     }
     else
     {
-      m_drivetrain.setMotors(-m_noTargetSpeed, m_noTargetSpeed);
-      // System.out.println("No Target");
+      // m_drivetrain.setMotors(-m_noTargetSpeed, m_noTargetSpeed);
+      m_drivetrain.setDriveMotorsRPM(-m_noTargetFoundRPM, m_noTargetFoundRPM);
     }
   }
 

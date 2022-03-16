@@ -46,7 +46,7 @@ public final class Constants {
     public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
     public static final int TOGGLE_LED_BUTTON = 7;
     public static final int TOGGLE_DRIVE_STATE_BUTTON = 8;
-    //public static final int EMPTY_BUTTON = 9;
+    public static final int DRIVE_RPM_BUTTON = 9;
     // public static final int EMPTY_BUTTON = 10; DO NOT USE
     public static final int STOP_DRIVE_TRAIN_BUTTON = 11;
 

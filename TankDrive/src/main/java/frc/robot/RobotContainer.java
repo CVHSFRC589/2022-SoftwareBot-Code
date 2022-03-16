@@ -97,6 +97,7 @@ public class RobotContainer {
     JoystickButton j0GoToTargetDistance = new JoystickButton(m_joystick0, Constants.GO_TO_TARGET_DISTANCE_BUTTON);
     JoystickButton j0FaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_BUTTON);
     JoystickButton j0AbortDriveCommand = new JoystickButton(m_joystick0, Constants.STOP_DRIVE_TRAIN_BUTTON);
+    JoystickButton j0DriveRPM = new JoystickButton(m_joystick0, Constants.DRIVE_RPM_BUTTON);
 
       //Feeding Buttons
     JoystickButton j0Feed = new JoystickButton(m_joystick0, Constants.SHOOTER_FEEDER_MOTOR_BUTTON);
@@ -132,11 +133,13 @@ public class RobotContainer {
     j0GoToTargetDistance.whenPressed(new DriveToGivenTargetDistance(Constants.SHOOTING_DISTANCE, m_limeLight, m_drivetrain));
     j0AbortDriveCommand.whenPressed(new StopDriveTrain(m_drivetrain));
     j0FaceTarget.toggleWhenPressed(new FaceTarget(m_limeLight, m_drivetrain));
+    j0DriveRPM.toggleWhenPressed(new DriveRPM(1000, 1000, m_drivetrain));
 
       //Feeding Buttons
     j0Feed.whenHeld(new FeederStart(m_feeder));
     j0Feed.whenReleased(new FeederStop(m_feeder));
     j0FeedOne.whenPressed(new FeedOneBall(m_feeder));
+
 
       //LED Control
      //j0ToggleVisualFeedback.whenPressed(new ToggleLEDs(m_VFS));
