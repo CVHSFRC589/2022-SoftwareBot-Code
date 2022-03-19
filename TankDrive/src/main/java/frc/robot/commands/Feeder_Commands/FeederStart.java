@@ -15,7 +15,7 @@ public class FeederStart extends CommandBase {
   public FeederStart(FeederSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_feeder = subsystem;
-    addRequirements(subsystem);
+    // addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.

@@ -35,7 +35,7 @@ public class SMRunAtRPM extends CommandBase {
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
     m_lever = () -> 0;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    // addRequirements(subsystem);
   }
   public SMRunAtRPM(double RPM, DoubleSupplier lever, ShooterSubsystemPID subsystem) {
     m_RPM = RPM;
@@ -45,7 +45,7 @@ public class SMRunAtRPM extends CommandBase {
     m_pattern = m_table.getEntry(Constants.VISUAL_FEEDBACK_TABLE_ENTRY_NAME);
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    // addRequirements(subsystem);
   }
   // Called when the command is initially scheduled.
   @Override

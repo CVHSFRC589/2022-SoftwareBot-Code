@@ -1,9 +1,9 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
- 
+
 package frc.robot;
- 
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,40 +21,45 @@ import frc.robot.commands.Feeder_Commands.*;
 import frc.robot.commands.Shooter_Motor_Commands.*;
 import frc.robot.commands.Climber_Commands.*;
 
- 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem m_drivetrain = new DriveTrainSubsystem();
-  //private final ShooterSubsystem m_shooter= new ShooterSubsystem();
+  // private final ShooterSubsystem m_shooter= new ShooterSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
   // private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final LimeLightAiming m_limeLight = new LimeLightAiming();
-  private final VisualFeedbackSubsystem m_VFS = new VisualFeedbackSubsystem();//VFS means visualfeedbacksubsystem
-  private final ShooterSubsystemPID m_shooterPID= new ShooterSubsystemPID();
+  private final VisualFeedbackSubsystem m_VFS = new VisualFeedbackSubsystem();// VFS means visualfeedbacksubsystem
+  private final ShooterSubsystemPID m_shooterPID = new ShooterSubsystemPID();
   private final FeederSubsystem m_feeder = new FeederSubsystem();
 
-  //joysticks we are going to use
+  // joysticks we are going to use
   private final Joystick m_joystick0 = new Joystick(0);
   private final Joystick m_joystick1 = new Joystick(1);
   private final Joystick m_joystick2 = new Joystick(2);
 
-
   SendableChooser<CommandBase> m_chooser = new SendableChooser<>();
-  
-  
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
-    
+
     m_chooser.setDefaultOption("Wait, back up once", new APBackUpOnce(m_drivetrain, m_shooterPID, m_feeder, m_VFS));
     m_chooser.addOption("Old Comp Auto", new APCompetition1(m_drivetrain, m_shooterPID, m_feeder, m_VFS));
-    // m_chooser.addOption("Drive+Shoot, Turn Right", new AutoPatternMiddleSpin(m_drivetrain, m_shooterPID, m_feeder, m_VFS));
-    // m_chooser.addOption("Drive Lime, Shoot, Turn Right", new AutoPatternLimelight(m_drivetrain, m_shooterPID, m_feeder, m_limeLight, m_VFS));
+    // m_chooser.addOption("Drive+Shoot, Turn Right", new
+    // AutoPatternMiddleSpin(m_drivetrain, m_shooterPID, m_feeder, m_VFS));
+    // m_chooser.addOption("Drive Lime, Shoot, Turn Right", new
+    // AutoPatternLimelight(m_drivetrain, m_shooterPID, m_feeder, m_limeLight,
+    // m_VFS));
     SmartDashboard.putData(m_chooser);
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
     SmartDashboard.putData("SetRPM", new SMRPMFromShuffleboard(m_shooterPID));
@@ -62,110 +67,110 @@ public class RobotContainer {
     // SmartDashboard.putData("SetPipeline", new ChangeLimePipeline(m_drivetrain));
     SmartDashboard.putData("Toggle Limelight LEDs", new ToggleLimelightLEDs(m_limeLight));
     SmartDashboard.putData(new SMSetPID(m_shooterPID));
-    m_drivetrain.setDefaultCommand( //for arcade drive or tank drive
-       new Drive(
-       () -> m_joystick0.getY(), () -> m_joystick1.getY(), () -> m_joystick0.getX(), m_drivetrain //2nd getY should be joystick 1
-        )
-     );
+    m_drivetrain.setDefaultCommand( // for arcade drive or tank drive
+        new Drive(
+            () -> m_joystick0.getY(), () -> m_joystick1.getY(), () -> m_joystick0.getX(), m_drivetrain // 2nd getY
+                                                                                                       // should be
+                                                                                                       // joystick 1
+        ));
 
-     m_shooterPID.setDefaultCommand(new SMControl(() -> m_joystick2.getZ(), m_shooterPID));
+    m_shooterPID.setDefaultCommand(new SMControl(() -> m_joystick2.getZ(), m_shooterPID));
 
-      SmartDashboard.putData(m_drivetrain);
-      // SmartDashboard.putData(m_climber);
-      SmartDashboard.putData(m_shooterPID);
-      //SmartDashboard.putData(m_intake);
-      SmartDashboard.updateValues();
+    SmartDashboard.putData(m_drivetrain);
+    // SmartDashboard.putData(m_climber);
+    SmartDashboard.putData(m_shooterPID);
+    // SmartDashboard.putData(m_intake);
+    SmartDashboard.updateValues();
 
     // Configure the button bindings
     configureButtonBindings();
   }
- 
+
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings()
-  {
+  private void configureButtonBindings() {
 
     /*** Button Creation ***/
-    
-    /*Joystick 0:*/
-      //Driving buttons
-    //JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0, Constants.TOGGLE_DRIVE_STATE_BUTTON);
+
+    /* Joystick 0: */
+    // Driving buttons
+    // JoystickButton j0ChangeDriveState= new JoystickButton(m_joystick0,
+    // Constants.TOGGLE_DRIVE_STATE_BUTTON);
     JoystickButton j0GoToTargetDistance = new JoystickButton(m_joystick0, Constants.GO_TO_TARGET_DISTANCE_BUTTON);
     JoystickButton j0FaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_BUTTON);
-    JoystickButton j0AbortDriveCommand = new JoystickButton(m_joystick0, Constants.STOP_DRIVE_TRAIN_BUTTON);
-    JoystickButton j0DriveRPM = new JoystickButton(m_joystick0, Constants.DRIVE_RPM_BUTTON);
+    // JoystickButton j0AbortDriveCommand = new JoystickButton(m_joystick0, Constants.STOP_DRIVE_TRAIN_BUTTON);
+    // JoystickButton j0DriveRPM = new JoystickButton(m_joystick0,
+    // Constants.DRIVE_RPM_BUTTON);
 
-      //Feeding Buttons
+    // Feeding Buttons
     JoystickButton j0Feed = new JoystickButton(m_joystick0, Constants.SHOOTER_FEEDER_MOTOR_BUTTON);
-    JoystickButton j0FeedOne = new JoystickButton(m_joystick0, Constants.FEED_ONE_BALL_BUTTON);
-    JoystickButton j0EatBall = new JoystickButton(m_joystick0, Constants.EAT_BALL_BUTTON);
+    // JoystickButton j0FeedOne = new JoystickButton(m_joystick0,
+    // Constants.FEED_ONE_BALL_BUTTON);
+    JoystickButton j0ReverseFeeder = new JoystickButton(m_joystick0, Constants.REVERSE_FEEDER_MOTOR_BUTTON);
 
-      //LED Control
-    // JoystickButton j0ToggleVisualFeedback = new JoystickButton(m_joystick0, Constants.TOGGLE_LED_BUTTON);
+    // LED Control
+    // JoystickButton j0ToggleVisualFeedback = new JoystickButton(m_joystick0,
+    // Constants.TOGGLE_LED_BUTTON);
 
-
-    /**Joystick 2:**/
-      //Shooting buttons
+    /** Joystick 2: **/
+    // Shooting buttons
     JoystickButton j2ToggleShooting = new JoystickButton(m_joystick2, Constants.TOGGLE_SHOOTING_BUTTON);
     JoystickButton j2SpitOutBall = new JoystickButton(m_joystick2, Constants.SPIT_OUT_BALL_BUTTON);
     JoystickButton j2CloseShoot = new JoystickButton(m_joystick2, Constants.CLOSE_SHOOTING_BUTTON);
     JoystickButton j2FarShoot = new JoystickButton(m_joystick2, Constants.FAR_SHOOTING_BUTTON);
-    JoystickButton j2LimelightShoot = new JoystickButton(m_joystick2, Constants.LIMELIGHT_RPM_SHOOT_BUTTON);
+    JoystickButton j2LimelightShoot = new JoystickButton(m_joystick2, Constants.LIMELIGHT_RPM_SHOOT_BUTTON); // needs more testing
     JoystickButton j2StopShooter = new JoystickButton(m_joystick2, Constants.STOP_SHOOTER_BUTTON);
-    
 
-      //Climbing buttons
+    // Climbing buttons
     JoystickButton j2ToggleClimberExtended = new JoystickButton(m_joystick2, Constants.TOGGLE_CLIMBER_ARMS_BUTTON);
-
-
-
-
 
     /*** Button Implementation ***/
 
-    /*Joystick 0:*/
-      //Driving Buttons
-    //j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
+    /* Joystick 0: */
+    // Driving Buttons
+    // j0ChangeDriveState.whenPressed(new ToggleDriveState(m_drivetrain));
     j0GoToTargetDistance.whenPressed(new DriveToGivenTargetDistance(Constants.SHOOTING_DISTANCE, m_limeLight, m_drivetrain));
-    j0AbortDriveCommand.whenPressed(new StopDriveTrain(m_drivetrain));
+    // j0AbortDriveCommand.whenPressed(new StopDriveTrain(m_drivetrain)); DOES NOT WORK(currently)
     j0FaceTarget.toggleWhenPressed(new FaceTarget(m_limeLight, m_drivetrain));
-    j0DriveRPM.toggleWhenPressed(new DriveRPM(1000, 1000, m_drivetrain));
+    // j0DriveRPM.toggleWhenPressed(new DriveRPM(1000, 1000, m_drivetrain));
 
-      //Feeding Buttons
+    // Feeding Buttons
     j0Feed.whenHeld(new FeederStart(m_feeder));
     j0Feed.whenReleased(new FeederStop(m_feeder));
-    j0FeedOne.whenPressed(new FeedOneBall(m_feeder));
+    j0ReverseFeeder.whenHeld(new ReverseFeeder(m_feeder));
+    // j0FeedOne.whenPressed(new FeedOneBall(m_feeder));
 
+    // LED Control
+    // j0ToggleVisualFeedback.whenPressed(new ToggleLEDs(m_VFS));
 
-      //LED Control
-     //j0ToggleVisualFeedback.whenPressed(new ToggleLEDs(m_VFS));
-
-    /*Joystick 2:*/
-      //Shooting Buttons
+    /* Joystick 2: */
+    // Shooting Buttons
     j2StopShooter.whenPressed(new SMStop(m_shooterPID));
     j2ToggleShooting.toggleWhenPressed(new SMToggle(m_shooterPID));
-    j2CloseShoot.toggleWhenPressed(new SMRunAtRPM(Constants.CLOSE_SHOOTING_RPM, () -> m_joystick2.getZ(), m_shooterPID));
-    j2FarShoot.toggleWhenPressed(new SMRunAtRPM(Constants.FAR_SHOOTING_RPM, () -> 0, m_shooterPID));  
-    j2SpitOutBall.toggleWhenPressed(new SMRunAtRPM(250,m_shooterPID));
-    j2LimelightShoot.toggleWhenPressed(new SMLimeRPM(() -> m_joystick2.getZ(),m_limeLight, m_shooterPID));
-    j0EatBall.whenHeld(new ReverseFeeder(m_feeder));
+    j2CloseShoot.toggleWhenPressed(new SMRunAtRPM(Constants.CLOSE_SHOOTING_RPM, () -> 0, m_shooterPID));
+    j2FarShoot.toggleWhenPressed(new SMRunAtRPM(Constants.FAR_SHOOTING_RPM, () -> 0, m_shooterPID));
+    j2SpitOutBall.toggleWhenPressed(new SMRunAtRPM(250, m_shooterPID));
+    // j2LimelightShoot.toggleWhenPressed(new SMLimeRPM(() -> m_joystick2.getZ(), m_limeLight, m_shooterPID));
 
-      //Climbing Buttons
+    // Climbing Buttons
     j2ToggleClimberExtended.whenPressed(new ToggleClimberArms(m_climber));
 
+    // Intake buttons
+    // JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2,
+    // Constants.TOGGLE_INTAKE_ARMS_BUTTON);
+    // JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2,
+    // Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
 
-    //Intake buttons
-    // JoystickButton j2ToggleIntakeArms = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_ARMS_BUTTON);
-    // JoystickButton j2StartIntakeMotor = new JoystickButton(m_joystick2, Constants.TOGGLE_INTAKE_MOTOR_BUTTON);
-    
     // j2ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
     // j2StartIntakeMotor.whenPressed(new SetIntakeMotor(m_intake, 0.4));
   }
- 
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -174,6 +179,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_chooser.getSelected();
- }
- 
+  }
+
 }

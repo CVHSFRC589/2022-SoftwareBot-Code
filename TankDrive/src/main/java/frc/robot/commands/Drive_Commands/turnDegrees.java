@@ -22,7 +22,7 @@ public class TurnDegrees extends CommandBase {
     m_speed = speed;
     m_distanceInches = degrees*Constants.ROBOT_TURN_CIRCUM/360;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    // addRequirements(subsystem);
   }
  
   // Called when the command is initially scheduled.

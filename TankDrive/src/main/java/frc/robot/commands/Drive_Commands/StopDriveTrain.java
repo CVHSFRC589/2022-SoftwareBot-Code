@@ -13,7 +13,7 @@ public class StopDriveTrain extends CommandBase {
   public StopDriveTrain(DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = subsystem;
-    addRequirements(m_drive);
+     //addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.

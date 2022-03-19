@@ -24,7 +24,7 @@ public class SMRPM extends InstantCommand {
     
     m_shootSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    // addRequirements(subsystem);
   }
 
   

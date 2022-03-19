@@ -15,7 +15,7 @@ public class ToggleDriveState extends CommandBase {
     public ToggleDriveState(DriveTrainSubsystem drivetrain) {
         m_drivetrain = drivetrain;
 
-        addRequirements(m_drivetrain);
+        //addRequirements(m_drivetrain);
     }
  
     // Called repeatedly when this Command is scheduled to run

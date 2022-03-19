@@ -19,7 +19,7 @@ public class SetSpeedScale extends CommandBase {
     m_drivetrain = subsystem;
     m_newScale = newScale;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    // addRequirements(subsystem);
   }
  
   // Called when the command is initially scheduled.

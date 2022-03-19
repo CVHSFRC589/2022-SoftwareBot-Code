@@ -79,11 +79,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
 
     public void setMotors(double leftSpeed, double rightSpeed){
+      System.out.println("LEFT,RIGHT: "+leftSpeed+rightSpeed);
+      SmartDashboard.putNumber("Left Speed", leftSpeed);
+      SmartDashboard.putNumber("Right Speed", rightSpeed);
       m_leftMotor.set(leftSpeed);
       m_rightMotor.set(rightSpeed);
     }
 
     public void setDriveMotorsRPM(double leftRPM, double rightRPM){
+      SmartDashboard.putNumber("Left desired RPM", leftRPM);
+      SmartDashboard.putNumber("Right desired RPM", rightRPM);
       m_leftPIDController.setReference(leftRPM, CANSparkMax.ControlType.kVelocity);
       m_rightPIDController.setReference(rightRPM, CANSparkMax.ControlType.kVelocity);
     }
@@ -134,7 +139,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       // SmartDashboard.putNumber("RightInches", getRightEncoderInches());
       SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
       SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
-      SmartDashboard.putNumber("UltraSonic Inches", getUltraDistInches());
+      // SmartDashboard.putNumber("UltraSonic Inches", getUltraDistInches());
     }
 
     public double getLeftEncoderInches()
