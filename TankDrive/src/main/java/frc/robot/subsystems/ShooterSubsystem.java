@@ -9,13 +9,14 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 // import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
-public class ShooterSubsystemPID extends SubsystemBase {
+import frc.robot.Constants;
+import frc.robot.PIDConstants;
+
+public class ShooterSubsystem extends SubsystemBase {
   private final CANSparkMax m_shooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_shooterEncoder = m_shooterMotor.getEncoder();
   // private final CANSparkMax m_feederMotor = new CANSparkMax(Constants.FEEDER_MOTOR_PORT, MotorType.kBrushless);
@@ -33,7 +34,7 @@ public class ShooterSubsystemPID extends SubsystemBase {
   private NetworkTableEntry m_kFF;
 
   /** Creates a new ShooterSubsystemPID. */
-  public ShooterSubsystemPID() {
+  public ShooterSubsystem() {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_rpm = m_table.getEntry(Constants.SHOOTER_RPM_ENTRY_NAME);
     m_rpm.setDouble(Constants.MAX_SHOOTER_RPM);
@@ -50,19 +51,19 @@ public class ShooterSubsystemPID extends SubsystemBase {
     m_kIz = m_table.getEntry("kIz");
     m_kFF = m_table.getEntry("kFF");
 
-    m_kP.setDouble(Constants.kP);
-    m_kI.setDouble(Constants.kI);
-    m_kD.setDouble(Constants.kD);
-    m_kIz.setDouble(Constants.kIz);
-    m_kFF.setDouble(Constants.kFF);
+    m_kP.setDouble(PIDConstants.SHOOTER_P);
+    m_kI.setDouble(PIDConstants.SHOOTER_I);
+    m_kD.setDouble(PIDConstants.SHOOTER_D);
+    m_kIz.setDouble(PIDConstants.SHOOTER_Iz);
+    m_kFF.setDouble(PIDConstants.SHOOTER_FF);
 
     // set PID coefficients
-    m_shooterPIDController.setP(Constants.kP);
-    m_shooterPIDController.setI(Constants.kI);
-    m_shooterPIDController.setD(Constants.kD);
-    m_shooterPIDController.setIZone(Constants.kIz);
-    m_shooterPIDController.setFF(Constants.kFF);
-    m_shooterPIDController.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
+    m_shooterPIDController.setP(PIDConstants.SHOOTER_P);
+    m_shooterPIDController.setI(PIDConstants.SHOOTER_I);
+    m_shooterPIDController.setD(PIDConstants.SHOOTER_D);
+    m_shooterPIDController.setIZone(PIDConstants.SHOOTER_Iz);
+    m_shooterPIDController.setFF(PIDConstants.SHOOTER_FF);
+    m_shooterPIDController.setOutputRange(PIDConstants.SHOOTER_MIN_OUTPUT, PIDConstants.SHOOTER_MAX_OUTPUT);
   }
 
   public void runShooterMotor(double leverValue)

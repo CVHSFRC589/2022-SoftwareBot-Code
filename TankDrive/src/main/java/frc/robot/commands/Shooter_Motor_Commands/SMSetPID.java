@@ -7,22 +7,24 @@ package frc.robot.commands.Shooter_Motor_Commands;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.PIDConstants;
+import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SMSetPID extends CommandBase {
-  private ShooterSubsystemPID m_shooter;
+  private ShooterSubsystem m_shooter;
   private NetworkTable m_table;
   private NetworkTableEntry m_kP;
   private NetworkTableEntry m_kI;
   private NetworkTableEntry m_kD;
   private NetworkTableEntry m_kIz;
   private NetworkTableEntry m_kFF;
+  
 
 
-  public SMSetPID(ShooterSubsystemPID subsystem) {
+  public SMSetPID(ShooterSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = subsystem;
 
@@ -42,7 +44,7 @@ public class SMSetPID extends CommandBase {
 
   @Override
   public void execute(){
-    m_shooter.setPID(m_kP.getDouble(Constants.kP),m_kI.getDouble(Constants.kI),m_kD.getDouble(Constants.kD),m_kIz.getDouble(Constants.kIz),m_kFF.getDouble(Constants.kFF));
+    m_shooter.setPID(m_kP.getDouble(PIDConstants.SHOOTER_P),m_kI.getDouble(PIDConstants.SHOOTER_I),m_kD.getDouble(PIDConstants.SHOOTER_D),m_kIz.getDouble(PIDConstants.SHOOTER_Iz),m_kFF.getDouble(PIDConstants.SHOOTER_FF));
   }
 
 

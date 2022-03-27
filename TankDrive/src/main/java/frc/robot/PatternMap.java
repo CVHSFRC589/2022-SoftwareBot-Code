@@ -9,12 +9,12 @@ package frc.robot;
 // the WPILib BSD license file in the root directory of this project.
 
 import java.util.HashMap;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 public class PatternMap {
     /** Creates a new VisualFeedbackSubsystem. */
     public HashMap<String, Double> m_colorMap = new HashMap<String, Double>();
-    private ArrayList<String> arrayPatterns = new ArrayList<>();
+    // private ArrayList<String> arrayPatterns = new ArrayList<>();
 
     public PatternMap() {
         // 5V: 14
@@ -34,7 +34,7 @@ public class PatternMap {
         m_colorMap.put("larson scanner", -0.01);
         m_colorMap.put("shot", 0.13);
 
-        keysToString();
+        // keysToString();
 
         // 12V
         m_colorMap.put("hot pink", 0.57);
@@ -69,19 +69,20 @@ public class PatternMap {
         return m_colorMap.get(color);
     }
 
-    public String getPattern(int i) {
-        return arrayPatterns.get(i);
-    }
+    // public String getPattern(int i) {
+    //     return arrayPatterns.get(i);
+    // }
     
-    public int getPatternsNum() {
-        return arrayPatterns.size();
-    }
+    // public int getPatternsNum() {
+    //     return arrayPatterns.size();
+    // }
 
-    private void keysToString() {
-        // return (String[]) m_colorMap.keySet().toArray();
-        for(String key : m_colorMap.keySet()) {
-            arrayPatterns.add(key);
-        }
-    }
+    // private void keysToString() {
+    //     // return (String[]) m_colorMap.keySet().toArray();
+    //     for(String key : m_colorMap.keySet()) {
+    //         arrayPatterns.add(key);
+    //     }
+    // }
+
     // m_pattern.setString(defaultColor);
 }

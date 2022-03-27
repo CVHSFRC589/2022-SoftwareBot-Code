@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.Constants;
 
 /** An example command that uses an example subsystem. */
 public class SMControl extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystemPID m_shootSubsystem;
+  private final ShooterSubsystem m_shootSubsystem;
   // private double m_lever;
   private DoubleSupplier m_lever;
   private NetworkTable m_table;
@@ -23,7 +23,7 @@ public class SMControl extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public SMControl(DoubleSupplier lever, ShooterSubsystemPID subsystem) {
+  public SMControl(DoubleSupplier lever, ShooterSubsystem subsystem) {
     m_lever = lever;
     m_shootSubsystem = subsystem;
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);

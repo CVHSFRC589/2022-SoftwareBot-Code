@@ -5,22 +5,21 @@
 package frc.robot.commands.Auto_Patterns;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.Drive_Commands.DriveToDistance;
-import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.commands.Misc_Commands.*;
+import frc.robot.commands.Shooter_Motor_Commands.SMRPM;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootDriveBack extends ParallelRaceGroup {
+public class StartSM extends ParallelRaceGroup {
   /** Creates a new AutoStartShooter. */
-  public ShootDriveBack(double rpm, double distance, ShooterSubsystem shoot, DriveTrainSubsystem drive, FeederSubsystem feeder) {
+  public StartSM(double rpmS, double seconds, ShooterSubsystem shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new StartSMAndFM(rpm, 3, shoot, feeder),
-      new DriveToDistance(distance, -.6, drive)
+      new SMRPM(rpmS, shooter),
+      new Pause(seconds)
     );
   }
 }

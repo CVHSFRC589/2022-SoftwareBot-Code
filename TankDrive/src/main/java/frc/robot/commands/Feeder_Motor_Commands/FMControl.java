@@ -2,47 +2,42 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Feeder_Motor_Commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Constants;
+import frc.robot.subsystems.FeederSubsystem;
 
-public class Pause extends CommandBase {
-  /** Creates a new Pause. */
-  private Timer m_timer = new Timer();
-  private double m_startTime = 0.0;
-  private double m_delaySeconds = 0.0;
+public class FMControl extends CommandBase {
+  /** Creates a new FMControl. */
+  private FeederSubsystem m_feeder;
 
-  public Pause(double delaySeconds) {
-    m_delaySeconds = delaySeconds;
+  public FMControl(FeederSubsystem feeder) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_feeder = feeder;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(feeder);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_timer.start();
-    m_startTime = m_timer.get();
+    m_feeder.setDefaultRPM(Constants.FEEDER_MOTOR_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_feeder.runFeederMotor();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_timer.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_timer.get() >= m_startTime + m_delaySeconds){
-      return true;
-    }
-    else{
-      return false;
-    }  
+    return false;
   }
 }

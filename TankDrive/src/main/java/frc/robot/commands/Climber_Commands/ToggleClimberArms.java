@@ -37,7 +37,7 @@ public class ToggleClimberArms extends InstantCommand {
     else {
       m_patternOver.setString("done");
     }
-    m_climb.toggleLeftSolenoid();
-    m_climb.toggleRightSolenoid();
+    m_climb.toggleClimberSolenoids();
+    // m_climb.toggleRightSolenoid();
   }
 }

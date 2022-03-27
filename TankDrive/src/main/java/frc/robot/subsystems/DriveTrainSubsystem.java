@@ -9,12 +9,12 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimeLightAiming;
+import frc.robot.PIDConstants;
 import frc.robot.ControlMode.StreamType;
  
 public class DriveTrainSubsystem extends SubsystemBase {
@@ -31,7 +31,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
     private static BooleanSupplier driveType = () -> false;
     private static LimeLightAiming m_aiming = new LimeLightAiming();
-    private static AnalogInput m_sonic = new AnalogInput(Constants.ULTRASONIC_SENSOR_CHANNEL);
+    // private static AnalogInput m_sonic = new AnalogInput(Constants.ULTRASONIC_SENSOR_CHANNEL);
 
     private double m_scaleFactor = Constants.DRIVE_STARTING_SCALE_FACTOR; //Max
  
@@ -45,19 +45,20 @@ public class DriveTrainSubsystem extends SubsystemBase {
         setPipeline(1);
         reset();
         
-        m_leftPIDController.setP(Constants.kP);
-        m_leftPIDController.setI(Constants.kI);
-        m_leftPIDController.setD(Constants.kD);
-        m_leftPIDController.setIZone(Constants.kIz);
-        m_leftPIDController.setFF(Constants.kFF);
-        m_leftPIDController.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
+        m_leftPIDController.setP(PIDConstants.DRIVE_P);
+        m_leftPIDController.setI(PIDConstants.DRIVE_I);
+        m_leftPIDController.setD(PIDConstants.DRIVE_D);
+        m_leftPIDController.setIZone(PIDConstants.DRIVE_Iz);
+        m_leftPIDController.setFF(PIDConstants.DRIVE_FF);
+        m_leftPIDController.setOutputRange(PIDConstants.DRIVE_MIN_OUTPUT, PIDConstants.DRIVE_MAX_OUTPUT);
 
-        m_rightPIDController.setP(Constants.kP);
-        m_rightPIDController.setI(Constants.kI);
-        m_rightPIDController.setD(Constants.kD);
-        m_rightPIDController.setIZone(Constants.kIz);
-        m_rightPIDController.setFF(Constants.kFF);
-        m_rightPIDController.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
+        m_rightPIDController.setP(PIDConstants.DRIVE_P);
+        m_rightPIDController.setI(PIDConstants.DRIVE_I);
+        m_rightPIDController.setD(PIDConstants.DRIVE_D);
+        m_rightPIDController.setIZone(PIDConstants.DRIVE_Iz);
+        m_rightPIDController.setFF(PIDConstants.DRIVE_FF);
+        m_rightPIDController.setOutputRange(PIDConstants.DRIVE_MIN_OUTPUT, PIDConstants.DRIVE_MAX_OUTPUT);
+
     }
  
     public void drive(double left, double right) {
@@ -128,10 +129,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
       m_aiming.setPipeline(pipe);
     }
 
-    public double getUltraDistInches()
-    {
-      return m_sonic.getVoltage()*Constants.ULTRASONIC_VOLTAGE_MULTIPLIER;
-    }
+    // public double getUltraDistInches()
+    // {
+      // return m_sonic.getVoltage()*Constants.ULTRASONIC_VOLTAGE_MULTIPLIER;
+    // }
 
     public void updateShuffleboard()
     {

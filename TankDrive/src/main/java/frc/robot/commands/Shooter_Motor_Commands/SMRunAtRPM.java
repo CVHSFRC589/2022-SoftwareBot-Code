@@ -5,7 +5,7 @@
 package frc.robot.commands.Shooter_Motor_Commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.subsystems.ShooterSubsystem;
 
 import java.util.function.DoubleSupplier;
 
@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An example command that uses an example subsystem. */
 public class SMRunAtRPM extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystemPID m_shootSubsystem;
+  private final ShooterSubsystem m_shootSubsystem;
   private double m_RPM;
   private DoubleSupplier m_lever;
   private NetworkTable m_table;
@@ -27,7 +27,7 @@ public class SMRunAtRPM extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public SMRunAtRPM(double RPM, ShooterSubsystemPID subsystem) {
+  public SMRunAtRPM(double RPM, ShooterSubsystem subsystem) {
     m_RPM = RPM;
     m_shootSubsystem = subsystem;
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
@@ -37,7 +37,7 @@ public class SMRunAtRPM extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     // addRequirements(subsystem);
   }
-  public SMRunAtRPM(double RPM, DoubleSupplier lever, ShooterSubsystemPID subsystem) {
+  public SMRunAtRPM(double RPM, DoubleSupplier lever, ShooterSubsystem subsystem) {
     m_RPM = RPM;
     m_lever = lever;
     m_shootSubsystem = subsystem;

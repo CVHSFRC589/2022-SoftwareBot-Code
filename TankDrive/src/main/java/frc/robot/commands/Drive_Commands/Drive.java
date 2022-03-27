@@ -8,7 +8,6 @@ public class Drive extends CommandBase {
     private final DriveTrainSubsystem m_drivetrain;
     private final DoubleSupplier m_leftY;
     private final DoubleSupplier m_leftX;
-    private final DoubleSupplier m_rightY;
     
  
     /**
@@ -17,12 +16,11 @@ public class Drive extends CommandBase {
      * drivetrain is the subsystem to drive
      */
    
-    public Drive(DoubleSupplier leftY, DoubleSupplier rightY, DoubleSupplier leftX, DriveTrainSubsystem drivetrain) {
+    public Drive(DoubleSupplier leftY, DoubleSupplier leftX, DriveTrainSubsystem drivetrain) {
         //setting parameters to local vars
         m_drivetrain = drivetrain;
         m_leftY = leftY;
         m_leftX = leftX;
-        m_rightY = rightY;
         
  
         addRequirements(m_drivetrain);
@@ -31,14 +29,7 @@ public class Drive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        
-        if(m_drivetrain.getDriveType().getAsBoolean()){
-            m_drivetrain.drive(m_leftY.getAsDouble(), m_rightY.getAsDouble());
-        }
-        else
-        {
-            m_drivetrain.drive(m_leftY.getAsDouble(), m_leftX.getAsDouble());
-        }
+        m_drivetrain.drive(m_leftY.getAsDouble(), m_leftX.getAsDouble());
     }
  
   // Make this return true when this Command no longer needs to run execute()

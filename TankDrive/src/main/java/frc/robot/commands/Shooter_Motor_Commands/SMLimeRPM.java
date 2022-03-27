@@ -10,12 +10,12 @@ import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.LimeLightAiming;
-import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.subsystems.ShooterSubsystem;
 
 
 public class SMLimeRPM extends CommandBase {
   private LimeLightAiming m_limelight;
-  private ShooterSubsystemPID m_shoot;
+  private ShooterSubsystem m_shoot;
   private double m_shootSpeed;
   private DoubleSupplier m_lever;
   private NetworkTable m_table;
@@ -23,7 +23,7 @@ public class SMLimeRPM extends CommandBase {
   private NetworkTableEntry m_patternOver;
 
   /** Creates a new ShootLimeRPM. */
-  public SMLimeRPM(DoubleSupplier lever, LimeLightAiming limelight, ShooterSubsystemPID subsystem) {
+  public SMLimeRPM(DoubleSupplier lever, LimeLightAiming limelight, ShooterSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_lever = lever;
     m_limelight = limelight;

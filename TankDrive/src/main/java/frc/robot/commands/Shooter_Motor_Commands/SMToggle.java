@@ -7,7 +7,8 @@ package frc.robot.commands.Shooter_Motor_Commands;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.subsystems.ShooterSubsystem;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -15,9 +16,9 @@ import frc.robot.subsystems.ShooterSubsystemPID;
 public class SMToggle extends InstantCommand {
   private NetworkTable m_table;
   private NetworkTableEntry m_patternOver;
-  private ShooterSubsystemPID m_shooter;
+  private ShooterSubsystem m_shooter;
   
-  public SMToggle(ShooterSubsystemPID subsystem) {
+  public SMToggle(ShooterSubsystem subsystem) {
     m_table = NetworkTableInstance.getDefault().getTable(Constants.NETWORK_TABLE_NAME);
     m_patternOver = m_table.getEntry(Constants.PATTERN_FINISHED_ENTRY_NAME);
 

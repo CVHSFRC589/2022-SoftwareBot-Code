@@ -2,17 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Feeder_Commands;
+package frc.robot.commands.Feeder_Motor_Commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.FeederSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ReverseFeeder extends CommandBase {
-  private FeederSubsystem m_feeder;
-  /** Creates a new ReverseShooterFeeder. */
-  public ReverseFeeder(FeederSubsystem fSubsystem) {
+public class FMStart extends CommandBase {
+  /** Creates a new Feed. */
+  private final FeederSubsystem m_feeder;
+
+  public FMStart(FeederSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_feeder = fSubsystem;
+    m_feeder = subsystem;
+    // addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -22,18 +25,18 @@ public class ReverseFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feed(-.3);
+    m_feeder.runFeederAtRPM(Constants.FEEDER_MOTOR_RPM); //Changed from 3/2/22 testing
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.feed(0);
+    // m_feeder.feed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

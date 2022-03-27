@@ -5,34 +5,36 @@
 package frc.robot.commands.Auto_Patterns;
 import frc.robot.Constants;
 import frc.robot.LimeLightAiming;
-import frc.robot.commands.ChangeLimePipeline;
-import frc.robot.commands.Pause;
 import frc.robot.commands.Drive_Commands.*;
-import frc.robot.commands.Feeder_Commands.FeederStart;
-import frc.robot.commands.Feeder_Commands.FeederStop;
+import frc.robot.commands.Feeder_Motor_Commands.*;
+import frc.robot.commands.Misc_Commands.*;
 import frc.robot.commands.Shooter_Motor_Commands.*;
-import frc.robot.commands.UpdateAllianceColor;
+import frc.robot.commands.Trigger_Piston_Commands.ExtendTriggerPiston;
+import frc.robot.commands.Trigger_Piston_Commands.RetractTriggerPiston;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
-import frc.robot.subsystems.ShooterSubsystemPID;
+import frc.robot.subsystems.TriggerPistonSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisualFeedbackSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class APLimeDriving extends SequentialCommandGroup {
+public class APCompetition2 extends SequentialCommandGroup {
   /** Creates a new AutoPatternOne. */
-  public APLimeDriving(DriveTrainSubsystem drive, ShooterSubsystemPID shooter, FeederSubsystem feeder, LimeLightAiming lime, VisualFeedbackSubsystem vfs) {
+  public APCompetition2(DriveTrainSubsystem drive, ShooterSubsystem shooter, FeederSubsystem feeder, LimeLightAiming lime, VisualFeedbackSubsystem vfs, TriggerPistonSubsystem piston) {
     addCommands(
       new ChangeLimePipeline(1,drive),
       new UpdateAllianceColor(vfs),
       new DriveToGivenTargetDistance(Constants.SHOOTING_DISTANCE,drive.getLimeLight(), drive), //Change constant
-      new AutoStartShooter(2000, 3, shooter),
-      new FeederStart(feeder),
+      new StartSMAndFM(2000, Constants.FEEDER_MOTOR_RPM, shooter, feeder),
+      new RetractTriggerPiston(piston),
+      // new FeederStart(feeder),
       new Pause(1),
       new SMStop(shooter),
-      new FeederStop(feeder)
+      new FMStop(feeder),
+      new ExtendTriggerPiston(piston)
     );
   }
 }

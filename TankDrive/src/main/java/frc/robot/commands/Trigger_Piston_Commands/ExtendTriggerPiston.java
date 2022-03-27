@@ -2,24 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooter_Motor_Commands;
-
+package frc.robot.commands.Trigger_Piston_Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TriggerPistonSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SMStop extends InstantCommand {
-  private ShooterSubsystem m_shoot;
-  public SMStop(ShooterSubsystem subsystem) {
+public class ExtendTriggerPiston extends InstantCommand {
+  private TriggerPistonSubsystem m_trigger;
+  public ExtendTriggerPiston(TriggerPistonSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shoot = subsystem;
+    m_trigger = subsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shoot.stopShooter();
+    m_trigger.extendPiston();
+    System.out.println("-----------extended---------");
   }
 }
