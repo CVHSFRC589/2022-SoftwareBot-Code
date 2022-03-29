@@ -86,9 +86,9 @@ public final class Constants {
     // Shooting Constants
     public static final double MAX_SHOOTER_RPM = 4900.0;
     public static final double STARTING_SHOOTER_RPM = 2000;
-    public static final double CLOSE_SHOOTING_RPM = 1800; // 7 ft from hub
-    public static final double MEDIUM_SHOOTING_RPM = 2000; //9 ft from hub
-    public static final double FAR_SHOOTING_RPM = 2200; // 13 ft from hub
+    public static final double CLOSE_SHOOTING_RPM = 1800; // 5 ft from hub
+    public static final double MEDIUM_SHOOTING_RPM = 2000; // 7 ft from hub
+    public static final double FAR_SHOOTING_RPM = 2200; // 11 ft from hub
     public static final double SHOOTER_STOPPING_SPEED = 750;
     public static final double SHOOTER_RPM_TOLERANCE = 25;
     public static final double FEEDER_MOTOR_RPM = 800;

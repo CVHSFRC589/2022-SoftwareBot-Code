@@ -21,6 +21,6 @@ public class RetractTriggerPiston extends InstantCommand {
   @Override
   public void initialize() {
     m_trigger.retractPiston();
-    System.out.println("---------Command------------------");
+    // System.out.println("---------Command------------------");
   }
 }

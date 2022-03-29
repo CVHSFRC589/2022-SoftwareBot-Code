@@ -11,7 +11,7 @@ public class SetIntakeMotor extends CommandBase {
   /** Creates a new SetIntakeMotor. */
   private IntakeSubsystem m_intake;
   private double m_speed;
-  public SetIntakeMotor(IntakeSubsystem subsystem, double speed) {
+  public SetIntakeMotor(double speed, IntakeSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = subsystem;
     m_speed = speed;

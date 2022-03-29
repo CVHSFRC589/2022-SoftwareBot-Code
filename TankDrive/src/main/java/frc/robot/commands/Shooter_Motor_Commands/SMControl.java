@@ -65,7 +65,7 @@ public class SMControl extends CommandBase {
     // SmartDashboard.putBoolean("ShooterMotorRunning", false);
     // m_shootSubsystem.shootRPM(0, 0);
     if(!interrupted){
-      SmartDashboard.putBoolean("Shoot Interrrupted", interrupted);
+      SmartDashboard.putBoolean("Shooter Interrrupted", interrupted);
       System.out.println("---------------------- interrupted: "+interrupted);
       m_shootSubsystem.stopShooter();
     }

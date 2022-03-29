@@ -54,31 +54,27 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-
-    m_chooser.setDefaultOption("shoot twice", new APCompetition3(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston, m_intake));
-    m_chooser.addOption("shoot once", new APCompetition1(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston));
-    m_chooser.addOption("back up", new APBackUpOnce(m_drivetrain, m_shooter, m_feeder, m_VFS));
+    m_chooser.setDefaultOption("shoot once", new DriveBackShootOnce(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston));
+    m_chooser.addOption("shoot twice", new ShootTurnPickUpShoot(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston, m_intake));
+    m_chooser.addOption("back up", new APBackUp(m_drivetrain, m_shooter, m_feeder, m_VFS));
     SmartDashboard.putData(m_chooser);
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
+    SmartDashboard.putData("Toggle Limelight LEDs", new ToggleLimelightLEDs(m_limeLight));
     // SmartDashboard.putData("SetRPM", new SMRPMFromShuffleboard(m_shooter));
     // SmartDashboard.putData("SwitchPiP", new SwitchPIP(m_drivetrain));
     // SmartDashboard.putData("SetPipeline", new ChangeLimePipeline(m_drivetrain));
-    SmartDashboard.putData("Toggle Limelight LEDs", new ToggleLimelightLEDs(m_limeLight));
-    SmartDashboard.putData(new SMSetPID(m_shooter));
-    m_drivetrain.setDefaultCommand( // for arcade drive or tank drive
+    // SmartDashboard.putData(new SMSetPID(m_shooter));
+    SmartDashboard.updateValues();
+
+
+
+    m_drivetrain.setDefaultCommand(
         new Drive(
             () -> m_joystick0.getY(), () -> m_joystick0.getX(), m_drivetrain
         ));
 
     m_shooter.setDefaultCommand(new SMControl(() -> m_joystick1.getZ(), m_shooter));
     m_feeder.setDefaultCommand(new FMControl(m_feeder));
-
-    SmartDashboard.putData(m_drivetrain);
-    // SmartDashboard.putData(m_climber);
-    SmartDashboard.putData(m_shooter);
-    SmartDashboard.putData(m_feeder);
-    SmartDashboard.putData(m_intake);
-    SmartDashboard.updateValues();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -120,7 +116,7 @@ public class RobotContainer {
     JoystickButton j1CloseShoot = new JoystickButton(m_joystick1, Constants.CLOSE_SHOOTING_BUTTON);
     JoystickButton j1MediumShoot = new JoystickButton(m_joystick1, Constants.MEDIUM_SHOOTING_BUTTON);
     JoystickButton j1FarShoot = new JoystickButton(m_joystick1, Constants.FAR_SHOOTING_BUTTON);
-    JoystickButton j1StopShooter = new JoystickButton(m_joystick1, Constants.STOP_SHOOTER_BUTTON);
+    // JoystickButton j1StopShooter = new JoystickButton(m_joystick1, Constants.STOP_SHOOTER_BUTTON);
     // JoystickButton j1LimelightShoot = new JoystickButton(m_joystick1, Constants.LIMELIGHT_RPM_SHOOT_BUTTON); // needs more testing
 
     // Climbing buttons
@@ -145,12 +141,12 @@ public class RobotContainer {
 
     // Intake buttons
     j0ToggleIntakeArms.whenPressed(new ToggleIntakeArm(m_intake));
-    j0StartIntakeMotor.toggleWhenPressed(new SetIntakeMotor(m_intake, 0.8));
-    j0ReverseIntakeMotor.toggleWhenPressed(new SetIntakeMotor(m_intake, -0.7));
+    j0StartIntakeMotor.toggleWhenPressed(new SetIntakeMotor(1, m_intake));
+    j0ReverseIntakeMotor.toggleWhenPressed(new SetIntakeMotor(-0.7, m_intake));
 
     /* Joystick 1: */
     // Shooting Buttons
-    j1StopShooter.whenPressed(new SMStop(m_shooter));
+    // j1StopShooter.whenPressed(new SMStop(m_shooter));
     j1ToggleShooting.whenPressed(new ToggleSMAndFM(m_feeder, m_shooter));
     j1CloseShoot.whenPressed(new SMFMRPMPID(Constants.CLOSE_SHOOTING_RPM, Constants.FEEDER_MOTOR_RPM, m_shooter, m_feeder));
     j1MediumShoot.whenPressed(new SMFMRPMPID(Constants.MEDIUM_SHOOTING_RPM, Constants.FEEDER_MOTOR_RPM, m_shooter, m_feeder));

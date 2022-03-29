@@ -67,17 +67,13 @@ public class FeederSubsystem extends SubsystemBase {
   public void toggleFeeding(){
     m_isFeeding = !m_isFeeding;
   }
-  public void setFeeding(boolean shoot){
-    m_isFeeding = shoot;
+  public void setFeeding(boolean feed){
+    m_isFeeding = feed;
   }
 
   public void stopFeeding(){
     m_isFeeding = false;
     m_feederMotor.set(0);
-  }
-
-  public double getDefaultFeederRPM(){
-    return m_feederRPM;
   }
 
   public void feed(double speed){ 
@@ -101,12 +97,8 @@ public class FeederSubsystem extends SubsystemBase {
     //change constant to actual gear ratio later
   }
 
-  public void updateShuffleboard()
-  {
-    // SmartDashboard.putNumber("Shooter Speed: ", m_shooterRPM+m_leverRPM);
+  public void updateShuffleboard() {
     SmartDashboard.putNumber("FeederMotorRPM", m_feederEncoder.getVelocity());
-    // SmartDashboard.putNumber("FeedMotorRPM", m_feederEncoder.getVelocity());
-    // SmartDashboard.putNumber("LeverValue", m_leverRPM/.075/Constants.MAX_SHOOTER_RPM);
   }
 
   @Override

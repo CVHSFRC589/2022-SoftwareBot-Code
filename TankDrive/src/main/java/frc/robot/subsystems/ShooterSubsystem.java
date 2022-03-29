@@ -137,7 +137,7 @@ public class ShooterSubsystem extends SubsystemBase {
   {
     // SmartDashboard.putNumber("Shooter Speed: ", m_shooterRPM+m_leverRPM);
     SmartDashboard.putNumber("ShootMotorRPM", m_shooterEncoder.getVelocity());
-    // SmartDashboard.putNumber("FeedMotorRPM", m_feederEncoder.getVelocity());
+    // SmartDashboard.putNu mber("FeedMotorRPM", m_feederEncoder.getVelocity());
     // SmartDashboard.putNumber("LeverValue", m_leverRPM/.075/Constants.MAX_SHOOTER_RPM);
   }
   @Override

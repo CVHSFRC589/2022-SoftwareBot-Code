@@ -20,6 +20,6 @@ public class ExtendTriggerPiston extends InstantCommand {
   @Override
   public void initialize() {
     m_trigger.extendPiston();
-    System.out.println("-----------extended---------");
+    // System.out.println("-----------extended---------");
   }
 }

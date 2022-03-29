@@ -20,7 +20,15 @@ public class LimeLightAiming extends LimeLight{
       // SmartDashboard.putNumber("Target Area", m_Limelight.getTargetArea());
       SmartDashboard.putNumber("Estimated Target Distance", Math.floor(estimateTargetDistance()*1000)/1000/12);
       SmartDashboard.putString("Limelight Target", "Target found");
-      SmartDashboard.putNumber("Estimated RPM", Math.floor(inchesToRPM(estimateTargetDistance())*1000)/1000);
+      // SmartDashboard.putNumber("Estimated RPM", Math.floor(inchesToRPM(estimateTargetDistance())*1000)/1000);
+      if(estimateTargetDistance()/12 > 4 && estimateTargetDistance()/12 < 6)
+        SmartDashboard.putString("Estimated Shoot Mode", "CLOSE (4)");
+      else if(estimateTargetDistance()/12 > 6 && estimateTargetDistance()/12 < 9)
+        SmartDashboard.putString("Estimated Shoot Mode", "MEDIUM (3)");
+      else if(estimateTargetDistance()/12 > 9 && estimateTargetDistance()/12 < 11)
+        SmartDashboard.putString("Estimated Shoot Mode", "FAR (5)");
+      else
+        SmartDashboard.putString("Estimated Shoot Mode", "IDK ¯\\_(ツ)_/¯");
     }
     else{
       SmartDashboard.putString("Limelight Target", "No Target found");
