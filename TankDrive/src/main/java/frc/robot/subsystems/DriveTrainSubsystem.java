@@ -30,6 +30,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
  
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
     private static BooleanSupplier driveType = () -> false;
+    private static BooleanSupplier reverseDriving = () -> false;
     private static LimeLightAiming m_aiming = new LimeLightAiming();
     // private static AnalogInput m_sonic = new AnalogInput(Constants.ULTRASONIC_SENSOR_CHANNEL);
 
@@ -68,7 +69,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
       // }
       //else
       // {
-        m_drive.arcadeDrive(left*m_scaleFactor, -right*m_scaleFactor);
+        if(reverseDriving.getAsBoolean()){
+          m_drive.arcadeDrive(-left*m_scaleFactor, -right*m_scaleFactor);
+        }else{
+          m_drive.arcadeDrive(left*m_scaleFactor,-right*m_scaleFactor);
+        }
       //}
     }
 
@@ -107,6 +112,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
           driveType = () -> false;
       else
           driveType = () -> true;
+    }
+
+    public void toggleReverseDriving() {
+      if(reverseDriving.getAsBoolean()) 
+        reverseDriving = () -> false;
+      else
+        reverseDriving = () -> true;
     }
 
     public BooleanSupplier getDriveType(){

@@ -40,7 +40,7 @@ public final class Constants {
 
     // Joystick 0 Buttons
     public static final int TOGGLE_PISTON_BUTTON = 1;
-    // public static final int EMPTY_BUTTON = 2;
+    public static final int REVERSE_DRIVING_BUTTON = 2;
     public static final int REVERSE_FEEDER_MOTOR_BUTTON = 3;
     public static final int FACE_TARGET_BUTTON = 4;
     public static final int GO_TO_TARGET_DISTANCE_BUTTON = 5;

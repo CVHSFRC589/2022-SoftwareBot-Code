@@ -96,6 +96,7 @@ public class RobotContainer {
     // Driving buttons
     JoystickButton j0GoToTargetDistance = new JoystickButton(m_joystick0, Constants.GO_TO_TARGET_DISTANCE_BUTTON);
     JoystickButton j0FaceTarget = new JoystickButton(m_joystick0, Constants.FACE_TARGET_BUTTON);
+    JoystickButton j0ReverseDriving = new JoystickButton(m_joystick0,Constants.REVERSE_DRIVING_BUTTON);
     // JoystickButton j0DriveRPM = new JoystickButton(m_joystick0, Constants.DRIVE_RPM_BUTTON);
 
     // Feeding Buttons
@@ -129,6 +130,7 @@ public class RobotContainer {
     // Driving Buttons
     j0GoToTargetDistance.whenPressed(new DriveToGivenTargetDistance(Constants.SHOOTING_DISTANCE, m_limeLight, m_drivetrain));
     j0FaceTarget.toggleWhenPressed(new FaceTarget(m_limeLight, m_drivetrain));
+    j0ReverseDriving.whenPressed(new ToggleReverseDriving(m_drivetrain));
     // j0DriveRPM.toggleWhenPressed(new DriveRPM(1000, 1000, m_drivetrain));
 
     // Feeding Buttons
