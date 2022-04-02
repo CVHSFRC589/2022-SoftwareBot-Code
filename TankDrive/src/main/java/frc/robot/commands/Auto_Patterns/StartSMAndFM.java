@@ -20,7 +20,7 @@ public class StartSMAndFM extends ParallelRaceGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SMFMRPMPID(rpmS, Constants.FEEDER_MOTOR_RPM, shooter, feeder),
+      new APSMFMRPMPID(rpmS, Constants.FEEDER_MOTOR_RPM, shooter, feeder),
       new Pause(seconds)
     );
   }

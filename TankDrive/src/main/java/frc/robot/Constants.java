@@ -44,7 +44,7 @@ public final class Constants {
     public static final int REVERSE_FEEDER_MOTOR_BUTTON = 3;
     public static final int FACE_TARGET_BUTTON = 4;
     public static final int GO_TO_TARGET_DISTANCE_BUTTON = 5;
-    // public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
+    public static final int AUTO_DRIVE_DISTANCE_BUTTON = 6;
     // public static final int TOGGLE_LED_BUTTON = 7;
     public static final int TOGGLE_INTAKE_ARMS_BUTTON = 8;
     public static final int TOGGLE_INTAKE_MOTOR_BUTTON = 9;
@@ -81,7 +81,7 @@ public final class Constants {
     public static final String PATTERN_FINISHED_ENTRY_NAME = "VF Pattern done";
     public static final String SHOOTER_RPM_ENTRY_NAME = "Shooter RPM";
     public static final String LIMELIGHT_PIPELINE_ENTRY_NAME = "new pipeline number";
-    public static final double DRIVE_STARTING_SCALE_FACTOR = 1;
+    public static final double DRIVE_SCALE_FACTOR = 0.7;
 
     // Shooting Constants
     public static final double MAX_SHOOTER_RPM = 4900.0;

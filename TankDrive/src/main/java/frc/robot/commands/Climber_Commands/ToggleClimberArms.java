@@ -30,7 +30,7 @@ public class ToggleClimberArms extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(m_climb.getLeftValue().equals(DoubleSolenoid.Value.kForward)){
+    if(m_climb.getArmsValue().equals(DoubleSolenoid.Value.kForward)){
       m_patternOver.setString("unfinished");
       m_pattern.setString("rainbow party palette");
     }

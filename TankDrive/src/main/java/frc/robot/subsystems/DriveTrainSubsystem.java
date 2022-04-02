@@ -34,7 +34,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private static LimeLightAiming m_aiming = new LimeLightAiming();
     // private static AnalogInput m_sonic = new AnalogInput(Constants.ULTRASONIC_SENSOR_CHANNEL);
 
-    private double m_scaleFactor = Constants.DRIVE_STARTING_SCALE_FACTOR; //Max
+    private double m_scaleFactor = Constants.DRIVE_SCALE_FACTOR; //Max
  
     /**create a new drive train subsystem */
     public DriveTrainSubsystem() {
@@ -81,7 +81,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       setLeftEncoder(0);
       setRightEncoder(0);
       setMotors(0,0);
-      m_scaleFactor = Constants.DRIVE_STARTING_SCALE_FACTOR;
+      m_scaleFactor = Constants.DRIVE_SCALE_FACTOR;
     }
 
     public void setMotors(double leftSpeed, double rightSpeed){
@@ -97,6 +97,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       // SmartDashboard.putNumber("Right desired RPM", rightRPM);
       m_leftPIDController.setReference(leftRPM, CANSparkMax.ControlType.kVelocity);
       m_rightPIDController.setReference(rightRPM, CANSparkMax.ControlType.kVelocity);
+      // System.out.println("===================================");
+
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed){
@@ -145,8 +147,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     {
       // SmartDashboard.putNumber("LeftInches", getLeftEncoderInches());
       // SmartDashboard.putNumber("RightInches", getRightEncoderInches());
-      SmartDashboard.putNumber("LeftMotorRPM", leftEncoder.getVelocity());
-      SmartDashboard.putNumber("RightMotorRPM", rightEncoder.getVelocity());
+      SmartDashboard.putNumber("LeftMotorRPM", Math.floor(leftEncoder.getVelocity()*1000)/1000);
+      SmartDashboard.putNumber("RightMotorRPM", Math.floor(rightEncoder.getVelocity()*1000)/1000);
     }
 
     public double getLeftEncoderInches()

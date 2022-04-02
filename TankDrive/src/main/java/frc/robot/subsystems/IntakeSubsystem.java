@@ -20,10 +20,14 @@ public class IntakeSubsystem extends SubsystemBase {
   private final DoubleSolenoid m_arms;
   private final CANSparkMax m_intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder m_intakeEncoder = m_intakeMotor.getEncoder();
+  private int m_extensionTracker;
+  private int m_retractionTracker;
 
   public IntakeSubsystem() {
     m_intakeMotor.setInverted(true);
     m_arms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_ARMS_ON_PORT, Constants.INTAKE_ARMS_OFF_PORT);
+    m_extensionTracker = 0;
+    m_retractionTracker = 0;
   }
   // public boolean isExtended()
   // {
@@ -37,7 +41,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public void toggleIntake(){
     if (DoubleSolenoid.Value.kOff == m_arms.get()){
       extendIntake();
-      
     }
    else{
       m_arms.toggle();
@@ -46,12 +49,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void extendIntake()
   {
+    m_extensionTracker++;
     m_arms.set(DoubleSolenoid.Value.kForward);
     // SmartDashboard.putString("Intake Solenoids", "Extended");
   }
 
   public void retractIntake()
   {
+    m_retractionTracker++;
     m_arms.set(DoubleSolenoid.Value.kReverse);
     stopMotor();
     // SmartDashboard.putString("Intake Solenoids", "Retracted");
@@ -70,6 +75,14 @@ public class IntakeSubsystem extends SubsystemBase {
   public double getIntakeMotorSpeed()
   {
     return m_intakeEncoder.getVelocity();
+  }
+
+  public int getExtensions(){
+    return m_extensionTracker;
+  }
+
+  public int getRetractions(){
+    return m_retractionTracker;
   }
 
   @Override

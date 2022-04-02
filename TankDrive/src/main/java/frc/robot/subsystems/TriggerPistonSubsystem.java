@@ -17,20 +17,26 @@ import frc.robot.Constants;
 
 public class TriggerPistonSubsystem extends SubsystemBase {
   private DoubleSolenoid m_trigger; 
+  private int m_extensionTracker;
+  private int m_retractionTracker;
   
   /** Creates a new FeederSubsystem. */
   public TriggerPistonSubsystem() {
     m_trigger = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.FEEDER_PISTON_ON_PORT, Constants.FEEDER_PISTON_OFF_PORT);
     extendPiston();
+    m_extensionTracker = 0;
+    m_retractionTracker = 0;
   }
 
   public void extendPiston(){
+    m_extensionTracker++;
     m_trigger.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void retractPiston(){
+    m_retractionTracker++;
     m_trigger.set(DoubleSolenoid.Value.kForward);
-    System.out.println("-------------------------");
+    // System.out.println("-------------------------");
   }
 
   public void toggleTriggerExtension(){
@@ -39,6 +45,14 @@ public class TriggerPistonSubsystem extends SubsystemBase {
     } else {
       m_trigger.set(DoubleSolenoid.Value.kForward);
     }
+  }
+
+  public int getExtensions(){
+    return m_extensionTracker;
+  }
+
+  public int getRetractions(){
+    return m_retractionTracker;
   }
 
   @Override

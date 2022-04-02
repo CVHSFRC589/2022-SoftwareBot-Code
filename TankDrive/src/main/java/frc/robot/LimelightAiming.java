@@ -28,7 +28,7 @@ public class LimeLightAiming extends LimeLight{
       else if(estimateTargetDistance()/12 > 9 && estimateTargetDistance()/12 < 11)
         SmartDashboard.putString("Estimated Shoot Mode", "FAR (5)");
       else
-        SmartDashboard.putString("Estimated Shoot Mode", "IDK ¯\\_(ツ)_/¯");
+        SmartDashboard.putString("Estimated Shoot Mode", "IDK ¯\\_(._.)_/¯");
     }
     else{
       SmartDashboard.putString("Limelight Target", "No Target found");

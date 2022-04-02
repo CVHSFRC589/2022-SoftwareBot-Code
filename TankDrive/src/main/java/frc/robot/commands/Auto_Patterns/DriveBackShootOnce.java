@@ -3,8 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Auto_Patterns;
+import frc.robot.commands.Drive_Commands.DriveToDistance;
 import frc.robot.commands.Misc_Commands.*;
-import frc.robot.commands.Shooter_And_Feeder_Commands.StopSMAndFM;
+import frc.robot.commands.Shooter_And_Feeder_Commands.*;
 import frc.robot.commands.Trigger_Piston_Commands.ExtendTriggerPiston;
 import frc.robot.commands.Trigger_Piston_Commands.RetractTriggerPiston;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -25,9 +26,11 @@ public class DriveBackShootOnce extends SequentialCommandGroup {
     addCommands(
       new ChangeLimePipeline(1,drive),
       new UpdateAllianceColor(vfs),
-      new ShootDriveBack(2075, 70, shooter, drive, feeder), 
+      new ShootWhileDriving(1975, 75, shooter, drive, feeder),
+      // new StartSMAndFM(2075, 3, shooter, feeder),
+      // new DriveToDistance(70, .6, drive),
       new RetractTriggerPiston(piston),
-      new Pause(1),
+      new Pause(2),
       new StopSMAndFM(shooter, feeder),
       new ExtendTriggerPiston(piston)
     );

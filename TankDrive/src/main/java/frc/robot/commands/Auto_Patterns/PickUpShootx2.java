@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Auto_Patterns;
+import frc.robot.commands.Drive_Commands.DriveToDistance;
+import frc.robot.commands.Drive_Commands.FaceTarget;
 import frc.robot.commands.Intake_Commands.*;
 import frc.robot.commands.Misc_Commands.*;
 import frc.robot.commands.Shooter_And_Feeder_Commands.StopSMAndFM;
@@ -19,9 +21,11 @@ public class PickUpShootx2 extends SequentialCommandGroup {
     addCommands(
       new ChangeLimePipeline(1,drive),
       new UpdateAllianceColor(vfs),
-      new ToggleIntakeArm(intake),
-      new SetIntakeMotor(1, intake),
-      new ShootDriveBack(2200, 140, shooter, drive, feeder),
+      // new ToggleIntakeArm(intake),
+      // new SetIntakeMotor(1, intake),
+      // new DriveToDistance(90, 0.6, drive),
+      new ShootWhileDriving(2200, 100, shooter, drive, feeder),
+      new FaceTarget(drive.getLimeLight(),drive),
       new RetractTriggerPiston(piston),
       new Pause(3),
       new ExtendTriggerPiston(piston),

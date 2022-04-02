@@ -15,33 +15,48 @@ public class ClimberSubsystem extends SubsystemBase {
   /* Creates a new climber. */
   private final DoubleSolenoid m_climberArms;
   private final Compressor m_compressor;
-  
+  private int m_reachTracker;
+  private int m_pullTracker;
+
   public ClimberSubsystem() {
     m_climberArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.CLIMBER_ARMS_ON_PORT, Constants.CLIMBER_ARMS_OFF_PORT);
     m_compressor = new Compressor(PneumaticsModuleType.CTREPCM); //Also turns on the compressor
     m_compressor.enableDigital();
+    m_reachTracker = 0;
+    m_pullTracker = 0;
+
     // m_compressor.disable();  
   }
   
-  public DoubleSolenoid.Value getLeftValue(){
+  public DoubleSolenoid.Value getArmsValue(){
     return m_climberArms.get();
   }
   
-  public void reachLeft()
+  public void reachArms()
   {
+    m_reachTracker++;
     m_climberArms.set(DoubleSolenoid.Value.kForward);
   }
 
-  public void pullLeft()
+  public void pullArms()
   {
+    m_pullTracker++;
     m_climberArms.set(DoubleSolenoid.Value.kReverse);
   }
   
   public void toggleClimberSolenoids(){
-    if(getLeftValue().equals(DoubleSolenoid.Value.kForward))
-      pullLeft();
+    if(getArmsValue().equals(DoubleSolenoid.Value.kForward))
+      pullArms();
     else
-      reachLeft();
+      reachArms();
+  }
+
+  public int getReaches(){
+    return m_reachTracker;
+  }
+
+  public int getPulls(){
+    return m_pullTracker;
   }
 
   @Override

@@ -16,10 +16,16 @@ public class DriveToDistance extends CommandBase {
    */
   public DriveToDistance(double distanceinches, double speed, DriveTrainSubsystem drivetrain) {
     m_drivetrain = drivetrain;
-    m_speed = speed;
     m_distanceInches = distanceinches;
+    if(m_distanceInches < 0)
+    {
+      m_speed = -speed;
+    }
+    else{
+      m_speed = speed;
+    }
     // Use addRequirements() here to declare subsystem dependencies.
-    // addRequirements(m_drivetrain);
+    addRequirements(m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -27,23 +33,29 @@ public class DriveToDistance extends CommandBase {
   public void initialize() {
     m_drivetrain.reset();
   }
-
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // m_drivetrain.driveToDistance(m_distanceInches);
-    m_drivetrain.tankDrive(-m_speed, -m_speed);
+    m_drivetrain.tankDrive(m_speed, m_speed); 
+    // m_drivetrain.setDriveMotorsRPM(m_speed*5000, m_speed*5000);
+    System.out.println(m_drivetrain.getLeftEncoderInches()-m_drivetrain.getRightEncoderInches());
+    // System.out.println("driveto---------------------idsjanfkkf");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // System.out.println("ENNDDDDDD--------------------idsjanfkkf");
     m_drivetrain.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_drivetrain.getAverageEncoderInches()) >= m_distanceInches;
+    // return false;
+    // System.out.println("driveto---------------------idsjanfkkf");
+    return Math.abs(m_drivetrain.getAverageEncoderInches()) >= Math.abs(m_distanceInches);
   }
 }

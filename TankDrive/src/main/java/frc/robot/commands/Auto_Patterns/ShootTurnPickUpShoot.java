@@ -20,7 +20,7 @@ public class ShootTurnPickUpShoot extends SequentialCommandGroup {
     addCommands(
       new ChangeLimePipeline(1,drive),
       new UpdateAllianceColor(vfs),
-      new ShootDriveBack(2200, 80, shooter, drive, feeder),
+      new ShootWhileDriving(2200, 80, shooter, drive, feeder),
       new RetractTriggerPiston(piston),
       new Pause(1),
       new ExtendTriggerPiston(piston),
