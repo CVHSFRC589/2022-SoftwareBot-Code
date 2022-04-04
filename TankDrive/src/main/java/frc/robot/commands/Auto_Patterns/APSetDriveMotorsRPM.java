@@ -5,7 +5,6 @@
 package frc.robot.commands.Auto_Patterns;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.Drive_Commands.Drive;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class APSetDriveMotorsRPM extends CommandBase {

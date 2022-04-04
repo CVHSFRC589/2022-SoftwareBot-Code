@@ -18,8 +18,8 @@ package frc.robot;
  */
 public final class Constants {
     // Motor/Solenoid Ports
-    public static final int DRIVE_LEFT_MOTOR_PORT = 11; // 11
-    public static final int DRIVE_RIGHT_MOTOR_PORT = 12; // 12
+    public static final int DRIVE_LEFT_MOTOR_PORT = 12; // 11
+    public static final int DRIVE_RIGHT_MOTOR_PORT = 11; // 12
     // public static final int ULTRASONIC_SENSOR_CHANNEL = 0;// Arbitrary
     // public static final int ULTRASONIC_VOLTAGE_MULTIPLIER = 1;// Arbitrary
 
@@ -81,7 +81,8 @@ public final class Constants {
     public static final String PATTERN_FINISHED_ENTRY_NAME = "VF Pattern done";
     public static final String SHOOTER_RPM_ENTRY_NAME = "Shooter RPM";
     public static final String LIMELIGHT_PIPELINE_ENTRY_NAME = "new pipeline number";
-    public static final double DRIVE_SCALE_FACTOR = 0.7;
+    public static final double DRIVE_SCALE_FACTOR = 1.0; //1.0 for matches
+    public static final double INTAKE_MOTOR_SPEED = 1.0; //1.0
 
     // Shooting Constants
     public static final double MAX_SHOOTER_RPM = 4900.0;

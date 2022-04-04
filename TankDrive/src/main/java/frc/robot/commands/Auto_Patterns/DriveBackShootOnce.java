@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Auto_Patterns;
-import frc.robot.commands.Drive_Commands.DriveToDistance;
 import frc.robot.commands.Misc_Commands.*;
 import frc.robot.commands.Shooter_And_Feeder_Commands.*;
 import frc.robot.commands.Trigger_Piston_Commands.ExtendTriggerPiston;

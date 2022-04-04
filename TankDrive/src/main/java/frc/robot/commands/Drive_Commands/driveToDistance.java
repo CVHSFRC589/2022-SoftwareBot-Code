@@ -40,7 +40,7 @@ public class DriveToDistance extends CommandBase {
     // m_drivetrain.driveToDistance(m_distanceInches);
     m_drivetrain.tankDrive(m_speed, m_speed); 
     // m_drivetrain.setDriveMotorsRPM(m_speed*5000, m_speed*5000);
-    System.out.println(m_drivetrain.getLeftEncoderInches()-m_drivetrain.getRightEncoderInches());
+    System.out.println(m_drivetrain.getAverageEncoderInches());
     // System.out.println("driveto---------------------idsjanfkkf");
   }
 
@@ -55,7 +55,8 @@ public class DriveToDistance extends CommandBase {
   @Override
   public boolean isFinished() {
     // return false;
-    // System.out.println("driveto---------------------idsjanfkkf");
+    
+    System.out.println((Math.abs(m_drivetrain.getAverageEncoderInches()) >= Math.abs(m_distanceInches))+" Distance: "+m_distanceInches);
     return Math.abs(m_drivetrain.getAverageEncoderInches()) >= Math.abs(m_distanceInches);
   }
 }

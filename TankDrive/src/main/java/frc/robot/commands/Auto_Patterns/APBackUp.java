@@ -4,16 +4,9 @@
 
 package frc.robot.commands.Auto_Patterns;
 import frc.robot.commands.Drive_Commands.*;
-import frc.robot.commands.Misc_Commands.*;
-import frc.robot.commands.Trigger_Piston_Commands.RetractTriggerPiston;
-
-import javax.swing.GroupLayout.ParallelGroup;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.FeederSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TriggerPistonSubsystem;
 import frc.robot.subsystems.VisualFeedbackSubsystem;
 

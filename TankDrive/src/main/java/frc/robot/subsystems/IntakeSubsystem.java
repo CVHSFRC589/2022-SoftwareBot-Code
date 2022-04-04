@@ -22,6 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private final RelativeEncoder m_intakeEncoder = m_intakeMotor.getEncoder();
   private int m_extensionTracker;
   private int m_retractionTracker;
+  private boolean m_motorRunning;
 
   public IntakeSubsystem() {
     m_intakeMotor.setInverted(true);
@@ -65,11 +66,20 @@ public class IntakeSubsystem extends SubsystemBase {
   public void startMotor(double speed)
   {
     m_intakeMotor.set(speed);
+    if(speed>0)
+      m_motorRunning = true;
+    else
+      m_motorRunning = false;
   }
 
   public void stopMotor()
   {
     m_intakeMotor.set(0);
+    m_motorRunning = false;
+  }
+
+  public boolean getIntakeMotorRunning(){
+    return m_motorRunning;
   }
 
   public double getIntakeMotorSpeed()
@@ -88,6 +98,6 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("IntakeRPM", getIntakeMotorSpeed());
+    SmartDashboard.putBoolean("Intake Running", m_motorRunning);
   }
 }
