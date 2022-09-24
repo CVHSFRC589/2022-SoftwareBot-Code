@@ -4,24 +4,24 @@
 
 package frc.robot.commands.Auto_Patterns;
 import frc.robot.commands.Drive_Commands.DriveToDistance;
-import frc.robot.commands.Drive_Commands.FaceTarget;
-import frc.robot.commands.Drive_Commands.TurnDegrees;
-import frc.robot.commands.Intake_Commands.*;
-import frc.robot.commands.Misc_Commands.*;
-import frc.robot.commands.Shooter_And_Feeder_Commands.StopSMAndFM;
-import frc.robot.commands.Trigger_Piston_Commands.*;
+// import frc.robot.commands.Drive_Commands.FaceTarget;
+// import frc.robot.commands.Drive_Commands.TurnDegrees;
+// import frc.robot.commands.Intake_Commands.*;
+// import frc.robot.commands.Misc_Commands.*;
+// import frc.robot.commands.Shooter_And_Feeder_Commands.StopSMAndFM;
+// import frc.robot.commands.Trigger_Piston_Commands.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class RookieDay{//#endregion extends SequentialCommandGroup {
+public class RookieDay extends SequentialCommandGroup {
   /** Creates a new TurnPickUpShootx2. */
-  public RookieDay(DriveTrainSubsystem drive, ShooterSubsystem shooter, FeederSubsystem feeder, VisualFeedbackSubsystem vfs, TriggerPistonSubsystem piston, IntakeSubsystem intake) {
+  public RookieDay(DriveTrainSubsystem drive) {
     addCommands(
-      
-     
+      new DriveToDistance(-30,0.4,drive)
+
     );
   }
 }

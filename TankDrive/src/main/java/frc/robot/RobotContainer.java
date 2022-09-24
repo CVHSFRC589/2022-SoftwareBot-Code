@@ -57,8 +57,10 @@ public class RobotContainer {
     // m_chooser.addOption("Back Up", new APBackUp(m_drivetrain, m_VFS, m_piston));
     m_chooser.addOption("Shoot Once (Anywhere)", new DriveBackShootOnce(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston));
     // m_chooser.addOption("Shoot Twice Two Turns", new ShootTurnPickUpShoot(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston, m_intake));
-    m_chooser.setDefaultOption("2 Ball Auto (Hangar Side)", new PickUpShoot2(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston, m_intake));
+    m_chooser.addOption("2 Ball Auto (Hangar Side)", new PickUpShoot2(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston, m_intake));
     m_chooser.addOption("2 Ball Auto (Terminal Side)", new PickUpShoot2ShortSide(m_drivetrain, m_shooter, m_feeder, m_VFS, m_piston, m_intake));
+    m_chooser.setDefaultOption("Rookie Week", new RookieDay(m_drivetrain));
+
     SmartDashboard.putData(m_chooser);
     SmartDashboard.putData("UpdateAllianceColor", new UpdateAllianceColor(m_VFS));
     SmartDashboard.putData("Toggle Limelight LEDs", new ToggleLimelightLEDs(m_limeLight));
