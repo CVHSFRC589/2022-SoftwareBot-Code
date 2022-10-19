@@ -5,7 +5,7 @@
 package frc.robot.commands.Auto_Patterns;
 import frc.robot.commands.Drive_Commands.DriveToDistance;
 // import frc.robot.commands.Drive_Commands.FaceTarget;
-// import frc.robot.commands.Drive_Commands.TurnDegrees;
+import frc.robot.commands.Drive_Commands.TurnDegrees;
 // import frc.robot.commands.Intake_Commands.*;
 // import frc.robot.commands.Misc_Commands.*;
 // import frc.robot.commands.Shooter_And_Feeder_Commands.StopSMAndFM;
@@ -20,8 +20,7 @@ public class RookieDay extends SequentialCommandGroup {
   /** Creates a new TurnPickUpShootx2. */
   public RookieDay(DriveTrainSubsystem drive) {
     addCommands(
-      new DriveToDistance(-30,0.4,drive)
-
+      new DriveToDistance(-24, .55, drive)
     );
   }
 }
